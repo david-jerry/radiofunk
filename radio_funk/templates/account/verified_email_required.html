@@ -1,0 +1,28 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% translate "Verify Your E-mail Address" %}{% endblock %}
+
+{% block inner %}
+{% url 'account_email' as email_url %}
+
+<div>
+  <img class="mx-auto h-12 w-auto animate-bounce" src="{% static 'images/favicon.png' %}" alt="Workflow">
+  <h2 class="mt-6 text-center text-3xl font-extrabold text-white">Verify Your E-mail Address</h2>
+  <p class="mt-2 text-center text-sm text-slate-400">
+    This part of the site requires us to verify that
+    you are who you claim to be. For this purpose, we require that you
+    verify ownership of your e-mail address.
+  </p>
+  <p class="mt-2 text-center text-sm text-slate-400">
+    We have sent an e-mail to you for
+    verification. Please click on the link inside this e-mail. Please
+    contact us if you do not receive it within a few minutes.
+  </p>
+  <p class="mt-2 text-center text-sm text-slate-400">
+    <strong>Note:</strong> you can still
+    <a href="{{email_url}}" class="font-medium text-yellow-600 hover:text-yellow-500"> change your e-mail address.</a>
+  </p>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "account/base.html" %}
+
+{% load i18n static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}{% translate "Signup" %}{% endblock %}
+
+{% block inner %}
+<div>
+  <img class="mx-auto h-12 w-auto animate-bounce" src="{% static 'images/favicon.png' %}" alt="Workflow">
+  <h2 class="mt-6 text-center text-3xl font-extrabold text-white">Create a Free Account</h2>
+  <p class="mt-2 text-center text-sm text-slate-400">
+    Or
+    <a href="{{ login_url }}" class="font-medium text-yellow-600 hover:text-yellow-500"> login to your existing account </a>
+  </p>
+</div>
+
+<form class="signup mt-8 space-y-6" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+
+  {% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+        <div class="border border-red-400 bg-red-300 text-red-900 px-4 py-6">
+          {{ error }}
+        </div>
+      {% endfor %}
+  {% endif %}
+
+  <div class="rounded-md shadow-sm -space-y-px">
+    <div id="div_id_name">
+      <label class="form-label requiredField sr-only" for="id_name">Name<span class="asteriskField">*</span></label>
+      <input class="textinput textInput form-control fbc-has-badge fbc-UID_1 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-sm" id="id_name" name="name" placeholder="Firstname Lastname" required="" type="text">
+    </div>
+    <div id="div_id_username">
+      <label class="form-label requiredField sr-only" for="id_username">Username<span class="asteriskField">*</span></label>
+      <input autocomplete="username" class="textinput textInput form-control appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-sm" id="id_username" name="username" placeholder="Username" required="" type="text">
+    </div>
+    <div id="div_id_email">
+      <label class="form-label requiredField sr-only" for="id_email">Email<span class="asteriskField">*</span></label>
+      <input autocomplete="email" class="textinput textInput form-control appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-sm" id="id_email" name="email" placeholder="Email Address" required="" type="email">
+    </div>
+    <div id="div_id_password1">
+      <label class="form-label requiredField sr-only" for="id_password1">Password<span class="asteriskField">*</span></label>
+      <input autocomplete="new-password" class="textinput textInput form-control appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-sm" id="id_password1" name="password1" placeholder="Password" required="" type="password">
+    </div>
+    <div id="div_id_password2">
+      <label class="form-label requiredField sr-only" for="id_username">Confirm Password<span class="asteriskField">*</span></label>
+      <input class="textinput textInput form-control appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-sm" id="id_password2" name="password2" placeholder="Confirm Password" required="" type="password">
+    </div>
+  </div>
+
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+
+  <div>
+    <button type="submit" class="primaryAction group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+      <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+        <!-- Heroicon name: solid/lock-closed -->
+        <svg class="h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+        </svg>
+      </span>
+      Sign Up
+    </button>
+  </div>
+</form>
+
+{% endblock %}

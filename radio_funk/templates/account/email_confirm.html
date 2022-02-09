@@ -1,0 +1,46 @@
+{% extends "account/base.html" %}
+
+{% load i18n static %}
+{% load account %}
+
+{% block head_title %}{% translate "Confirm E-mail Address" %}{% endblock %}
+
+
+{% block inner %}
+<div>
+  <img class="mx-auto h-12 w-auto animate-bounce" src="{% static 'images/favicon.png' %}" alt="Workflow">
+  <h2 class="mt-6 text-center text-3xl font-extrabold text-white">Confirm E-mail Address</h2>
+  <p class="mt-2 text-center text-sm text-slate-400">
+    Or
+    <a href="{{signup_url}}" class="font-medium text-yellow-600 hover:text-yellow-500"> get started with a free account </a>
+  </p>
+</div>
+
+{% if confirmation %}
+
+{% user_display confirmation.email_address.user as user_display %}
+
+<p class="mt-2 text-center text-sm text-slate-400">{% blocktranslate with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{ email }}" class="font-medium text-yellow-600 hover:text-yellow-500">{{ email }}</a> is an e-mail address for user {{ user_display }}.{% endblocktranslate %}</p>
+
+<form class="mt-8 space-y-6" method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+          <div class="border border-red-400 bg-red-300 text-red-900 px-4 py-6">
+            {{ error }}
+          </div>
+        {% endfor %}
+    {% endif %}
+
+    <button class="btn btn-primary w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500" type="submit">{% translate 'Confirm' %}</button>
+</form>
+
+{% else %}
+
+{% url 'account_email' as email_url %}
+
+<p class="mt-2 text-center text-sm text-slate-400">{% blocktranslate %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}" class="font-medium text-yellow-600 hover:text-yellow-500">issue a new e-mail confirmation request</a>.{% endblocktranslate %}</p>
+
+{% endif %}
+
+{% endblock %}

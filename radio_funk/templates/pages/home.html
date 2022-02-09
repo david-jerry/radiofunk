@@ -1,0 +1,856 @@
+{% extends "base.html" %} {% load static heroicons %} {% block content %}
+
+<section class="flex justify-items-center overflow-x-scroll scrollbar-hide h-99 max-w-[1210px] pt-8 space-x-4 p-8 pb-8">
+  {% for p in podcasts %}
+  <div
+    class="min-w-[260px] min-h-[360px] rounded-[50px] overflow-hidden relative text-white/80 cursor-pointer hover:scale-105 hover:text-white/100 transition duration-200 ease-out group mx-auto"
+    onclick=""
+  >
+    <img
+      src="{% if p.image %}{{p.image.thumbnail.url}}{% else %}{% static 'images/album.jpg' %}{% endif %}"
+      alt="{{p.name|title}} cover photo"
+      objectFit="contain"
+      class="h-full w-full absolute inset-0 object-cover rounded-[50px] opacity-80 group-hover:opacity-100"
+    />
+
+    <div
+      class="absolute bottom-10 inset-x-0 ml-4 flex items-center space-x-3.5"
+    >
+      <div
+        class="h-10 w-10 bg-[#c7ab1d] rounded-full flex items-center justify-center group-hover:bg-[#dcdc21] flex-shrink-0"
+      >
+        <!-- if paused playing show pause icon -->
+        <div class="text-black text-xl"
+        onclick="audioPlay(this.getAttribute('data-value'))"
+        data-value="{{p.mp3url}}"
+        >
+          {% heroicon 'play' style='solid' %}
+        </div>
+        <!-- else if unpaused show playing icon -->
+        <!-- <BsFillPlayFill class="text-white text-xl ml-[1px]" /> -->
+      </div>
+
+      <div class="text-[15px]">
+        <h4 class="font-extrabold truncate w-44">{{p.name|title}}</h4>
+        <h6>{{p.creator.name|title}}</h6>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div
+    class="min-w-[260px] min-h-[360px] rounded-[50px] overflow-hidden relative text-white/80 cursor-pointer hover:scale-105 hover:text-white/100 transition duration-200 ease-out group mx-auto"
+    onclick=""
+  >
+    <img
+      src="{% static 'images/album.jpg' %}"
+      alt="song.name"
+      objectFit="contain"
+      class="h-full w-full absolute inset-0 object-cover rounded-[50px] opacity-80 group-hover:opacity-100"
+    />
+
+    <div
+      class="absolute bottom-10 inset-x-0 ml-4 flex items-center space-x-3.5"
+    >
+      <div
+        class="h-10 w-10 bg-[#c7ab1d] rounded-full flex items-center justify-center group-hover:bg-[#dcdc21] flex-shrink-0"
+      >
+        <!-- if paused playing show pause icon -->
+        <div class="text-black text-xl" onclick="audioPlay(this)">
+          {% heroicon 'play' style='solid' %}
+        </div>
+        <!-- else if unpaused show playing icon -->
+        <!-- <BsFillPlayFill class="text-white text-xl ml-[1px]" /> -->
+      </div>
+
+      <div class="text-[15px]">
+        <h4 class="font-extrabold truncate w-44">track.title</h4>
+        <h6>track.artist</h6>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-[260px] min-h-[360px] rounded-[50px] overflow-hidden relative text-white/80 cursor-pointer hover:scale-105 hover:text-white/100 transition duration-200 ease-out group mx-auto"
+    onclick=""
+  >
+    <img
+      src="{% static 'images/album.jpg' %}"
+      alt="song.name"
+      objectFit="contain"
+      class="h-full w-full absolute inset-0 object-cover rounded-[50px] opacity-80 group-hover:opacity-100"
+    />
+
+    <div
+      class="absolute bottom-10 inset-x-0 ml-4 flex items-center space-x-3.5"
+    >
+      <div
+        class="h-10 w-10 bg-[#c7ab1d] rounded-full flex items-center justify-center group-hover:bg-[#dcdc21] flex-shrink-0"
+      >
+        <!-- if paused playing show pause icon -->
+        <div class="text-black text-xl" onclick="audioPlay(this)">
+          {% heroicon 'play' style='solid' %}
+        </div>
+        <!-- else if unpaused show playing icon -->
+        <!-- <BsFillPlayFill class="text-white text-xl ml-[1px]" /> -->
+      </div>
+
+      <div class="text-[15px]">
+        <h4 class="font-extrabold truncate w-44">track.title</h4>
+        <h6>track.artist</h6>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-[260px] min-h-[360px] rounded-[50px] overflow-hidden relative text-white/80 cursor-pointer hover:scale-105 hover:text-white/100 transition duration-200 ease-out group mx-auto"
+    onclick=""
+  >
+    <img
+      src="{% static 'images/album.jpg' %}"
+      alt="song.name"
+      objectFit="contain"
+      class="h-full w-full absolute inset-0 object-cover rounded-[50px] opacity-80 group-hover:opacity-100"
+    />
+
+    <div
+      class="absolute bottom-10 inset-x-0 ml-4 flex items-center space-x-3.5"
+    >
+      <div
+        class="h-10 w-10 bg-[#c7ab1d] rounded-full flex items-center justify-center group-hover:bg-[#dcdc21] flex-shrink-0"
+      >
+        <!-- if paused playing show pause icon -->
+        <div class="text-black text-xl" onclick="audioPlay(this)">
+          {% heroicon 'play' style='solid' %}
+        </div>
+        <!-- else if unpaused show playing icon -->
+        <!-- <BsFillPlayFill class="text-white text-xl ml-[1px]" /> -->
+      </div>
+
+      <div class="text-[15px]">
+        <h4 class="font-extrabold truncate w-44">track.title</h4>
+        <h6>track.artist</h6>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-[260px] min-h-[360px] rounded-[50px] overflow-hidden relative text-white/80 cursor-pointer hover:scale-105 hover:text-white/100 transition duration-200 ease-out group mx-auto"
+    onclick=""
+  >
+    <img
+      src="{% static 'images/album.jpg' %}"
+      alt="song.name"
+      objectFit="contain"
+      class="h-full w-full absolute inset-0 object-cover rounded-[50px] opacity-80 group-hover:opacity-100"
+    />
+
+    <div
+      class="absolute bottom-10 inset-x-0 ml-4 flex items-center space-x-3.5"
+    >
+      <div
+        class="h-10 w-10 bg-[#c7ab1d] rounded-full flex items-center justify-center group-hover:bg-[#dcdc21] flex-shrink-0"
+      >
+        <!-- if paused playing show pause icon -->
+        <div class="text-black text-xl" onclick="audioPlay(this)">
+          {% heroicon 'play' style='solid' %}
+        </div>
+        <!-- else if unpaused show playing icon -->
+        <!-- <BsFillPlayFill class="text-white text-xl ml-[1px]" /> -->
+      </div>
+
+      <div class="text-[15px]">
+        <h4 class="font-extrabold truncate w-44">track.title</h4>
+        <h6>track.artist</h6>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-[260px] min-h-[360px] rounded-[50px] overflow-hidden relative text-white/80 cursor-pointer hover:scale-105 hover:text-white/100 transition duration-200 ease-out group mx-auto"
+    onclick=""
+  >
+    <img
+      src="{% static 'images/album.jpg' %}"
+      alt="song.name"
+      objectFit="contain"
+      class="h-full w-full absolute inset-0 object-cover rounded-[50px] opacity-80 group-hover:opacity-100"
+    />
+
+    <div
+      class="absolute bottom-10 inset-x-0 ml-4 flex items-center space-x-3.5"
+    >
+      <div
+        class="h-10 w-10 bg-[#c7ab1d] rounded-full flex items-center justify-center group-hover:bg-[#dcdc21] flex-shrink-0"
+      >
+        <!-- if paused playing show pause icon -->
+        <div class="text-black text-xl" onclick="audioPlay(this)">
+          {% heroicon 'play' style='solid' %}
+        </div>
+        <!-- else if unpaused show playing icon -->
+        <!-- <BsFillPlayFill class="text-white text-xl ml-[1px]" /> -->
+      </div>
+
+      <div class="text-[15px]">
+        <h4 class="font-extrabold truncate w-44">track.title</h4>
+        <h6>track.artist</h6>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-[260px] min-h-[360px] rounded-[50px] overflow-hidden relative text-white/80 cursor-pointer hover:scale-105 hover:text-white/100 transition duration-200 ease-out group mx-auto"
+    onclick=""
+  >
+    <img
+      src="{% static 'images/album.jpg' %}"
+      alt="song.name"
+      objectFit="contain"
+      class="h-full w-full absolute inset-0 object-cover rounded-[50px] opacity-80 group-hover:opacity-100"
+    />
+
+    <div
+      class="absolute bottom-10 inset-x-0 ml-4 flex items-center space-x-3.5"
+    >
+      <div
+        class="h-10 w-10 bg-[#c7ab1d] rounded-full flex items-center justify-center group-hover:bg-[#dcdc21] flex-shrink-0"
+      >
+        <!-- if paused playing show pause icon -->
+        <div class="text-black text-xl" onclick="audioPlay(this)">
+          {% heroicon 'play' style='solid' %}
+        </div>
+        <!-- else if unpaused show playing icon -->
+        <!-- <BsFillPlayFill class="text-white text-xl ml-[1px]" /> -->
+      </div>
+
+      <div class="text-[15px]">
+        <h4 class="font-extrabold truncate w-44">track.title</h4>
+        <h6>track.artist</h6>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-[260px] min-h-[360px] rounded-[50px] overflow-hidden relative text-white/80 cursor-pointer hover:scale-105 hover:text-white/100 transition duration-200 ease-out group mx-auto"
+    onclick=""
+  >
+    <img
+      src="{% static 'images/album.jpg' %}"
+      alt="song.name"
+      objectFit="contain"
+      class="h-full w-full absolute inset-0 object-cover rounded-[50px] opacity-80 group-hover:opacity-100"
+    />
+
+    <div
+      class="absolute bottom-10 inset-x-0 ml-4 flex items-center space-x-3.5"
+    >
+      <div
+        class="h-10 w-10 bg-[#c7ab1d] rounded-full flex items-center justify-center group-hover:bg-[#dcdc21] flex-shrink-0"
+      >
+        <!-- if paused playing show pause icon -->
+        <div class="text-black text-xl" onclick="audioPlay(this)">
+          {% heroicon 'play' style='solid' %}
+        </div>
+        <!-- else if unpaused show playing icon -->
+        <!-- <BsFillPlayFill class="text-white text-xl ml-[1px]" /> -->
+      </div>
+
+      <div class="text-[15px]">
+        <h4 class="font-extrabold truncate w-44">track.title</h4>
+        <h6>track.artist</h6>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-[260px] min-h-[360px] rounded-[50px] overflow-hidden relative text-white/80 cursor-pointer hover:scale-105 hover:text-white/100 transition duration-200 ease-out group mx-auto"
+    onclick=""
+  >
+    <img
+      src="{% static 'images/album.jpg' %}"
+      alt="song.name"
+      objectFit="contain"
+      class="h-full w-full absolute inset-0 object-cover rounded-[50px] opacity-80 group-hover:opacity-100"
+    />
+
+    <div
+      class="absolute bottom-10 inset-x-0 ml-4 flex items-center space-x-3.5"
+    >
+      <div
+        class="h-10 w-10 bg-[#c7ab1d] rounded-full flex items-center justify-center group-hover:bg-[#dcdc21] flex-shrink-0"
+      >
+        <!-- if paused playing show pause icon -->
+        <div class="text-black text-xl" onclick="audioPlay(this)">
+          {% heroicon 'play' style='solid' %}
+        </div>
+        <!-- else if unpaused show playing icon -->
+        <!-- <BsFillPlayFill class="text-white text-xl ml-[1px]" /> -->
+      </div>
+
+      <div class="text-[15px]">
+        <h4 class="font-extrabold truncate w-44">track.title</h4>
+        <h6>track.artist</h6>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-[260px] min-h-[360px] rounded-[50px] overflow-hidden relative text-white/80 cursor-pointer hover:scale-105 hover:text-white/100 transition duration-200 ease-out group mx-auto"
+    onclick=""
+  >
+    <img
+      src="{% static 'images/album.jpg' %}"
+      alt="song.name"
+      objectFit="contain"
+      class="h-full w-full absolute inset-0 object-cover rounded-[50px] opacity-80 group-hover:opacity-100"
+    />
+
+    <div
+      class="absolute bottom-10 inset-x-0 ml-4 flex items-center space-x-3.5"
+    >
+      <div
+        class="h-10 w-10 bg-[#c7ab1d] rounded-full flex items-center justify-center group-hover:bg-[#dcdc21] flex-shrink-0"
+      >
+        <!-- if paused playing show pause icon -->
+        <div class="text-black text-xl" onclick="audioPlay(this)">
+          {% heroicon 'play' style='solid' %}
+        </div>
+        <!-- else if unpaused show playing icon -->
+        <!-- <BsFillPlayFill class="text-white text-xl ml-[1px]" /> -->
+      </div>
+
+      <div class="text-[15px]">
+        <h4 class="font-extrabold truncate w-44">track.title</h4>
+        <h6>track.artist</h6>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-[260px] min-h-[360px] rounded-[50px] overflow-hidden relative text-white/80 cursor-pointer hover:scale-105 hover:text-white/100 transition duration-200 ease-out group mx-auto"
+    onclick=""
+  >
+    <img
+      src="{% static 'images/album.jpg' %}"
+      alt="song.name"
+      objectFit="contain"
+      class="h-full w-full absolute inset-0 object-cover rounded-[50px] opacity-80 group-hover:opacity-100"
+    />
+
+    <div
+      class="absolute bottom-10 inset-x-0 ml-4 flex items-center space-x-3.5"
+    >
+      <div
+        class="h-10 w-10 bg-[#c7ab1d] rounded-full flex items-center justify-center group-hover:bg-[#dcdc21] flex-shrink-0"
+      >
+        <!-- if paused playing show pause icon -->
+        <div class="text-black text-xl" onclick="audioPlay(this)">
+          {% heroicon 'play' style='solid' %}
+        </div>
+        <!-- else if unpaused show playing icon -->
+        <!-- <BsFillPlayFill class="text-white text-xl ml-[1px]" /> -->
+      </div>
+
+      <div class="text-[15px]">
+        <h4 class="font-extrabold truncate w-44">track.title</h4>
+        <h6>track.artist</h6>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+
+<section class="flex gap-x-8 w-full relative md:min-w-[1210px] md:max-w-[1210px] md:relative ml-6 mb-6">
+  <div class="hidden md:inline max-w-[220px] min-w-[220px]">
+    <h2 class="text-white font-bold mb-3">Genres</h2>
+    <div class="flex gap-x-2 gap-y-2.5 flex-wrap mb-3">
+      {% for g in genres %}
+      <div class="genre">{{g.name|title}}</div>
+      {% endfor %}
+    </div>
+    <button
+      class="text-[#CECECE] bg-[#1A1A1A] text-[13px] py-3.5 px-4 rounded-2xl w-full font-bold bg-opacity-80 hover:bg-opacity-100 transition ease-out"
+    >
+      All Genres
+    </button>
+  </div>
+
+  <div class="min-w-full md:min-w-[990px] md:max-w-[990px] pr-11">
+    <h2 class="font-bold mb-3">
+      <!-- if search value is greater than 0 change to Tracks else Leave default New releases -->
+      New Podcast Releases
+    </h2>
+    <div class="space-y-3 border-2 border-[#262626] rounded-2xl mb-[52px] p-3 bg-[#0D0D0D] overflow-y-scroll max-h-[600px] min-h-[65px] md:h:96 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-thumb-rounded hover:scrollbar-thumb-gray-500 w-full">
+      {% for r in radios %}
+      <div
+        class="flex items-center justify-between space-x-15 cursor-default hover:bg-white/10 py-2 px-4 rounded group transition ease-out"
+      >
+        <div class="flex items-center mr-8">
+          <img
+            src="{% if r.image %}{{r.image.thumbnail.url}}{% else %}{% static 'images/album.jpg' %}{% endif %}"
+            alt=""
+            height="48"
+            width="48"
+            objectFit="contain"
+            class="rounded-xl h-12 w-12 object-cover mr-3"
+          />
+          <div>
+            <h4 class="text-white text-sm font-semibold truncate w-[130px]">
+              {{r.name|title}}
+            </h4>
+            <p
+              class="text-[rgb(179,179,179)] text-[13px] truncate font-semibold group-hover:text-white"
+            >
+              {{r.description|safe|truncatewords:5}}
+            </p>
+          </div>
+        </div>
+
+        <div class="md:ml-auto flex items-center space-x-2">
+          <div class="text-white flex space-x-1 text-sm font-semibold">
+            <i class="fas fa-headphones-alt text-2xl font-bold"></i>
+            <h4 class="font-sans text-sm">12</h4>
+          </div>
+          <div
+            class="flex items-center rounded-full border-2 border-[#262626] w-[85px] h-10 relative cursor-pointer group-hover:border-white/40"
+          >
+            <div class="text-[12px] ml-3 icon text-[#868686] h-6 w-6">
+              {% heroicon 'heart' style='solid' %}
+            </div>
+            <div
+              class="h-6 w-6 rounded-full border text-black border-[#c7ab1d] flex items-center justify-center absolute -right-[-10px] bg-[#dcdc21] icon hover:scale-110"
+              onclick="audioPlay(this.getAttribute('data-value'))"
+              data-value="{{r.mp3url}}"
+            >
+              {% heroicon 'play' style='solid' %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div
+        class="flex items-center justify-between space-x-15 cursor-default hover:bg-white/10 py-2 px-4 rounded-lg group transition ease-out"
+      >
+        <div class="flex items-center">
+          <img
+            src="{% static 'images/album.jpg' %}"
+            alt=""
+            height="48"
+            width="48"
+            class="rounded-xl h-12 w-12 object-cover mr-3"
+          />
+          <div>
+            <h4 class="text-white text-sm font-semibold truncate w-[450px]">
+              track.title
+            </h4>
+            <p
+              class="text-[rgb(179,179,179)] text-[13px] font-semibold group-hover:text-white"
+            >
+              track.artist
+            </p>
+          </div>
+        </div>
+
+        <div class="md:ml-auto flex items-center space-x-2">
+          <div class="text-white flex space-x-1 text-sm font-semibold">
+            <i class="fas fa-headphones-alt text-2xl font-bold"></i>
+            <h4 class="font-sans text-sm">12</h4>
+          </div>
+          <div
+            class="flex items-center rounded-full border-2 border-[#262626] w-[85px] h-10 relative cursor-pointer group-hover:border-white/40"
+          >
+            <div class="text-[12px] ml-3 icon text-[#868686] h-6 w-6">
+              {% heroicon 'heart' style='solid' %}
+            </div>
+            <div
+              class="h-6 w-6 rounded-full border text-white border-[#c7ab1d] flex items-center justify-center absolute -right-[-10px] bg-[#dcdc21] icon hover:scale-110"
+              onclick="audioPlay(this.getAttribute('data-value'))"
+            >
+              {% heroicon 'play' style='solid' %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex items-center justify-between space-x-15 cursor-default hover:bg-white/10 py-2 px-4 rounded-lg group transition ease-out"
+      >
+        <div class="flex items-center">
+          <img
+            src="{% static 'images/album.jpg' %}"
+            alt=""
+            height="48"
+            width="48"
+            class="rounded-xl h-12 w-12 object-cover mr-3"
+          />
+          <div>
+            <h4 class="text-white text-sm font-semibold truncate w-[450px]">
+              track.title
+            </h4>
+            <p
+              class="text-[rgb(179,179,179)] text-[13px] font-semibold group-hover:text-white"
+            >
+              track.artist
+            </p>
+          </div>
+        </div>
+
+        <div class="md:ml-auto flex items-center space-x-2">
+          <div class="text-white flex space-x-1 text-sm font-semibold">
+            <i class="fas fa-headphones-alt text-2xl font-bold"></i>
+            <h4 class="font-sans text-sm">12</h4>
+          </div>
+          <div
+            class="flex items-center rounded-full border-2 border-[#262626] w-[85px] h-10 relative cursor-pointer group-hover:border-white/40"
+          >
+            <div class="text-[12px] ml-3 icon text-[#868686] h-6 w-6">
+              {% heroicon 'heart' style='solid' %}
+            </div>
+            <div
+              class="h-6 w-6 rounded-full border text-white border-[#c7ab1d] flex items-center justify-center absolute -right-[-10px] bg-[#dcdc21] icon hover:scale-110"
+              onclick="audioPlay(this.getAttribute('data-value'))"
+            >
+              {% heroicon 'play' style='solid' %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex items-center justify-between space-x-15 cursor-default hover:bg-white/10 py-2 px-4 rounded-lg group transition ease-out"
+      >
+        <div class="flex items-center">
+          <img
+            src="{% static 'images/album.jpg' %}"
+            alt=""
+            height="48"
+            width="48"
+            class="rounded-xl h-12 w-12 object-cover mr-3"
+          />
+          <div>
+            <h4 class="text-white text-sm font-semibold truncate w-[450px]">
+              track.title
+            </h4>
+            <p
+              class="text-[rgb(179,179,179)] text-[13px] font-semibold group-hover:text-white"
+            >
+              track.artist
+            </p>
+          </div>
+        </div>
+
+        <div class="md:ml-auto flex items-center space-x-2">
+          <div class="text-white flex space-x-1 text-sm font-semibold">
+            <i class="fas fa-headphones-alt text-2xl font-bold"></i>
+            <h4 class="font-sans text-sm">12</h4>
+          </div>
+          <div
+            class="flex items-center rounded-full border-2 border-[#262626] w-[85px] h-10 relative cursor-pointer group-hover:border-white/40"
+          >
+            <div class="text-[12px] ml-3 icon text-[#868686] h-6 w-6">
+              {% heroicon 'heart' style='solid' %}
+            </div>
+            <div
+              class="h-6 w-6 rounded-full border text-white border-[#c7ab1d] flex items-center justify-center absolute -right-[-10px] bg-[#dcdc21] icon hover:scale-110"
+              onclick="audioPlay(this.getAttribute('data-value'))"
+            >
+              {% heroicon 'play' style='solid' %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex items-center justify-between space-x-15 cursor-default hover:bg-white/10 py-2 px-4 rounded-lg group transition ease-out"
+      >
+        <div class="flex items-center">
+          <img
+            src="{% static 'images/album.jpg' %}"
+            alt=""
+            height="48"
+            width="48"
+            class="rounded-xl h-12 w-12 object-cover mr-3"
+          />
+          <div>
+            <h4 class="text-white text-sm font-semibold truncate w-[450px]">
+              track.title
+            </h4>
+            <p
+              class="text-[rgb(179,179,179)] text-[13px] font-semibold group-hover:text-white"
+            >
+              track.artist
+            </p>
+          </div>
+        </div>
+
+        <div class="md:ml-auto flex items-center space-x-2">
+          <div class="text-white flex space-x-1 text-sm font-semibold">
+            <i class="fas fa-headphones-alt text-2xl font-bold"></i>
+            <h4 class="font-sans text-sm">12</h4>
+          </div>
+          <div
+            class="flex items-center rounded-full border-2 border-[#262626] w-[85px] h-10 relative cursor-pointer group-hover:border-white/40"
+          >
+            <div class="text-[12px] ml-3 icon text-[#868686] h-6 w-6">
+              {% heroicon 'heart' style='solid' %}
+            </div>
+            <div
+              class="h-6 w-6 rounded-full border text-white border-[#c7ab1d] flex items-center justify-center absolute -right-[-10px] bg-[#dcdc21] icon hover:scale-110"
+              onclick="audioPlay(this.getAttribute('data-value'))"
+            >
+              {% heroicon 'play' style='solid' %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex items-center justify-between space-x-15 cursor-default hover:bg-white/10 py-2 px-4 rounded-lg group transition ease-out"
+      >
+        <div class="flex items-center">
+          <img
+            src="{% static 'images/album.jpg' %}"
+            alt=""
+            height="48"
+            width="48"
+            class="rounded-xl h-12 w-12 object-cover mr-3"
+          />
+          <div>
+            <h4 class="text-white text-sm font-semibold truncate w-[450px]">
+              track.title
+            </h4>
+            <p
+              class="text-[rgb(179,179,179)] text-[13px] font-semibold group-hover:text-white"
+            >
+              track.artist
+            </p>
+          </div>
+        </div>
+
+        <div class="md:ml-auto flex items-center space-x-2">
+          <div class="text-white flex space-x-1 text-sm font-semibold">
+            <i class="fas fa-headphones-alt text-2xl font-bold"></i>
+            <h4 class="font-sans text-sm">12</h4>
+          </div>
+          <div
+            class="flex items-center rounded-full border-2 border-[#262626] w-[85px] h-10 relative cursor-pointer group-hover:border-white/40"
+          >
+            <div class="text-[12px] ml-3 icon text-[#868686] h-6 w-6">
+              {% heroicon 'heart' style='solid' %}
+            </div>
+            <div
+              class="h-6 w-6 rounded-full border text-white border-[#c7ab1d] flex items-center justify-center absolute -right-[-10px] bg-[#dcdc21] icon hover:scale-110"
+              onclick="audioPlay(this.getAttribute('data-value'))"
+            >
+              {% heroicon 'play' style='solid' %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex items-center justify-between space-x-15 cursor-default hover:bg-white/10 py-2 px-4 rounded-lg group transition ease-out"
+      >
+        <div class="flex items-center">
+          <img
+            src="{% static 'images/album.jpg' %}"
+            alt=""
+            height="48"
+            width="48"
+            class="rounded-xl h-12 w-12 object-cover mr-3"
+          />
+          <div>
+            <h4 class="text-white text-sm font-semibold truncate w-[450px]">
+              track.title
+            </h4>
+            <p
+              class="text-[rgb(179,179,179)] text-[13px] font-semibold group-hover:text-white"
+            >
+              track.artist
+            </p>
+          </div>
+        </div>
+
+        <div class="md:ml-auto flex items-center space-x-2">
+          <div class="text-white flex space-x-1 text-sm font-semibold">
+            <i class="fas fa-headphones-alt text-2xl font-bold"></i>
+            <h4 class="font-sans text-sm">12</h4>
+          </div>
+          <div
+            class="flex items-center rounded-full border-2 border-[#262626] w-[85px] h-10 relative cursor-pointer group-hover:border-white/40"
+          >
+            <div class="text-[12px] ml-3 icon text-[#868686] h-6 w-6">
+              {% heroicon 'heart' style='solid' %}
+            </div>
+            <div
+              class="h-6 w-6 rounded-full border text-white border-[#c7ab1d] flex items-center justify-center absolute -right-[-10px] bg-[#dcdc21] icon hover:scale-110"
+              onclick="audioPlay(this.getAttribute('data-value'))"
+            >
+              {% heroicon 'play' style='solid' %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex items-center justify-between space-x-15 cursor-default hover:bg-white/10 py-2 px-4 rounded-lg group transition ease-out"
+      >
+        <div class="flex items-center">
+          <img
+            src="{% static 'images/album.jpg' %}"
+            alt=""
+            height="48"
+            width="48"
+            class="rounded-xl h-12 w-12 object-cover mr-3"
+          />
+          <div>
+            <h4 class="text-white text-sm font-semibold truncate w-[450px]">
+              track.title
+            </h4>
+            <p
+              class="text-[rgb(179,179,179)] text-[13px] font-semibold group-hover:text-white"
+            >
+              track.artist
+            </p>
+          </div>
+        </div>
+
+        <div class="md:ml-auto flex items-center space-x-2">
+          <div class="text-white flex space-x-1 text-sm font-semibold">
+            <i class="fas fa-headphones-alt text-2xl font-bold"></i>
+            <h4 class="font-sans text-sm">12</h4>
+          </div>
+          <div
+            class="flex items-center rounded-full border-2 border-[#262626] w-[85px] h-10 relative cursor-pointer group-hover:border-white/40"
+          >
+            <div class="text-[12px] ml-3 icon text-[#868686] h-6 w-6">
+              {% heroicon 'heart' style='solid' %}
+            </div>
+            <div
+              class="h-6 w-6 rounded-full border text-white border-[#c7ab1d] flex items-center justify-center absolute -right-[-10px] bg-[#dcdc21] icon hover:scale-110"
+              onclick="audioPlay(this.getAttribute('data-value'))"
+            >
+              {% heroicon 'play' style='solid' %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex items-center justify-between space-x-15 cursor-default hover:bg-white/10 py-2 px-4 rounded-lg group transition ease-out"
+      >
+        <div class="flex items-center">
+          <img
+            src="{% static 'images/album.jpg' %}"
+            alt=""
+            height="48"
+            width="48"
+            class="rounded-xl h-12 w-12 object-cover mr-3"
+          />
+          <div>
+            <h4 class="text-white text-sm font-semibold truncate w-[450px]">
+              track.title
+            </h4>
+            <p
+              class="text-[rgb(179,179,179)] text-[13px] font-semibold group-hover:text-white"
+            >
+              track.artist
+            </p>
+          </div>
+        </div>
+
+        <div class="md:ml-auto flex items-center space-x-2">
+          <div class="text-white flex space-x-1 text-sm font-semibold">
+            <i class="fas fa-headphones-alt text-2xl font-bold"></i>
+            <h4 class="font-sans text-sm">12</h4>
+          </div>
+          <div
+            class="flex items-center rounded-full border-2 border-[#262626] w-[85px] h-10 relative cursor-pointer group-hover:border-white/40"
+          >
+            <div class="text-[12px] ml-3 icon text-[#868686] h-6 w-6">
+              {% heroicon 'heart' style='solid' %}
+            </div>
+            <div
+              class="h-6 w-6 rounded-full border text-white border-[#c7ab1d] flex items-center justify-center absolute -right-[-10px] bg-[#dcdc21] icon hover:scale-110"
+              onclick="audioPlay(this.getAttribute('data-value'))"
+            >
+              {% heroicon 'play' style='solid' %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex items-center justify-between space-x-15 cursor-default hover:bg-white/10 py-2 px-4 rounded-lg group transition ease-out"
+      >
+        <div class="flex items-center">
+          <img
+            src="{% static 'images/album.jpg' %}"
+            alt=""
+            height="48"
+            width="48"
+            class="rounded-xl h-12 w-12 object-cover mr-3"
+          />
+          <div>
+            <h4 class="text-white text-sm font-semibold truncate w-[450px]">
+              track.title
+            </h4>
+            <p
+              class="text-[rgb(179,179,179)] text-[13px] font-semibold group-hover:text-white"
+            >
+              track.artist
+            </p>
+          </div>
+        </div>
+
+        <div class="md:ml-auto flex items-center space-x-2">
+          <div class="text-white flex space-x-1 text-sm font-semibold">
+            <i class="fas fa-headphones-alt text-2xl font-bold"></i>
+            <h4 class="font-sans text-sm">12</h4>
+          </div>
+          <div
+            class="flex items-center rounded-full border-2 border-[#262626] w-[85px] h-10 relative cursor-pointer group-hover:border-white/40"
+          >
+            <div class="text-[12px] ml-3 icon text-[#868686] h-6 w-6">
+              {% heroicon 'heart' style='solid' %}
+            </div>
+            <div
+              class="h-6 w-6 rounded-full border text-white border-[#c7ab1d] flex items-center justify-center absolute -right-[-10px] bg-[#dcdc21] icon hover:scale-110"
+              onclick="audioPlay(this.getAttribute('data-value'))"
+            >
+              {% heroicon 'play' style='solid' %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex items-center justify-between space-x-15 cursor-default hover:bg-white/10 py-2 px-4 rounded-lg group transition ease-out"
+      >
+        <div class="flex items-center">
+          <img
+            src="{% static 'images/album.jpg' %}"
+            alt=""
+            height="48"
+            width="48"
+            class="rounded-xl h-12 w-12 object-cover mr-3"
+          />
+          <div>
+            <h4 class="text-white text-sm font-semibold truncate w-[450px]">
+              track.title
+            </h4>
+            <p
+              class="text-[rgb(179,179,179)] text-[13px] font-semibold group-hover:text-white"
+            >
+              track.artist
+            </p>
+          </div>
+        </div>
+
+        <div class="md:ml-auto flex items-center space-x-2">
+          <div class="text-white flex space-x-1 text-sm font-semibold">
+            <i class="fas fa-headphones-alt text-2xl font-bold"></i>
+            <h4 class="font-sans text-sm">12</h4>
+          </div>
+          <div
+            class="flex items-center rounded-full border-2 border-[#262626] w-[85px] h-10 relative cursor-pointer group-hover:border-white/40"
+          >
+            <div class="text-[12px] ml-3 icon text-[#868686] h-6 w-6">
+              {% heroicon 'heart' style='solid' %}
+            </div>
+            <div
+              class="h-6 w-6 rounded-full border text-white border-[#c7ab1d] flex items-center justify-center absolute -right-[-10px] bg-[#dcdc21] icon hover:scale-110"
+              onclick="audioPlay(this.getAttribute('data-value'))"
+            >
+              {% heroicon 'play' style='solid' %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

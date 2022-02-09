@@ -1,0 +1,99 @@
+{% extends "account/base.html" %}
+
+{% load i18n static heroicons %}
+{% load account socialaccount %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}{% translate "Sign In" %}{% endblock %}
+
+{% block inner %}
+<div>
+  <img class="mx-auto h-12 w-auto animate-bounce" src="{% static 'images/favicon.png' %}" alt="Workflow">
+  <h2 class="mt-6 text-center text-3xl font-extrabold text-white">Sign in to your account</h2>
+  <p class="mt-2 text-center text-sm text-slate-400">
+    Or
+    <a href="{{signup_url}}" class="font-medium text-yellow-600 hover:text-yellow-500"> get started with a free account </a>
+  </p>
+</div>
+
+<form class="login mt-8 space-y-6" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  {% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+        <div class="border border-red-400 bg-red-300 text-red-900 px-4 py-6">
+          {{ error }}
+        </div>
+      {% endfor %}
+  {% endif %}
+
+  <div class="rounded-md shadow-sm -space-y-px">
+    <div id="div_id_login">
+      <label class="form-label requiredField sr-only" for="id_login">E-mail<span class="asteriskField">*</span></label>
+      <input autocomplete="email" class="textinput textInput form-control fbc-has-badge fbc-UID_1 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-sm" id="id_login" name="login" placeholder="E-mail address" required="" type="email">
+    </div>
+    <div id="div_id_password">
+      <label class="form-label requiredField sr-only" for="id_password">Password<span class="asteriskField">*</span></label>
+      <input autocomplete="current-password" class="textinput textInput form-control appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-sm" id="id_password" name="password" placeholder="Password" required="" type="password">
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between">
+    <div class="flex items-center" id="div_id_remember">
+      <input class="checkboxinput form-check-input h-4 w-4 text-yellow-600 focus:ring-yellow-500 border-gray-300 rounded" id="id_remember" name="remember" type="checkbox">
+      <label class="form-check-label ml-2 block text-sm text-yellow-600" for="id_remember">Remember Me</label>
+    </div>
+
+    <div class="text-sm">
+      <a class="button secondaryAction font-medium text-yellow-600 hover:text-yellow-500" href="{% url 'account_reset_password' %}">{% translate "Forgot Password?" %}</a>
+    </div>
+  </div>
+
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+
+  <div>
+    <button type="submit" class="primaryAction group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+      <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+        <!-- Heroicon name: solid/lock-closed -->
+        <svg class="h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+        </svg>
+      </span>
+      Sign in
+    </button>
+  </div>
+</form>
+
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+  <div class="socialaccount_ballot">
+    <div class="login-or text-center text-slate-500 font-bold pb-4">{% translate "or" %}</div>
+    <ul class="socialaccount_providers flex items-center justify-between">
+      <a href="{% provider_login_url 'google' %}" class="flex items-center space-x-3 px-4 py-2 rounded bg-[#DB4437]">
+        <i class="fab fa-google text-black"></i>
+        <span class="text-black">Google</span>
+      </a>
+
+      <a href="{% provider_login_url 'facebook' %}" class="flex items-center space-x-3 px-4 py-2 rounded bg-[#6abbed]">
+        <i class="fab fa-facebook text-black"></i>
+        <span class="text-black">Facebook</span>
+      </a>
+    </ul>
+  </div>
+
+  {% include "socialaccount/snippets/login_extra.html" %}
+
+{% else %}
+  {% if ACCOUNT_ALLOW_REGISTRATION %}
+    <p>
+      {% blocktranslate trimmed %}
+        If you have not created an account yet, then please
+        <a href="{{ signup_url }}">sign up</a> first.
+      {% endblocktranslate %}
+    </p>
+  {% endif %}
+{% endif %}
+
+{% endblock %}

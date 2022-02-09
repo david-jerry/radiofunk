@@ -1,0 +1,119 @@
+{% load static heroicons %}
+<div class="flex justify-between items-center w-full space-x-4">
+  <div
+    class="bg-[#1a1a1a] z-10 rounded-full overflow-hidden border-2 border-[#333333] p-1.5 px-4 pr-8 flex max-w-sm md:max-w-6xl items-center"
+  >
+    <div
+      class="text-white h-4 w-4 rounded-full border-2 flex-shrink-0 animate-spin"
+    >
+      {% heroicon 'globe' style='solid' %}
+    </div>
+    <input
+      type="text"
+      placeholder="Search"
+      class="bg-[#1a1a1a] border-none focus:ring-0 outline-none focus:animate-none animate-pulse placeholder-slate-400 text-sm text-white"
+    />
+
+    <div
+      class="md:flex hidden items-center divide-dotted divide-x-2 divide-slate-400 ml-auto"
+    >
+      <div class="space-x-2 pr-5 text-sm">
+        <button class="tag hover:text-white">Podcasts</button>
+        <button class="tag hover:text-white">Radios</button>
+      </div>
+
+      <div class="flex items-center space-x-2.5 text-sm text-slate-400 pl-4">
+        <i class="fas fa-align-left text-sm animate-pulse text-white"></i>
+        <span class="font-bold text-white">Filters</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="space-y-8 pr-8 right-0 z-20 ">
+    <div class="flex space-x-2 items-center justify-between">
+      <!-- <div
+        class="items-center space-x-4 border-2 border-[#262626] rounded-full h-12 py-3 px-4 hidden md:flex"
+      >
+        <i class="fas fa-cogs text-[#CCCCCC] text-xl"></i>
+        <div>
+          <i class="fas fa-bell text-[#CCCCCC] text-xl"></i>
+        </div>
+      </div> -->
+      <div class="w-24 h-12 relative flex items-center">
+        <div class="w-full absolute right-1 group">
+          <button
+
+            type="button"
+            class="flex items-center w-full px-4 py-3 text-sm font-medium text-white bg-[#1A1A1A] rounded-full hover:bg-[#3E3E3E]"
+          >
+            <i
+              id="dropdownButton"
+              data-dropdown-toggle="dropdown"
+              class="fas fa-sort-down h-6 text-[#686868] text-4xl"
+              aria-hidden="true"
+            ></i>
+
+            <a class="rounded-full w-11 h-11 absolute -right-1 object-cover" title="{{request.user.name|title}}" href="{{request.user.get_absolute_url}}">
+              <img
+                src="{% if request.user.image.thumbnail %}{{request.user.image.thumbnail.url}}{% elif request.user.socialaccount_set.all.0.get_avatar_url %}{{ request.user.socialaccount_set.all.0.get_avatar_url }}{% else %}{% static 'images/album.jpg' %}{% endif %}"
+                alt=""
+                class="rounded-full w-11 h-11 absolute -right-1 object-cover"
+              />
+            </a>
+          </button>
+        </div>
+
+        <div
+          id="dropdown"
+          class="hidden z-10 w-44 absolute right-0 mt-24 origin-top-right bg-[#1A1A1A] divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        >
+          <div class="px-1 py-1">
+            <ul class="py-1" aria-labelledby="dropdownButton">
+              {% if request.user.is_authenticated %}
+              <li
+                class="group flex rounded-md items-center w-full px-2 py-2 text-sm font-semibold tracking-wide text-white cursor-default"
+              >
+                <a href="javascript:;">
+                  <i class="fas fa-bell text-[#CCCCCC] w-5 h-5 mr-2" aria-hidden="true"></i>
+                  Notifications
+                </a>
+              </li>
+              <li
+                class="group flex rounded-md items-center w-full px-2 py-2 text-sm font-semibold tracking-wide text-white cursor-default"
+              >
+                <a href="{% url 'account_change_password' %}">
+                  <i area-hidden="true" class="fas fa-cogs text-[#CCCCCC] w-5 h-5 mr-2"></i>
+                  Settings
+                </a>
+              </li>
+              <li
+                class="group flex rounded-md items-center w-full px-2 py-2 text-sm font-semibold tracking-wide text-white cursor-default"
+              >
+                <a href="{% url 'account_logout' %}">
+                  <i
+                    class="fas fa-sign-out-alt w-5 h-5 mr-2"
+                    aria-hidden="true"
+                  ></i>
+                  Log out
+                </a>
+              </li>
+              {% else %}
+              <li
+                class="group flex rounded-md items-center w-full px-2 py-2 text-sm font-semibold tracking-wide text-white cursor-default"
+              >
+                <a href="{% url 'account_login' %}">
+                  <i
+                    class="fas fa-sign-in-alt w-5 h-5 mr-2"
+                    aria-hidden="true"
+                  ></i>
+                  Sign In
+                </a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
