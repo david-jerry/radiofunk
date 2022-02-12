@@ -4,9 +4,11 @@
  * If you need the full config, get it from here:
  * https://unpkg.com/browse/tailwindcss@latest/stubs/defaultConfig.stub.js
  */
- const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
+  mode : 'jit',
+  darkMode: 'media',
   content: [
     /**
      * HTML. Paths to Django template files that will contain Tailwind CSS classes.
@@ -47,11 +49,32 @@ module.exports = {
       screens: {
         xs: '475px',
         ...defaultTheme.screens
+      },
+      fontFamily: {
+        body: ["'Dongle'", "sans-serif"],
+        sans: ["'Source Serif 4'", "system-ui"],
+      },
+      color: {
+        grey : {
+          900: "#1F1D2B",
+          800: "#252836",
+          700: "#393C49",
+          500: "#ABBBC2",
+          400: "#B7B9D2",
+          100: "#EBE6E9"
+        },
+        yellow: {
+          400: "#FFCE45",
+          700: "#D4AC2B",
+          900: "#9D5C0D"
+        },
+        primary: "#D4AC2B"
+      },
+      boxShadow : {
+        primary : "6px 6px 10px rgba(255,224,51, 0.32)",
+        'inverse-top' : "4px 4px #252B36",
+        'inverse-bottom' : "4px -4px #252B36",
       }
-    },
-    fontFamily: {
-      body: ["'Dongle'", "sans-serif"],
-      sans: ["Source Serif 4", "system-ui"],
     },
   },
   variants: {

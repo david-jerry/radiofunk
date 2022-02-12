@@ -111,7 +111,6 @@ THIRD_PARTY_APPS = [
 
     "tailwind",
     "theme",
-    "django_browser_reload",
 
     # icons
     'heroicons',
@@ -200,8 +199,6 @@ MIDDLEWARE = [
 
     'django.middleware.cache.FetchFromCacheMiddleware',
     'htmlmin.middleware.MarkRequestMiddleware',
-
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 # STATIC

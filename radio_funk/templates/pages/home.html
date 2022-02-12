@@ -1,11 +1,153 @@
-{% extends "base.html" %} {% load static heroicons %} {% block content %}
+{% extends "base.html" %}
+{% load static heroicons %}
+
+{% block content %}
+<div class="relative pt-28 pb-14 min-w-[calc(100%_-_4rem)] md:min-w-[calc(100%_-_6rem)] md:pl-24 pl-16 min-h-full space-y-6 pr-6">
+
+  <h2 class="text-xs text-white/50 font-semibold">HOW TO</h2>
+
+  <section class="flex justify-items-center space-x-4 md:space-x-8 overflow-x-scroll scrollbar-hide py-8 max-h-96 min-h-[96px] w-[calc(100vw_-_8rem)] md:w-[calc(100vw_-_10rem)]">
+    <article class="min-w-[250px] max-w-[250px] max-h-96 overflow-hidden bg-gray-100 rounded-2xl shadow-lg text-gray-900 space-y-6 hover:shadow-xl transition-shadow duration-300 ease-in-out">
+      <div class="aspect-square bg-white justify-center items-center relative">
+        <img src="{% static 'images/card/how-to.svg' %}" alt="how to add a radio station on radiofunk" srcset="" objectFit="contain" class="w-full object-contain object-center h-60 opacity-80 hover:opacity-100 cursor-pointer transition-all duration-300 ease-in-out ">
+        <div class="hover:animate-pulse absolute w-11 h-11 p-1 justify-items-center hover:cursor-pointer hover:shadow-xl top-4 right-4 flex items-center rounded-full bg-yellow-200 transition-shadow duration-300 ease-in-out text-center">
+          <svg class="flex w-11 h-11 object-cover items-center text-yellow-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"></path></svg>
+        </div>
+      </div>
+      <div class="w-full px-6 pb-6 space-y-1 relative">
+        <h2 class="font-black font-sans text-md truncate uppercase"><a href="">How to add a radio station to RadioFunk.</a></h2>
+        <p class="font-normal text-sm leading-4 truncate text-gray-600">Read through the documentation to know how we add a radio station on radiofunk.</p>
+      </div>
+    </article>
+
+    <article class="min-w-[250px] max-w-[250px] max-h-96 overflow-hidden bg-gray-100 rounded-2xl shadow-lg text-gray-900 space-y-6 hover:shadow-xl transition-shadow duration-300 ease-in-out">
+      <div class="relative aspect-square bg-white justify-center items-center ">
+        <img src="{% static 'images/card/upload-podcast.svg' %}" alt="how to add a radio station on radiofunk" srcset="" objectFit="contain" class="object-contain w-full h-60 opacity-80 hover:opacity-100 cursor-pointer transition-all duration-300 ease-in-out ">
+        <div class="hover:animate-pulse absolute w-11 h-11 p-1 justify-items-center hover:cursor-pointer hover:shadow-xl top-4 right-4 flex items-center rounded-full bg-yellow-200 transition-shadow duration-300 ease-in-out text-center">
+          <svg class="flex w-11 h-11 object-cover items-center text-yellow-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"></path></svg>
+        </div>
+      </div>
+      <div class="w-full px-6 pb-6 space-y-1">
+        <h2 class="font-black font-sans text-md truncate uppercase"><a href="">How to upload a podcast.</a></h2>
+        <p class="font-normal text-sm leading-4 truncate text-gray-600">For podcasting we have made ample provisions to ensure uploading your podcast is handled easily.</p>
+      </div>
+    </article>
+
+    <article class="min-w-[250px] max-w-[250px] max-h-96 overflow-hidden bg-gray-100 rounded-2xl shadow-lg text-gray-900 space-y-6 hover:shadow-xl transition-shadow duration-300 ease-in-out">
+      <div class="relative aspect-square bg-white justify-center items-center ">
+        <img src="{% static 'images/card/manage-uploads.svg' %}" alt="how to add a radio station on radiofunk" srcset="" objectFit="contain" class="object-contain w-full h-60 opacity-80 hover:opacity-100 cursor-pointer transition-all duration-300 ease-in-out ">
+      <div class="hover:animate-pulse absolute w-11 h-11 p-1 justify-items-center hover:cursor-pointer hover:shadow-xl top-4 right-4 flex items-center rounded-full bg-yellow-200 transition-shadow duration-300 ease-in-out text-center">
+          <svg class="flex w-11 h-11 object-cover items-center text-yellow-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"></path></svg>
+        </div>
+      </div>
+      <div class="w-full px-6 pb-6 space-y-1">
+        <h2 class="font-black font-sans text-md truncate uppercase"><a href="">How to manage your uploaded podcasts.</a></h2>
+        <p class="font-normal text-sm leading-4 truncate text-gray-600">It is to your benefit you understand how to manage your uploaded content as well as monitor its analytics.</p>
+      </div>
+    </article>
+
+    <article class="min-w-[250px] max-w-[250px] max-h-96 overflow-hidden bg-gray-100 rounded-2xl shadow-xl text-gray-900 space-y-6 hover:shadow-xl transition-shadow duration-300 ease-in-out">
+      <div class="relative aspect-square bg-white justify-center items-center ">
+        <img src="{% static 'images/card/stream-podcasts.svg' %}" alt="how to add a radio station on radiofunk" srcset="" objectFit="contain" class="object-contain w-full h-60 opacity-80 hover:opacity-100 cursor-pointer transition-all duration-300 ease-in-out ">
+      <div class="hover:animate-pulse absolute w-11 h-11 p-1 justify-items-center hover:cursor-pointer hover:shadow-xl top-4 right-4 flex items-center rounded-full bg-yellow-200 transition-shadow duration-300 ease-in-out text-center">
+          <svg class="flex w-11 h-11 object-cover items-center text-yellow-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"></path></svg>
+        </div>
+      </div>
+      <div class="w-full px-6 pb-6 space-y-1">
+        <h2 class="font-black font-sans text-md truncate uppercase"><a href="">How to monetize your podcasts.</a></h2>
+        <p class="font-normal text-sm leading-4 truncate text-gray-600">We all desire to make a living from our unique skills. At radiofunk we have made provisions to help you achieve this goal.</p>
+      </div>
+    </article>
+  </section>
+
+  <h2 class="text-xs text-white/50 font-semibold pt-8">POPULAR STATIONS</h2>
+
+  <section class="flex justify-items-center space-x-4 overflow-x-scroll scrollbar-hide py-8 max-h-96 min-h-[96px] w-[calc(100vw_-_8rem)] md:w-[calc(100vw_-_10rem)]">
+    {% for r in radios %}
+    <article class="min-w-[250px] max-w-[250px] max-h-96 overflow-hidden relative cursor-pointer hover:shadow-md group">
+      <div class="aspect-square">
+        <img width="250" height="250" src="{% if r.image %}{% static 'images/card/radio.webp' %}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="Radio Illustration" class="w-[250px] h-[250px] object-cover object-center rounded-lg shadow-md opacity-80 group-hover:opacity-100 transition-all duration-300 ease-in-out">
+      </div>
+
+      <div class="aspect-square absolute top-6 left-6 bg-yellow-200 rounded-lg">
+        <img width="40" height="40" src="{% if r.image %}{{r.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{r.name|title}} Logo" class="w-[40px] h-[40px] object-cover object-center rounded-lg shadow-xl">
+      </div>
+
+
+
+      <div class="relative px-4 -mt-16  ">
+        <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+          <span class="bg-yellow-200 text-yellow-900 text-xs px-2 inline-block rounded-full  uppercase font-semibold tracking-wide">
+            Hot
+          </span>
+          <div class="flex items-baseline">
+
+            <div class="ml-2 text-gray-600 uppercase text-xs font-semibold tracking-wider">
+              {{r.name|title|truncatewords:3}}
+            </div>
+          </div>
+          <div class="absolute w-11 h-11 p-1 justify-items-center hover:cursor-pointer hover:shadow-xl -top-5 right-4 flex items-center rounded-full bg-yellow-200 transition-shadow duration-300 ease-in-out text-center">
+            <svg class="flex w-11 h-11 object-cover items-center text-yellow-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+          </div>
+        </div>
+      </div>
+
+    </article>
+    {% empty %}
+    <div class="bg-yellow-200 relative text-yellow-900 p-6 text-center rounded-md shadow-md font-black tracking-wide w-full">
+      No Radio Station Has Been Added Yet.
+    </div>
+    {% endfor %}
+  </section>
+
+  <h2 class="text-xs text-white/50 font-semibold pt-8">POPULAR PODCASTS</h2>
+
+  <section class="flex justify-items-center space-x-4 overflow-x-scroll scrollbar-hide py-8 max-h-96 min-h-[96px] w-[calc(100vw_-_8rem)] md:w-[calc(100vw_-_10rem)]">
+    {% for r in podcasts %}
+    <article class="min-w-[250px] max-w-[250px] max-h-96 overflow-hidden relative cursor-pointer hover:shadow-md group">
+      <div class="aspect-square">
+        <img width="250" height="250" src="{% if r.image %}{% static 'images/card/radio.webp' %}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="Radio Illustration" class="w-[250px] h-[250px] object-cover object-center rounded-lg shadow-md opacity-80 group-hover:opacity-100 transition-all duration-300 ease-in-out">
+      </div>
+
+      <div class="aspect-square absolute top-6 left-6 bg-yellow-200 rounded-lg">
+        <img width="40" height="40" src="{% if r.image %}{{r.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{r.name|title}} Logo" class="w-[40px] h-[40px] object-cover object-center rounded-lg shadow-xl">
+      </div>
+
+
+
+      <div class="relative px-4 -mt-16  ">
+        <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+          <span class="bg-yellow-200 text-yellow-900 text-xs px-2 inline-block rounded-full  uppercase font-semibold tracking-wide">
+            Hot
+          </span>
+          <div class="flex items-baseline">
+
+            <div class="ml-2 text-gray-600 uppercase text-xs font-semibold tracking-wider">
+              {{r.name|title|truncatewords:3}}
+            </div>
+          </div>
+          <div class="absolute w-11 h-11 p-1 justify-items-center hover:cursor-pointer hover:shadow-xl -top-5 right-4 flex items-center rounded-full bg-yellow-200 transition-shadow duration-300 ease-in-out text-center">
+            <svg class="flex w-11 h-11 object-cover items-center text-yellow-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+          </div>
+        </div>
+      </div>
+
+    </article>
+    {% empty %}
+    <div class="bg-yellow-200 reltative text-yellow-900 p-6 text-center rounded-md shadow-md font-black tracking-wide w-full">
+      No Padcast Has Been Added Yet.
+    </div>
+    {% endfor %}
+  </section>
+
+
+</div>
+
+{% endblock content %}
 
 <section class="flex justify-items-center overflow-x-scroll scrollbar-hide h-99 max-w-[1210px] pt-8 space-x-4 p-8 pb-8">
   {% for p in podcasts %}
-  <div
-    class="min-w-[260px] min-h-[360px] rounded-[50px] overflow-hidden relative text-white/80 cursor-pointer hover:scale-105 hover:text-white/100 transition duration-200 ease-out group mx-auto"
-    onclick=""
-  >
+  <div class="min-w-[260px] min-h-[360px] rounded-[50px] overflow-hidden relative text-white/80 cursor-pointer hover:scale-105 hover:text-white/100 transition duration-200 ease-out group mx-auto" onclick="">
     <img
       src="{% if p.image %}{{p.image.thumbnail.url}}{% else %}{% static 'images/album.jpg' %}{% endif %}"
       alt="{{p.name|title}} cover photo"
@@ -377,7 +519,7 @@
       >
         <div class="flex items-center mr-8">
           <img
-            src="{% if r.image %}{{r.image.thumbnail.url}}{% else %}{% static 'images/album.jpg' %}{% endif %}"
+            src="{% if not r.image %}{{r.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}"
             alt=""
             height="48"
             width="48"
@@ -853,4 +995,3 @@
   </div>
 </section>
 
-{% endblock content %}

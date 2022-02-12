@@ -23,6 +23,16 @@ urlpatterns = [
     path(
         "discovery/", TemplateView.as_view(template_name="pages/about.html"), name="about"
     ),
+    path(
+        "podcasts/", TemplateView.as_view(template_name="pages/about.html"), name="podcasts"
+    ),
+    path(
+        "history/", TemplateView.as_view(template_name="pages/about.html"), name="history"
+    ),
+    path(
+        "events/", TemplateView.as_view(template_name="pages/about.html"), name="events"
+    ),
+
     # Django Admin, use {% url 'admin:index' %}
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path(settings.ADMIN_URL, admin.site.urls),
@@ -39,7 +49,6 @@ urlpatterns = [
 if settings.DEBUG:
     # Static file serving when using Gunicorn + Uvicorn for local web socket development
     urlpatterns += staticfiles_urlpatterns()
-    urlpatterns += path("__reload__/", include("django_browser_reload.urls")),
 
 # API URLS
 urlpatterns += [
@@ -96,7 +105,7 @@ if settings.DEBUG:
     if "debug_toolbar" in settings.INSTALLED_APPS:
         import debug_toolbar
 
-        urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
+        urlpatterns = [path("__debug__/", include(debug_toolbar.urls)),] + urlpatterns
 
 
 admin.site.site_header = "Dashboard - Radio Funk"

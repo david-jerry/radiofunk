@@ -57,7 +57,7 @@ class Tunes(TimeStampedModel):
 
     name = CharField(max_length=255, blank=False, null=True, unique=True)
     description = HTMLField('Tune Description')
-    image = StdImageField(upload_to="tune/album_art", blank=True, variations={'thumbnail': {"width": 260, "height": 360, "crop": True}})
+    image = StdImageField(upload_to="tune/album_art", blank=True, variations={'thumbnail': {"width": 250, "height": 250, "crop": True}})
     mp3url = URLField(blank=False)
     country = ForeignKey(CountryField, on_delete=CASCADE, default="US")
     active = BooleanField(default=False)

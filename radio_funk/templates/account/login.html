@@ -8,7 +8,7 @@
 
 {% block inner %}
 <div>
-  <img class="mx-auto h-12 w-auto animate-bounce" src="{% static 'images/favicon.png' %}" alt="Workflow">
+  <img class="mx-auto h-12 w-auto animate-bounce" src="{% static 'images/favicons.svg' %}" alt="Workflow">
   <h2 class="mt-6 text-center text-3xl font-extrabold text-white">Sign in to your account</h2>
   <p class="mt-2 text-center text-sm text-slate-400">
     Or
@@ -53,10 +53,10 @@
   {% endif %}
 
   <div>
-    <button type="submit" class="primaryAction group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+    <button type="submit" class="primaryAction group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-bold rounded-md text-yellow-900 bg-yellow-400 hover:bg-yellow-300 focus:outline-none focus:ring-0 focus:shadow-primary hover:shadow-primary">
       <span class="absolute left-0 inset-y-0 flex items-center pl-3">
         <!-- Heroicon name: solid/lock-closed -->
-        <svg class="h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <svg class="h-5 w-5 text-yellow-900" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
         </svg>
       </span>
@@ -69,16 +69,16 @@
 
 {% if socialaccount_providers %}
   <div class="socialaccount_ballot">
-    <div class="login-or text-center text-slate-500 font-bold pb-4">{% translate "or" %}</div>
-    <ul class="socialaccount_providers flex items-center justify-between">
-      <a href="{% provider_login_url 'google' %}" class="flex items-center space-x-3 px-4 py-2 rounded bg-[#DB4437]">
-        <i class="fab fa-google text-black"></i>
-        <span class="text-black">Google</span>
+    <div class="login-or text-center text-slate-500 font-bold pb-8">{% translate "or" %}</div>
+    <ul class="socialaccount_providers flex items-center text-center font-bold justify-between">
+      <a href="{% provider_login_url 'google' %}" class="flex items-center content-center space-x-3 px-4 py-2 min-w-[47%] rounded bg-[#DB4437] hover:bg-[#993026] text-center hover:shadow-lg text-white">
+        <i class="fab fa-google"></i>
+        <span>Google</span>
       </a>
 
-      <a href="{% provider_login_url 'facebook' %}" class="flex items-center space-x-3 px-4 py-2 rounded bg-[#6abbed]">
-        <i class="fab fa-facebook text-black"></i>
-        <span class="text-black">Facebook</span>
+      <a href="{% provider_login_url 'facebook' %}" class="flex items-center content-center space-x-3 px-4 py-2 min-w-[47%] rounded bg-[#3b5998] hover:bg-[#2f4677] text-right hover:shadow-lg text-white">
+        <span class="ml-auto">Facebook</span>
+        <i class="fab fa-facebook"></i>
       </a>
     </ul>
   </div>
