@@ -38,6 +38,7 @@
 
     {{ form.media }}
 
+    <link rel="preload" href="{% static 'css/project.css' %}" as="style" />
     <link rel="stylesheet" href="{% static 'css/project.css' %}" />
 
     {% tailwind_preload_css %}

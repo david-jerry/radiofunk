@@ -45,6 +45,7 @@
     {% endblock javascript %} {{ form.media }} {% tailwind_preload_css %}
     {% tailwind_css %}
 
+    <link rel="preload" href="{% static 'css/project.css' %}" as="style" />
     <link rel="stylesheet" href="{% static 'css/project.css' %}" />
 
   </head>
