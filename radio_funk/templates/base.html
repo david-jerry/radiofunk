@@ -56,18 +56,18 @@
       {% include "snippets/search.html" %}
       {% block content %} {% endblock content %}
 
-      <div class="flex items-center space-x-6 min-h-[64px] min-w-[calc(100%_-_4rem)] md:min-w-[calc(100%_-_6rem)] md:left-[6rem] left-[4rem] bottom-0 z-50 fixed bg-gray-900 border-t-2 border-t-yellow-400 py-1 px-3">
-        <div class="w-[60px] min-h-[60px] max-h-[60px] relative justify-items-center hover:cursor-pointer hover:shadow-xl flex items-center p-1">
+      <div id="musicList" class="flex items-center space-x-6 min-h-[64px] min-w-[calc(100%_-_4rem)] md:min-w-[calc(100%_-_6rem)] md:left-[6rem] left-[4rem] bottom-0 z-[60] fixed bg-gray-900 border-t-2 border-t-yellow-400 py-1 px-3">
+        <div class="img-area w-[60px] min-h-[60px] max-h-[60px] relative justify-items-center hover:cursor-pointer hover:shadow-xl flex items-center p-1">
           <img src="{% static 'images/card/manage-uploads.svg' %}" alt="" class="flex object-cover object-center w-[60px] h-[60px]">
         </div>
 
-        <div class="playIcon reltaive w-[34px] h-[34px] p-1 justify-items-center hover:cursor-pointer hover:shadow-xl flex items-center rounded-full bg-yellow-200 transition-shadow duration-300 ease-in-out text-center">
+        <div class="play-pause hover:scale-110 reltaive w-[34px] h-[34px] p-1 justify-items-center hover:cursor-pointer hover:shadow-xl flex items-center rounded-full bg-yellow-200 transition-shadow duration-300 ease-in-out text-center">
           <svg class="flex w-[34px] h-[34px] object-cover items-center text-yellow-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
         </div>
 
-        <div class="reltaive min-w-[30%] max-w-[30%]">
-          <h3 class="text-yellow-400 font-black tracking-wide truncate text-sm">Name</h3>
-          <p class="text-gray-400 font-normal truncate text-xs">Listening</p>
+        <div class="song-details reltaive min-w-[30%] max-w-[30%]">
+          <h3 class="name text-yellow-400 font-black tracking-wide truncate text-sm">Name</h3>
+          <p class="artist text-gray-400 font-normal truncate text-xs animate-pulse">Listening</p>
         </div>
 
         <div class="reltaive w-[34px] h-[34px] p-1 justify-items-center hover:cursor-pointer hover:shadow-xl flex items-center rounded-full bg-yellow-200 transition-shadow duration-300 ease-in-out text-center">
@@ -89,16 +89,16 @@
         </div>
 
         <div class="reltaive w-[34px] h-[34px] p-1 justify-items-center hover:cursor-pointer hover:shadow-xl flex items-center rounded-full transition-shadow duration-300 ease-in-out text-center">
-          <svg id="more-music" class="flex w-[34px] h-[34px] object-cover items-center text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path></svg>
+          <svg id="moreMusic" class="flex w-[34px] h-[34px] object-cover items-center text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path></svg>
         </div>
 
-        <div class="music-list absolute bg-gray-900 min-w-[384px] max-w-sm min-h-min max-h-96 right-3 bottom-[77px] pointer-events-none py-3 px-4 rounded-lg transition-all duration-500 ease-out">
+        <div id="list" class="hidden music-list absolute bg-gray-900 min-w-[384px] max-w-sm min-h-min max-h-96 right-3 bottom-[77px] py-3 px-4 rounded-lg transition-all duration-500 ease-out z-50 overflow-y-scroll scrollbar-hide">
           <div class="header flex items-center relative justify-between">
             <div class="row flex items-center space-x-6">
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
               <span>Listening List</span>
             </div>
-            <svg id="close" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+            <svg id="close" class="w-6 h-6 cursor-pointer hover:shadow-xl" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
           </div>
           <ul>
             <!-- here li list are coming from js -->
@@ -130,8 +130,81 @@
         var audio = document.getElementById('audio');
         audio.src = div;
         audio.play();
-      }
+      };
+
+      let radioStations = [
+      {% for r in all_radios %}
+      {
+          name: "{{r.name|title}}",
+          img: "{{r.image.thumbnail.url}}",
+          src: "{{r.mp3url}}"
+      }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+      ]
     </script>
+    <script async src="{% static 'js/project.js' %}"></script>
 
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- {% for r in all_radios %}
+            <li id="audioFiles" class="z-[60] relative flex items-center justify-between space-x-15 cursor-pointer hover:bg-white/10 py-2 px-4 rounded-lg group transition ease-out">
+              <div class="flex items-center">
+                <img
+                  src="{% if r.image %}{{r.image.thumbnail.url}}{% else %}{% static 'images/album.jpg' %}{% endif %}"
+                  alt=""
+                  height="48"
+                  width="48"
+                  objectFit="contain"
+                  class="rounded-xl h-12 w-12 object-cover mr-3"
+                />
+                <div>
+                  <h4 class="text-white text-sm font-semibold truncate max-w-[120px]">
+                    {{r.name|title}}
+                  </h4>
+                  <p
+                    class="text-[rgb(179,179,179)] text-[13px] font-semibold group-hover:text-white"
+                  >
+                    {{r.description|safe|truncatechars:20}}
+                  </p>
+                </div>
+              </div>
+
+              <div class="md:ml-auto flex items-center space-x-2">
+                <div
+                  class="flex items-center rounded-full border-2 border-[#262626] w-[85px] h-10 relative cursor-pointer group-hover:border-white/40"
+                >
+                  <div class="text-[12px] ml-3 icon text-[#868686] hover:text-red-600 h-6 w-6">
+                    {% heroicon 'heart' style='solid' %}
+                  </div>
+                  <a href="javascript:;" data-value="{{r.mp3url}}" onclick="audioPlay(this.getAttribute('data-value'))"
+                    class="h-6 w-6 rounded-full border text-yellow-900 border-yellow-200 flex items-center justify-center absolute -right-[-10px] bg-[#dcdc21] icon hover:scale-110"
+                  >
+                    {% heroicon 'play' style='solid' %}
+                  </a>
+                </div>
+              </div>
+            </li>
+            {% endfor %}-->
