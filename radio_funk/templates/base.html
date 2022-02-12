@@ -38,8 +38,11 @@
 
     {{ form.media }}
 
+    <link rel="stylesheet" href="{% static 'css/project.css' %}" />
+
     {% tailwind_preload_css %}
     {% tailwind_css %}
+
   </head>
 
   <body class="min-h-screen min-w-[100vw] max-w-[100vw] flex font-body transition-all duration-200 ease-out">
