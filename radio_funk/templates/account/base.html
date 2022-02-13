@@ -47,6 +47,11 @@
 
     <link rel="preload" href="{% static 'css/project.css' %}" as="style" />
     <link rel="stylesheet" href="{% static 'css/project.css' %}" />
+    <link href="{% static 'css/iziToast.min.css' %}" rel="preload" as="style">
+    <link href="{% static 'css/iziToast.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <script src="{% static 'js/iziToast.min.js' %}" crossorigin="anonymous"></script>
 
   </head>
 
@@ -63,4 +68,29 @@
       </div>
     </div>
   </body>
+
+  {% for message in messages %}
+  <script type=text/javascript>
+    iziToast.settings({
+      timeout: 9000,
+      position: 'topLeft',
+      drag: true,
+      pauseOnHover: true,
+      transitionIn: 'flipInX',
+      transitionOut: 'flipOutX',
+      transitionInMobile: 'fadeInUp',
+      transitionOutMobile: 'fadeOutDown',
+      close: true,
+      progressBar: true,
+      progressBarEasing: 'ease',
+      icon: 'icone-{{ message.tags }}',
+    });
+    iziToast.{{ message.tags }}({
+      id: '{{ message.tags }}',
+      title: '{{ message.tags|capfirst }}',
+      message: '{{ message }}',
+    });
+  </script>
+  {% endfor %}
+
 </html>
