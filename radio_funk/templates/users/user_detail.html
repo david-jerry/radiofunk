@@ -1,9 +1,38 @@
-{% extends "base.html" %}
+{% extends "users/base.html" %}
 {% load static %}
 
 {% block title %}User: {{ object.username }}{% endblock %}
 
 {% block inner %}
+<h2 class="font-bolder text-sm text-gray-400">Welcome Back, {{user.username|title}}</h2>
+<div class="flex items-center">
+  <div class="min-w-[324px] max-w-sm bg-gray-900 min-h-min rounded-xl shadow-xl">
+    <div class="text-center bg-gray-700 rounded-t-xl py-8  shadow-xl">
+      {% if request.user.image or request.user.socialaccount_set.all.0.get_avatar_url %}
+      <img class="rounded-full w-16 h-16 object-cover" src="{% if request.user.image %}{{request.user.image.thumbnail.url}}{% elif request.user.socialaccount_set.all.0.get_avatar_url %}request.user.socialaccount_set.all.0.get_avatar_url{% endif %}" class="fill-current w-10 h-10" alt="{{request.user.username|title}} Passport"/>
+      {% else %}
+      <button type="button" class="w-24 h-24 rounded-full bg-gray-900 border-4 border-yellow-400 overflow-hidden">
+        <svg class='w-24 h-24 rounded-full object-contain hover:scale-110 hover:cursor-pointer' fill='currentColor' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z' clip-rule='evenodd'></path></svg>
+      </button>
+      {% endif %}
+    </div>
+    <div class="bg-gray-900 space-y-6 py-4 px-6">
+      <div class="flex items-center justify-between">
+        <h3 class="text-gray-400 font-normal text-sm">Name:</h3><span class="font-black text-yellow-200">{% if user.name %}{{user.name|title}}{% else %}{{user.username|title}}{% endif %}</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <h3 class="text-gray-400 font-normal text-sm">Email:</h3><span class="font-black text-yellow-200">{{user.email}}</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <h3 class="text-gray-400 font-normal text-sm">Joined:</h3><span class="font-black text-yellow-200">{{user.date_joined|date:"M Y"}}</span>
+      </div>
+    </div>
+    <a href="{% url 'account_email' %}" class="block bg-yellow-400 py-4 px-6 rounded-b-xl overflow-hidden text-center hover:bg-yellow-200 focus:bg-yellow-200 text-center text-yellow-900 uppercase font-black transition-all duration-500 ease-in-out">
+      Update Your Email
+    </a>
+  </div>
+</div>
+{% endblock inner %}
 <div class="container">
 
   <div class="row">
@@ -31,4 +60,3 @@
 {% endif %}
 
 </div>
-{% endblock inner %}
