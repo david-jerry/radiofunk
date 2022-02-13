@@ -13,6 +13,12 @@
 
     {% block css %}
 
+    {% if messages %}
+    <!-- <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">    <link
+    href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Public+Sans:wght@300;400&family=Paytone+One&Abril+Fatface&family=Architects+Daughter&family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500&display=swap"
+    rel="stylesheet"> -->
+    {% endif %}
+
     <!-- Your stuff: Third-party CSS libraries go here -->
     <!-- This file stores project-specific CSS -->
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.3.3/dist/flowbite.min.css" />
@@ -32,6 +38,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script async type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script async nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <link href="{% static 'css/icons.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- place project specific Javascript in this file -->
 
     {% endblock javascript %}
@@ -40,15 +47,13 @@
 
     <link rel="preload" href="{% static 'css/project.css' %}" as="style" />
     <link rel="stylesheet" href="{% static 'css/project.css' %}" />
-    <link href="{% static 'css/iziToast.min.css' %}" rel="preload" as="style">
-    <link href="{% static 'css/iziToast.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/icons.min.css' %}" rel="stylesheet" type="text/css" />
 
-    <script src="{% static 'js/iziToast.min.js' %}" crossorigin="anonymous"></script>
 
     {% tailwind_preload_css %}
     {% tailwind_css %}
 
+    <link href="{% static 'css/iziToast.min.css' %}" rel="preload" as="style">
+    <link href="{% static 'css/iziToast.min.css' %}" rel="stylesheet">
   </head>
 
   <body class="min-h-screen min-w-[100vw] max-w-[100vw] flex font-body transition-all duration-200 ease-out">
@@ -129,6 +134,41 @@
     {% endcomment %}
     {% endblock inline_javascript %}
 
+    {% if messages %}
+    <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <!-- <script crossorigin="anonymous" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>    Your stuff: Third-party javascript libraries go here -->
+    <script src="{% static 'js/iziToast.min.js' %}"></script>
+    {% endif %}
+
+    {% for message in messages %}
+    <script type=text/javascript>
+      iziToast.settings({
+        timeout: 5000,
+        position: 'topRight',
+        drag: true,
+        pauseOnHover: true,
+        transitionIn: 'fadeInUp',
+        transitionOut: 'fadeOutDown',
+        transitionInMobile: 'fadeInUp',
+        transitionOutMobile: 'fadeOutDown',
+        close: true,
+        displayMode: "replace",
+        progressBar: true,
+        progressBarEasing: 'ease',
+        color: '{% if message.tags == "alert-success" %}green{% elif message.tags == "alert-warning" %}yellow{% elif message.tags == "alert-info" %}blue{% else %}red{% endif %}'
+      });
+      //iziToast.{{ message.tags }}({
+      iziToast.show({
+          balloon: true,
+          layout: 2,
+          id: '{{ message.tags }}',
+          title: '{{ message.tags|capfirst }}',
+          message: '{{ message }}',
+          icon: '{% if message.tags == "alert-success" %}fa-solid fa-thumbs-up{% elif message.tags == "alert-warning" %}fa-solid fa-triangle-exclamation{elif message.tags == "alert-info"}fa-solid fa-circle-info{% else %}fa-solid fa-bug{% endif %}',
+      });
+    </script>
+    {% endfor %}
 
     <script>
       function audioPlay(div) {
@@ -149,30 +189,6 @@
       ]
     </script>
     <script async src="{% static 'js/project.js' %}"></script>
-
-    {% for message in messages %}
-    <script type=text/javascript>
-      iziToast.settings({
-        timeout: 9000,
-        position: 'topLeft',
-        drag: true,
-        pauseOnHover: true,
-        transitionIn: 'flipInX',
-        transitionOut: 'flipOutX',
-        transitionInMobile: 'fadeInUp',
-        transitionOutMobile: 'fadeOutDown',
-        close: true,
-        progressBar: true,
-        progressBarEasing: 'ease',
-        icon: 'icone-{{ message.tags }}',
-      });
-      iziToast.{{ message.tags }}({
-        id: '{{ message.tags }}',
-        title: '{{ message.tags|capfirst }}',
-        message: '{{ message }}',
-      });
-    </script>
-    {% endfor %}
   </body>
 </html>
 
