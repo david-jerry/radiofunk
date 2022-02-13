@@ -109,7 +109,19 @@
     var marker = new mapboxgl.Marker()
         .setLngLat([{{ r.long }}, {{ r.lat }}])
         .setPopup(new mapboxgl.Popup({offset:30})
-        .setHTML("<a href='javascript:;' onclick='audioPlay(this)' class='flex items-center justify-between space-x-15 cursor-default hover:bg-white/10 py-2 px-4 rounded-lg group transition ease-out'><div class='flex items-center'><img src='{% if r.image %}{{r.image.thumbnail.url}}{% else %}{% static 'images/album.jpg' %}{% endif %}' alt='' height='48' width='48' objectFit='contain' class='rounded-xl h-12 w-12 object-cover mr-3' /><div><h2 class='font-bold text-black'>{{r.name|upper}}</h2><p class='text-bold text-black font-serif'>{{ r.address }}</p></div></div></a>"))
+        .setHTML(`
+        <div data-index='{{r.id}}' onclick='mapPlay(this)' class='flex max-w-full items-center justify-between space-x-15 cursor-default hover:bg-white/10 py-2 px-4 rounded-lg group transition ease-out'>
+          <div class='flex items-center'>
+            <img src='{% if r.image %}{{r.image.thumbnail.url}}{% else %}{% static 'images/album.jpg' %}{% endif %}' alt='' height='48' width='48' objectFit='contain' class='rounded-xl h-12 w-12 object-cover mr-3' />
+            <div>
+              <h2 class='font-bold text-black'>{{r.name|upper}}</h2>
+              <p class='text-bold text-black truncate'>
+                {{ r.address|truncatewords:4 }}
+              </p>
+            </div>
+          </div>
+        </div>
+        `))
         .addTo(map);
     {% endfor %}
   }

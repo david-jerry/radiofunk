@@ -135,6 +135,7 @@
       let radioStations = [
       {% for r in all_radios %}
       {
+          index: "{{r.id}}",
           name: "{{r.name|title}}",
           img: "{{r.image.thumbnail.url}}",
           src: "{{r.mp3url}}"

@@ -1353,6 +1353,10 @@ body::-webkit-scrollbar {
   max-width: 230px;
 }
 
+.max-w-full {
+  max-width: 100%;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
