@@ -222,6 +222,7 @@ for (let i = 0; i < radioStations.length; i++) {
                     </div>
                   </div>
                 </div>
+                <audio class="${radioStations[i].src}" src="${radioStations[i].src}"></audio>
               </li>`;
   ulTag.insertAdjacentHTML("beforeend", liTag); //inserting the li inside ul tag
 
