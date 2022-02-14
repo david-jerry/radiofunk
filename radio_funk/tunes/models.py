@@ -37,6 +37,11 @@ class Gift(TimeStampedModel):
     def __str__(self):
         return self.name.title()
 
+    class Meta:
+        managed = True
+        verbose_name = "Gift Item"
+        verbose_name_plural = "Gift Items"
+        ordering = ["-created"]
 
 class Genre(TimeStampedModel):
     name = CharField(max_length=255, blank=False, null=True, unique=True)
@@ -45,6 +50,12 @@ class Genre(TimeStampedModel):
 
     def __str__(self):
         return self.name.title()
+
+    class Meta:
+        managed = True
+        verbose_name = "Podcast & Radio Genre"
+        verbose_name_plural = "Podcast & Radio Genres"
+        ordering = ["-created"]
 
 class Tunes(TimeStampedModel):
     PODCAST = "Podcast"
@@ -74,6 +85,13 @@ class Tunes(TimeStampedModel):
     def __str__(self):
         return self.name.title()
 
+    class Meta:
+        managed = True
+        verbose_name = "Podcast & Radio Upload"
+        verbose_name_plural = "Podcast & Radio Uploads"
+        ordering = ["-created"]
+
+
     def save(self, *args, **kwargs):
         g = geocoder.mapbox(self.address, key=mapbox_access_token)
         g = g.latlng  # returns => [lat, long]
@@ -88,3 +106,9 @@ class PodcastGift(TimeStampedModel):
 
     def __str__(self):
         return f"{self.podcase.name.title()} Gifts"
+
+    class Meta:
+        managed = True
+        verbose_name = "Podcast Gift"
+        verbose_name_plural = "Podcast Gifts"
+        ordering = ["-created"]

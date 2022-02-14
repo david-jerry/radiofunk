@@ -37,6 +37,7 @@ urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path(settings.ADMIN_URL, admin.site.urls),
     path(settings.ADMIN_DOC_URL, include("django.contrib.admindocs.urls")),
+
     # User management
     path("users/", include("radio_funk.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
