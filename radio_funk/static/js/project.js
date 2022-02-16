@@ -217,8 +217,8 @@ for (let i = 0; i <= radioStations.length; i++) {
 
   ulTag.insertAdjacentHTML("beforeend", liTag); //inserting the li inside ul tag
 
-  let liAudioDuartionTag = ulTag.querySelector(`#${i}`);
-  let liAudioTag = ulTag.querySelector(`.${i}`);
+  let liAudioDuartionTag = ulTag.querySelector(`#radio${i}`);
+  let liAudioTag = ulTag.querySelector(`.radio${i}`);
   liAudioTag.addEventListener("loadeddata", ()=>{
     let duration = liAudioTag.duration;
     let totalMin = Math.floor(duration / 60);
@@ -242,8 +242,8 @@ function playingSong(){
     if(allLiTag[j].classList.contains("text-yellow-400")){
       allLiTag[j].classList.remove("text-yellow-400");
       let adDuration = audioTag.getAttribute("t-duration");
-      // audioTag.innerText = adDuration;
-      audioTag.innerText = "Paused";
+      audioTag.innerText = adDuration;
+      //audioTag.innerText = "Paused";
     }
 
     //if the li tag index is equal to the musicIndex then add playing class in it
@@ -266,42 +266,45 @@ function clicked(element){
 }
 
 
-function playingSong(){
-  const allLiTag = ulTag.querySelectorAll("li");
+// function playingMapSong(){
+//   const allLiTag = ulTag.querySelectorAll("li");
 
 
-  for (let j = 0; j < allLiTag.length; j++) {
-    let audioTag = allLiTag[j].querySelector(".audio-duration");
+//   for (let j = 0; j < allLiTag.length; j++) {
+//     let audioTag = allLiTag[j].querySelector(".audio-duration");
 
-    if(allLiTag[j].classList.contains("text-yellow-400")){
-      allLiTag[j].classList.remove("text-yellow-400");
-      let adDuration = audioTag.getAttribute("t-duration");
-      // audioTag.innerText = adDuration;
-      audioTag.innerText = "Paused";
-    }
+//     if(allLiTag[j].classList.contains("text-yellow-400")){
+//       allLiTag[j].classList.remove("text-yellow-400");
+//       let adDuration = audioTag.getAttribute("t-duration");
+//       // audioTag.innerText = adDuration;
+//       audioTag.innerText = "Paused";
+//     }
 
-    //if the li tag index is equal to the musicIndex then add playing class in it
-    if(allLiTag[j].getAttribute("li-index") == musicIndex){
-      allLiTag[j].classList.add("text-yellow-400");
-      audioTag.innerText = "Playing";
-    }
+//     //if the li tag index is equal to the musicIndex then add playing class in it
+//     if(allLiTag[j].getAttribute("li-index") == musicIndex){
+//       allLiTag[j].classList.add("text-yellow-400");
+//       audioTag.innerText = "Playing";
+//     }
 
-    allLiTag[j].setAttribute("onclick", "clicked(this)");
-  }
-}
+//     allLiTag[j].setAttribute("onclick", "clicked(this)");
+//   }
+// }
+
+
+
 // any radio button clicked function
 function tapped(element){
   let getIndex = element.getAttribute("data-index");
-  element.classList.toggle("playin")
+  element.classList.toggle("playing")
   radioIndex = getIndex; //updating current song index with clicked li index
-  if (element.classList.contains("playin")) {
+  if (element.classList.contains("playing")) {
     loadMusic(radioIndex);
     playMusic();
-    element.classList.add("animate-spin")
+    element.classList.add("animate-pulse")
     element.innerHTML = pauseSVG;
   } else {
     pauseMusic();
-    element.classList.remove("animate-spin")
+    element.classList.remove("animate-pulse")
     element.innerHTML = playSVG;
   }
 }
