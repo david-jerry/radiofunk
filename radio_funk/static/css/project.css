@@ -1031,6 +1031,10 @@ body::-webkit-scrollbar {
   margin-right: 0.5rem;
 }
 
+.mt-\[48px\] {
+  margin-top: 48px;
+}
+
 .block {
   display: block;
 }
