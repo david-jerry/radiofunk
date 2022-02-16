@@ -1,19 +1,21 @@
 /* Project specific Javascript goes here. */
 console.log(radioStations);
 
-const wrapper = document.querySelector("#musicList"),
-musicImg = wrapper.querySelector(".img-area img"),
-musicName = wrapper.querySelector(".song-details .name"),
-musicDefine = wrapper.querySelector(".song-details .artist"),
-playPauseBtn = wrapper.querySelector(".play-pause"),
-prevBtn = wrapper.querySelector("#prev"),
-nextBtn = wrapper.querySelector("#next"),
-mainAudio = wrapper.querySelector("#main-audio"),
-progressArea = wrapper.querySelector(".progress-area"),
-progressBar = progressArea.querySelector(".progress-bar"),
-musicList = wrapper.querySelector("#list"),
-moreMusicBtn = wrapper.querySelector("#moreMusic"),
+const radioCard = document.querySelector("#radioCard");
+const wrapper = document.querySelector("#musicList");
+musicImg = wrapper.querySelector(".img-area img");
+musicName = wrapper.querySelector(".song-details .name");
+musicDefine = wrapper.querySelector(".song-details .artist");
+playPauseBtn = wrapper.querySelector(".play-pause");
+prevBtn = wrapper.querySelector("#prev");
+nextBtn = wrapper.querySelector("#next");
+mainAudio = wrapper.querySelector("#main-audio");
+progressArea = wrapper.querySelector(".progress-area");
+progressBar = progressArea.querySelector(".progress-bar");
+musicList = wrapper.querySelector("#list");
+moreMusicBtn = wrapper.querySelector("#moreMusic");
 closemoreMusic = wrapper.querySelector("#close");
+radioSVG = radioCard.querySelectorAll("svg")
 
 pauseSVG = "<path fill-rule='evenodd' d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z' clip-rule='evenodd'></path>"
 playSVG = "<path fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z' clip-rule='evenodd'></path>"
@@ -239,22 +241,25 @@ function playingSong(){
   for (let j = 0; j < allLiTag.length; j++) {
     let audioTag = allLiTag[j].querySelector(".audio-duration");
 
-    if(allLiTag[j].classList.contains("text-yellow-400")){
-      allLiTag[j].classList.remove("text-yellow-400");
+    if(allLiTag[j].classList.contains("playing")){
+      allLiTag[j].classList.remove("playing");
       let adDuration = audioTag.getAttribute("t-duration");
+      audioTag.classList.remove("text-green-400")
       audioTag.innerText = adDuration;
       //audioTag.innerText = "Paused";
     }
 
     //if the li tag index is equal to the musicIndex then add playing class in it
     if(allLiTag[j].getAttribute("li-index") == musicIndex){
-      allLiTag[j].classList.add("text-yellow-400");
+      allLiTag[j].classList.add("playing");
+      audioTag.classList.add("text-green-400")
       audioTag.innerText = "Playing";
     }
 
     allLiTag[j].setAttribute("onclick", "clicked(this)");
   }
 }
+
 
 //particular li clicked function
 function clicked(element){
@@ -266,33 +271,6 @@ function clicked(element){
 }
 
 
-// function playingMapSong(){
-//   const allLiTag = ulTag.querySelectorAll("li");
-
-
-//   for (let j = 0; j < allLiTag.length; j++) {
-//     let audioTag = allLiTag[j].querySelector(".audio-duration");
-
-//     if(allLiTag[j].classList.contains("text-yellow-400")){
-//       allLiTag[j].classList.remove("text-yellow-400");
-//       let adDuration = audioTag.getAttribute("t-duration");
-//       // audioTag.innerText = adDuration;
-//       audioTag.innerText = "Paused";
-//     }
-
-//     //if the li tag index is equal to the musicIndex then add playing class in it
-//     if(allLiTag[j].getAttribute("li-index") == musicIndex){
-//       allLiTag[j].classList.add("text-yellow-400");
-//       audioTag.innerText = "Playing";
-//     }
-
-//     allLiTag[j].setAttribute("onclick", "clicked(this)");
-//   }
-// }
-
-
-
-// any radio button clicked function
 function tapped(element){
   let getIndex = element.getAttribute("data-index");
   element.classList.toggle("playing")
@@ -300,12 +278,14 @@ function tapped(element){
   if (element.classList.contains("playing")) {
     loadMusic(radioIndex);
     playMusic();
-    element.classList.add("animate-pulse")
-    element.innerHTML = pauseSVG;
+
+    // element.classList.add("animate-pulse")
+    // element.innerHTML = pauseSVG;
   } else {
     pauseMusic();
-    element.classList.remove("animate-pulse")
-    element.innerHTML = playSVG;
+
+    // element.classList.remove("animate-pulse")
+    // element.innerHTML = playSVG;
   }
 }
 
