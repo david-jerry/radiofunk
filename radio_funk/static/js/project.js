@@ -1,24 +1,24 @@
 /* Project specific Javascript goes here. */
 console.log(radioStations);
 
-const radioCard = document.querySelector("#radioCard");
-const wrapper = document.querySelector("#musicList");
-musicImg = wrapper.querySelector(".img-area img");
-musicName = wrapper.querySelector(".song-details .name");
-musicDefine = wrapper.querySelector(".song-details .artist");
-playPauseBtn = wrapper.querySelector(".play-pause");
-prevBtn = wrapper.querySelector("#prev");
-nextBtn = wrapper.querySelector("#next");
-mainAudio = wrapper.querySelector("#main-audio");
-progressArea = wrapper.querySelector(".progress-area");
-progressBar = progressArea.querySelector(".progress-bar");
-musicList = wrapper.querySelector("#list");
-moreMusicBtn = wrapper.querySelector("#moreMusic");
-closemoreMusic = wrapper.querySelector("#close");
-radioSVG = radioCard.querySelectorAll("svg")
+let radioCard = document.querySelector("#radioCard");
 
-pauseSVG = "<path fill-rule='evenodd' d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z' clip-rule='evenodd'></path>"
-playSVG = "<path fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z' clip-rule='evenodd'></path>"
+const wrapper = document.querySelector("#musicList"),
+musicImg = wrapper.querySelector(".img-area img"),
+musicName = wrapper.querySelector(".song-details .name"),
+musicDefine = wrapper.querySelector(".song-details .artist"),
+playPauseBtn = wrapper.querySelector(".play-pause"),
+prevBtn = wrapper.querySelector("#prev"),
+nextBtn = wrapper.querySelector("#next"),
+mainAudio = wrapper.querySelector("#main-audio"),
+progressArea = wrapper.querySelector(".progress-area"),
+progressBar = progressArea.querySelector(".progress-bar"),
+musicList = wrapper.querySelector("#list"),
+moreMusicBtn = wrapper.querySelector("#moreMusic"),
+closemoreMusic = wrapper.querySelector("#close");
+
+pauseSVG = "<path fill-rule='evenodd' d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z' clip-rule='evenodd'></path>";
+playSVG = "<path fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z' clip-rule='evenodd'></path>";
 
 let musicIndex = Math.floor((Math.random() * radioStations.length) + 1);
 isMusicPaused = true;
@@ -33,7 +33,7 @@ function loadMusic(indexNumb){
   musicDefine.innerText = radioStations[indexNumb - 1].artist;
   musicImg.src = radioStations[indexNumb - 1].img;
   mainAudio.src = radioStations[indexNumb - 1].src;
-}
+};
 
 //play music function
 function playMusic(){
@@ -43,7 +43,7 @@ function playMusic(){
   musicDefine.innerText = "Playing"
   musicDefine.classList.add("text-green-400")
   mainAudio.play();
-}
+};
 
 //pause music function
 function pauseMusic(){
@@ -52,7 +52,7 @@ function pauseMusic(){
   musicDefine.innerText = "Paused"
   musicDefine.classList.add("text-red-400")
   mainAudio.pause();
-}
+};
 
 //prev music function
 function prevMusic(){
@@ -62,7 +62,7 @@ function prevMusic(){
   loadMusic(musicIndex);
   playMusic();
   playingSong();
-}
+};
 
 //next music function
 function nextMusic(){
@@ -72,7 +72,7 @@ function nextMusic(){
   loadMusic(musicIndex);
   playMusic();
   playingSong();
-}
+};
 
 // play or pause button event
 playPauseBtn.addEventListener("click", ()=>{
@@ -231,7 +231,7 @@ for (let i = 0; i <= radioStations.length; i++) {
     liAudioDuartionTag.innerText = `${totalMin}:${totalSec}`; //passing total duation of song
     liAudioDuartionTag.setAttribute("t-duration", `${totalMin}:${totalSec}`); //adding t-duration attribute with total duration value
   });
-}
+};
 
 //play particular song from the list onclick of li tag
 function playingSong(){
@@ -258,7 +258,7 @@ function playingSong(){
 
     allLiTag[j].setAttribute("onclick", "clicked(this)");
   }
-}
+};
 
 
 //particular li clicked function
@@ -268,8 +268,14 @@ function clicked(element){
   loadMusic(musicIndex);
   playMusic();
   playingSong();
-}
+};
 
+function mapPlay(element){
+  let getIndex = element.getAttribute("data-index");
+  radioIndex = getIndex; //updating current song index with clicked li index
+  loadMusic(radioIndex);
+  playMusic();
+};
 
 function tapped(element){
   let getIndex = element.getAttribute("data-index");
@@ -287,11 +293,5 @@ function tapped(element){
     // element.classList.remove("animate-pulse")
     // element.innerHTML = playSVG;
   }
-}
+};
 
-function mapPlay(element){
-  let getIndex = element.getAttribute("data-index");
-  radioIndex = getIndex; //updating current song index with clicked li index
-  loadMusic(radioIndex);
-  playMusic();
-}
