@@ -42,7 +42,9 @@ function playMusic(){
   playPauseBtn.classList.add("animate-spin")
   musicDefine.innerText = "Playing"
   musicDefine.classList.add("text-green-400")
+  musicDefine.classList.remove("text-red-400")
   mainAudio.play();
+
 };
 
 //pause music function
@@ -50,6 +52,7 @@ function pauseMusic(){
   wrapper.classList.remove("paused");
   playPauseBtn.querySelector("svg").innerHTML = playSVG;
   musicDefine.innerText = "Paused"
+  musicDefine.classList.remove("text-green-400")
   musicDefine.classList.add("text-red-400")
   mainAudio.pause();
 };
@@ -61,7 +64,7 @@ function prevMusic(){
   musicIndex < 1 ? musicIndex = radioStations.length : musicIndex = musicIndex;
   loadMusic(musicIndex);
   playMusic();
-  playingSong();
+  playingSong(musicIndex);
 };
 
 //next music function
@@ -71,7 +74,7 @@ function nextMusic(){
   musicIndex > radioStations.length ? musicIndex = 1 : musicIndex = musicIndex;
   loadMusic(musicIndex);
   playMusic();
-  playingSong();
+  playingSong(musicIndex);
 };
 
 // play or pause button event
@@ -234,7 +237,7 @@ for (let i = 0; i <= radioStations.length; i++) {
 };
 
 //play particular song from the list onclick of li tag
-function playingSong(){
+function playingSong(musicIndex){
   const allLiTag = ulTag.querySelectorAll("li");
 
 
@@ -267,7 +270,7 @@ function clicked(element){
   musicIndex = getLiIndex; //updating current song index with clicked li index
   loadMusic(musicIndex);
   playMusic();
-  playingSong();
+  playingSong(musicIndex);
 };
 
 function mapPlay(element){
@@ -275,6 +278,7 @@ function mapPlay(element){
   radioIndex = getIndex; //updating current song index with clicked li index
   loadMusic(radioIndex);
   playMusic();
+  playingSong(radioIndex);
 };
 
 function tapped(element){
@@ -284,12 +288,11 @@ function tapped(element){
   if (element.classList.contains("playing")) {
     loadMusic(radioIndex);
     playMusic();
-
+    playingSong(radioIndex);
     // element.classList.add("animate-pulse")
     // element.innerHTML = pauseSVG;
   } else {
     pauseMusic();
-
     // element.classList.remove("animate-pulse")
     // element.innerHTML = playSVG;
   }
