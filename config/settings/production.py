@@ -161,6 +161,11 @@ LOGGING = {
 # ------------------------------------------------------------------------------
 # https://django-storages.readthedocs.io/en/latest/#installation
 INSTALLED_APPS += ["storages"]  # noqa F405
+# Collectfast
+# ------------------------------------------------------------------------------
+# https://github.com/antonagestam/collectfast#installation
+INSTALLED_APPS = ["collectfast"] + INSTALLED_APPS  # noqa F405
+
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_ACCESS_KEY_ID = env("DJANGO_AWS_ACCESS_KEY_ID")
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
@@ -187,7 +192,7 @@ aws_s3_domain = AWS_S3_CUSTOM_DOMAIN or f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws
 # STATIC
 # ------------------------
 # STATICFILES_STORAGE = "angalabiri.utils.storages.StaticRootS3Boto3Storage"
-# COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
+COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
 # STATIC_URL = f"https://{aws_s3_domain}/static/"
 # MEDIA
 # ------------------------------------------------------------------------------
