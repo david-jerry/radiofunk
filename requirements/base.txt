@@ -69,4 +69,4 @@ django-leaflet==0.28.2
 django-unicorn==0.42.1
 
 django-autoslug==1.9.8
-# pydub==0.25.1
+pydub==0.25.1
