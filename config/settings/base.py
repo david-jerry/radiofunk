@@ -84,7 +84,6 @@ DATABASES = {
     "default": env.db("DATABASE_URL", default="postgis:///radio_funk"),
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
-DATABASES["default"]["ENGINE"] = 'django.contrib.gis.db.backends.postgis'
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
