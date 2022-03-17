@@ -5,9 +5,11 @@ from django.db.models import (
     BooleanField,
     CharField,
     DateField,
+    DateTimeField,
     DecimalField,
     FileField,
     ForeignKey,
+    ManyToManyField,
     ImageField,
     IntegerField,
     OneToOneField,
@@ -20,6 +22,9 @@ from django.utils.translation import gettext_lazy as _
 from stdimage import StdImageField
 from model_utils.models import TimeStampedModel
 from countries_plus.models import Country
+from django.utils.timezone import now
+
+from .managers import UserObjManager
 
 class User(AbstractUser):
     """
@@ -28,6 +33,8 @@ class User(AbstractUser):
     check forms.SignupForm and forms.SocialSignupForms accordingly.
     """
 
+    model_name="Users"
+
     #: First and last name do not cover name patterns around the globe
     name = CharField(_("Name of User"), blank=True, max_length=255)
     first_name = None  # type: ignore
@@ -35,10 +42,20 @@ class User(AbstractUser):
     image = StdImageField(upload_to="user/passport", blank=True, variations={'thumbnail': {"width": 100, "height": 100, "crop": True}})
     paid = BooleanField(default=False)
 
+    created = DateTimeField(default=now, editable=False)
+
     podcaster = BooleanField(default=False)
 
+    follower = ManyToManyField("self", related_name="followers", symmetrical=False, default=None, blank=True)
+
+    managers = UserObjManager()
+
     def __str__(self):
-        return self.name.title()
+        return self.name.title() if self.name else self.username.title()
+
+    @property
+    def get_follower_count(self):
+        return self.follower.all().count()
 
     def get_absolute_url(self):
         """Get url for user's detail view.
@@ -81,3 +98,26 @@ class Privacy(TimeStampedModel):
         verbose_name = "User Privacy"
         verbose_name_plural = "User Privacies"
         ordering = [ "-created"]
+
+
+class Settings(TimeStampedModel):
+    NORM = "normal"
+    HIFI = 'high'
+    LOFI = 'low'
+    BITRATE = (
+        (NORM, NORM),
+        (HIFI, HIFI),
+        (LOFI, LOFI)
+    )
+    user = OneToOneField(User, on_delete=CASCADE, related_name="usersoundsettings")
+    bit_rate = CharField(max_length=50, choices=BITRATE, default=NORM)
+
+    def __str__(self):
+        return f"{self.user.name.title()} sound setting"
+
+    class Meta:
+        managed = True
+        verbose_name = "Sound Setting"
+        verbose_name_plural = "Sound Settings"
+        ordering = [ "-created"]
+

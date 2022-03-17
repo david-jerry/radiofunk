@@ -1,8 +1,7 @@
 from django.contrib import admin
-from .models import Tunes, Genre, Gift, PodcastGift
+from django.contrib.gis.admin import OSMGeoAdmin
+from .models import Stations
+from leaflet.admin import LeafletGeoAdmin
 
 # Register your models here.
-admin.site.register(Tunes)
-admin.site.register(Genre)
-admin.site.register(Gift)
-admin.site.register(PodcastGift)
+admin.site.register(Stations, LeafletGeoAdmin)

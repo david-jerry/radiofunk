@@ -1,0 +1,72 @@
+{% load static i18n %}
+
+{% url 'home' as home_url %}
+{% url 'about' as about_url %}
+{% url 'podcasts' as podcasts_url %}
+{% url 'history' as history_url %}
+{% url 'events' as event_url %}
+
+<section class="flex flex-col gap-y-8 items-center md:py-8 py-4 md:w-24 w-16 bg-gray-900 z-40 min-h-full fixed">
+  <a href="/" class="p-1 md:p-2 bg-opacity-20 w-16 h-16 mx-auto rounded-xl bg-[#D4AC2B] cursor-pointer" title="RadioFunk">
+      <img
+        src="{% static 'images/favicons.svg' %}"
+        objectFit="contain"
+        alt="Radio Funk Logo"
+        class="hover:animate-spin fill-current transition-all duration-300 delay-200 ease-in-out"
+      />
+      <!-- <svg class="md:w-9 md:h-9" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"></path></svg> -->
+  </a>
+
+
+  <div class="flex flex-col gap-y-0 items-end self-end">
+    <div class="hover:bg-gray-800 hover:rounded-l-xl hover:relative hover:before:absolute hover:before:w-4 hover:before:h-8 hover:before:-top-8 hover:before:rounded-br-xl hover:before:right-0 hover:before:shadow-inverse-top     hover:after:absolute hover:after:w-4 hover:after:h-8 hover:after:-bottom-8 hover:after:rounded-tr-xl hover:after:right-0 hover:after:shadow-inverse-bottom {% if request.path == home_url %}bg-gray-800 rounded-l-xl relative before:absolute before:w-4 before:h-8 before:-top-8 before:rounded-br-xl before:right-0 before:shadow-inverse-top     after:absolute after:w-4 after:h-8 after:-bottom-8 after:rounded-tr-xl after:right-0 after:shadow-inverse-bottom{% endif %} transition-all duration-300 delay-200 ease-in-out">
+      <a href="{% url 'home' %}" data-tooltip-target="tooltip-explore" data-tooltip-placement="right" type="button" title="Explore" class="cursor-pointer p-4 my-4 mr-4 ml-3 rounded-xl hover:text-yellow-900 hover:bg-[#D4AC2B] hover:shadow-primary {% if request.path == home_url %}bg-[#D4AC2B] text-yellow-900{% endif %} transition-all duration-300 delay-200 ease-in-out">
+          <svg class="w-6 h-6 md:w-9 md:h-9 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+      </a>
+    </div>
+      <div id="tooltip-explore" role="tooltip" class="inline-block absolute invisible z-10 py-4 px-3 text-lg font-bold text-yellow-400 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700 transition-all duration-300 delay-200 ease-in-out">
+          Explore
+          <div class="tooltip-arrow" data-popper-arrow></div>
+      </div>
+
+    <div class="transition-all duration-300 delay-200 ease-in-out hover:bg-gray-800 hover:rounded-l-xl hover:relative hover:before:absolute hover:before:w-4 hover:before:h-8 hover:before:-top-8 hover:before:rounded-br-xl hover:before:right-0 hover:before:shadow-inverse-top     hover:after:absolute hover:after:w-4 hover:after:h-8 hover:after:-bottom-8 hover:after:rounded-tr-xl hover:after:right-0 hover:after:shadow-inverse-bottom {% if request.path == about_url %}bg-gray-800 rounded-l-xl relative before:absolute before:w-4 before:h-8 before:-top-8 before:rounded-br-xl before:right-0 before:shadow-inverse-top     after:absolute after:w-4 after:h-8 after:-bottom-8 after:rounded-tr-xl after:right-0 after:shadow-inverse-bottom{% endif %}">
+      <a href="{% url 'about' %}" data-tooltip-target="tooltip-discover" data-tooltip-placement="right" type="button" title="Discover" class="transition-all duration-300 delay-200 ease-in-out cursor-pointer p-4 my-4 mr-4 ml-3 rounded-xl hover:text-yellow-900 hover:bg-[#D4AC2B] hover:shadow-primary {% if request.path == about_url %}bg-[#D4AC2B] text-yellow-900{% endif %}">
+          <svg xmlns="http://www.w3.org/2000/svg" title="Discover" class="ionicon w-6 h-6 md:w-9 md:h-9 fill-current" viewBox="0 0 512 512"><title>Planet</title><path d="M96.85 286.62a8 8 0 00-12.53 8.25C102.07 373.28 172.3 432 256 432a175.31 175.31 0 0052.41-8 8 8 0 00.79-15 1120 1120 0 01-109.48-55.61 1126.24 1126.24 0 01-102.87-66.77zM492.72 339.51c-4.19-5.58-9.11-11.44-14.7-17.53a15.83 15.83 0 00-26.56 5.13c0 .16-.11.31-.17.47a15.75 15.75 0 003.15 16.06c22.74 25 26.42 38.51 25.48 41.36-2 2.23-17.05 6.89-58.15-3.53q-8.83-2.24-19.32-5.46-6.76-2.08-13.79-4.49a176.76 176.76 0 0019.54-27.25c.17-.29.35-.58.52-.88A175.39 175.39 0 00432 256a178.87 178.87 0 00-1-19c-9.57-88.17-84.4-157-175-157a175.37 175.37 0 00-106.4 35.89 177.4 177.4 0 00-45.83 51.84c-.16.29-.34.58-.51.87a175.48 175.48 0 00-13.83 30.52q-5.59-4.87-10.79-9.67c-5.39-5-10.17-9.63-14.42-14-29.57-30.26-33.09-45.61-32.16-48.45 2-2.23 15.54-5.87 48.62 1.31A15.82 15.82 0 0096.22 123l.36-.44a15.74 15.74 0 00-8.67-25.43A237.38 237.38 0 0064.13 93c-30.72-3.53-50.83 2.52-59.78 18-3.24 5.58-6.35 15.09-2.72 28.6C7 159.66 26.14 184 53.23 209.5c8.63 8.13 18.06 16.37 28.12 24.64 7.32 6 15 12.06 22.9 18.08q7.91 6 16.15 12T137.1 276c25.41 17.61 52.26 34.52 78.59 49.69q14.34 8.26 28.64 16t28.37 14.81c21.9 11 43.35 20.92 63.86 29.43q13.19 5.48 25.81 10.16c11.89 4.42 23.37 8.31 34.31 11.59l1.1.33c25.73 7.66 47.42 11.69 64.48 12H464c21.64 0 36.3-6.38 43.58-19 9.09-15.62 4.08-36.32-14.86-61.5z"/></svg>
+      </a>
+    </div>
+      <div id="tooltip-discover" role="tooltip" class="transition-all duration-300 delay-200 ease-in-out inline-block absolute invisible z-10 py-4 px-3 text-lg font-bold text-yellow-400 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+          Discover
+          <div class="tooltip-arrow" data-popper-arrow></div>
+      </div>
+
+    <div class="transition-all duration-300 delay-200 ease-in-out hover:bg-gray-800 hover:rounded-l-xl hover:relative hover:before:absolute hover:before:w-4 hover:before:h-8 hover:before:-top-8 hover:before:rounded-br-xl hover:before:right-0 hover:before:shadow-inverse-top     hover:after:absolute hover:after:w-4 hover:after:h-8 hover:after:-bottom-8 hover:after:rounded-tr-xl hover:after:right-0 hover:after:shadow-inverse-bottom {% if request.path == podcasts_url %}bg-gray-800 rounded-l-xl relative before:absolute before:w-4 before:h-8 before:-top-8 before:rounded-br-xl before:right-0 before:shadow-inverse-top     after:absolute after:w-4 after:h-8 after:-bottom-8 after:rounded-tr-xl after:right-0 after:shadow-inverse-bottom{% endif %}">
+      <a href="{% url 'podcasts' %}" data-tooltip-target="tooltip-podcast" data-tooltip-placement="right" type="button" title="Podcast" class="transition-all duration-300 delay-200 ease-in-out cursor-pointer p-4 my-4 mr-4 ml-3 rounded-xl hover:text-yellow-900 hover:bg-[#D4AC2B] hover:shadow-primary {% if request.path == podcasts_url %}bg-[#D4AC2B] text-yellow-900{% endif %}">
+          <svg class="w-6 h-6 md:w-9 md:h-9 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clip-rule="evenodd"></path></svg>
+      </a>
+    </div>
+      <div id="tooltip-podcast" role="tooltip" class="transition-all duration-300 delay-200 ease-in-out inline-block absolute invisible z-10 py-4 px-3 text-lg font-bold text-yellow-400 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+          Podcast
+          <div class="tooltip-arrow" data-popper-arrow></div>
+      </div>
+
+    <div class="transition-all duration-300 delay-200 ease-in-out hover:bg-gray-800 hover:rounded-l-xl hover:relative hover:before:absolute hover:before:w-4 hover:before:h-8 hover:before:-top-8 hover:before:rounded-br-xl hover:before:right-0 hover:before:shadow-inverse-top     hover:after:absolute hover:after:w-4 hover:after:h-8 hover:after:-bottom-8 hover:after:rounded-tr-xl hover:after:right-0 hover:after:shadow-inverse-bottom {% if request.path == history_url %}bg-gray-800 rounded-l-xl relative before:absolute before:w-4 before:h-8 before:-top-8 before:rounded-br-xl before:right-0 before:shadow-inverse-top     after:absolute after:w-4 after:h-8 after:-bottom-8 after:rounded-tr-xl after:right-0 after:shadow-inverse-bottom{% endif %}">
+      <a href="{% url 'history' %}" data-tooltip-target="tooltip-history" data-tooltip-placement="right" type="button" title="History" class="transition-all duration-300 delay-200 ease-in-out cursor-pointer p-4 my-4 mr-4 ml-3 rounded-xl hover:text-yellow-900 hover:bg-[#D4AC2B] hover:shadow-primary {% if request.path == history_url %}bg-[#D4AC2B] text-yellow-900{% endif %}">
+          <svg class="w-6 h-6 md:w-9 md:h-9 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>
+      </a>
+    </div>
+      <div id="tooltip-history" role="tooltip" class="transition-all duration-300 delay-200 ease-in-out inline-block absolute invisible z-10 py-4 px-3 text-lg font-bold text-yellow-400 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+          History
+          <div class="tooltip-arrow" data-popper-arrow></div>
+      </div>
+
+    <div class="transition-all duration-300 delay-200 ease-in-out hover:bg-gray-800 hover:rounded-l-xl hover:relative hover:before:absolute hover:before:w-4 hover:before:h-8 hover:before:-top-8 hover:before:rounded-br-xl hover:before:right-0 hover:before:shadow-inverse-top     hover:after:absolute hover:after:w-4 hover:after:h-8 hover:after:-bottom-8 hover:after:rounded-tr-xl hover:after:right-0 hover:after:shadow-inverse-bottom {% if request.path == event_url %}bg-gray-800 rounded-l-xl relative before:absolute before:w-4 before:h-8 before:-top-8 before:rounded-br-xl before:right-0 before:shadow-inverse-top     after:absolute after:w-4 after:h-8 after:-bottom-8 after:rounded-tr-xl after:right-0 after:shadow-inverse-bottom{% endif %}">
+      <a href="{% url 'events' %}" data-tooltip-target="tooltip-event" data-tooltip-placement="right" type="button" title="Events" class="transition-all duration-300 delay-200 ease-in-out cursor-pointer p-4 my-4 mr-4 ml-3 rounded-xl hover:text-yellow-900 hover:bg-[#D4AC2B] hover:shadow-primary {% if request.path == event_url %}bg-[#D4AC2B] text-yellow-900{% endif %}">
+        <svg class="w-6 h-6 md:w-9 md:h-9 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+      </a>
+    </div>
+      <div id="tooltip-event" role="tooltip" class="transition-all duration-300 delay-200 ease-in-out inline-block absolute invisible z-10 py-4 px-3 text-lg font-bold text-yellow-400 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+          Events
+          <div class="tooltip-arrow" data-popper-arrow></div>
+      </div>
+  </div>
+</section>

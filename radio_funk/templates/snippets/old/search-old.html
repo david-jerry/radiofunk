@@ -1,0 +1,88 @@
+{% load static i18n %}
+<div class="flex justify-between items-center min-w-[calc(100%_-_6rem)] md:min-w-[calc(100%_-_8rem)] mx-auto space-x-4 fixed py-4 md:left-24 left-16 pl-4 pr-4 z-10">
+  <div class="bg-gray-900 rounded-full overflow-hidden border-2 border-yellow-400 p-1.5 px-4 pr-4 flex flex-1 min-w-[230px] max-w-[230px] md:min-w-6xl md:max-w-6xl items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon text-yellow-400 h-5 w-5 flex-shrink-0 animate-pulse mr-4" viewBox="0 0 512 512"><title>Planet</title><path d="M413.48 284.46c58.87 47.24 91.61 89 80.31 108.55-17.85 30.85-138.78-5.48-270.1-81.15S.37 149.84 18.21 119c11.16-19.28 62.58-12.32 131.64 14.09" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/><circle cx="256" cy="256" r="160" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/></svg>
+    <input
+      type="text"
+      placeholder="Search"
+      class="bg-gray-900 border-none min-w-full focus:ring-0 outline-none focus:animate-none focus:animate-pulse placeholder-slate-400 text-sm text-white tracking-wider font-medium items-center"
+    />
+  </div>
+
+  <div class="flex items-center justify-between space-x-2 text-yellow-400">
+    <div class="flex items-center md:space-x-4 border-2 border-[#262626] bg-gray-900 rounded-full h-14 w-12 md:w-auto py-3 px-4">
+      <div class="relative md:inline hidden md:hover:animate-bounce md:hover:cursor-pointer">
+        <span class="w-4 h-4 absolute top-0 -right-0 rounded-full border-4 border-gray-900 bg-red-500"></span>
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path></svg>
+      </div>
+      <svg class="w-8 h-8 md:inline hidden md:hover:animate-bounce md:hover:cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+      {% if not request.user.is_authenticated %}
+      <button type="button" id="dropdownButton" data-dropdown-toggle="dropdown" class="w-8 h-8 rounded-full">
+        <svg class="w-8 h-8 rounded-full object-cover hover:animate-bounce hover:cursor-pointer" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+      </button>
+      {% else %}
+        {% if request.user.image or request.user.socialaccount_set.all.0.get_avatar_url %}
+        <img id="dropdownButton" data-dropdown-toggle="dropdown" class="rounded-full w-10 h-10 object-cover" src="{% if request.user.image %}{{request.user.image.thumbnail.url}}{% elif request.user.socialaccount_set.all.0.get_avatar_url %}request.user.socialaccount_set.all.0.get_avatar_url{% endif %}" class="fill-current w-10 h-10" alt="{{request.user.username|title}} Passport"/>
+        {% else %}
+        <button type="button" id="dropdownButton" data-dropdown-toggle="dropdown" class="w-8 h-8 rounded-full">
+          <svg class='w-8 h-8 rounded-full object-cover hover:animate-bounce hover:cursor-pointer' fill='currentColor' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z' clip-rule='evenodd'></path></svg>
+        </button>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <div id="dropdown" class="hidden w-44 absolute right-0 mt-28 origin-top-right bg-gray-900 divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-gray-900 ring-opacity-5 focus:outline-none transition-all duration-300 delay-200 ease-in-out">
+      <div class="px-1 py-1">
+        <ul class="py-2" aria-labelledby="dropdownButton">
+          {% if request.user.is_authenticated %}
+          <li class="group flex rounded-md items-center w-full px-2 py-2 text-sm font-semibold tracking-wide text-white cursor-pointer hover:bg-white/10">
+            <a href="{% if request.user %}{{request.user.get_absolute_url}}{% endif %}" class="flex items-center justify-between">
+              <svg class="w-8 h-8 mr-2 text-[#fff]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+              {{request.user.username|title}}
+            </a>
+          </li>
+
+          <li
+            class="group md:hidden flex rounded-md items-center w-full px-2 py-2 text-sm font-semibold tracking-wide text-white cursor-pointer hover:bg-white/10"
+          >
+            <a href="javascript:;" class="flex items-center justify-between">
+              <div class="relative">
+                <span class="w-4 h-4 absolute top-0 -right-0 rounded-full border-4 border-gray-900 bg-red-500"></span>
+                <svg class="w-8 h-8 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path></svg>
+              </div>
+              Notifications
+            </a>
+          </li>
+          <li
+            class="group md:hidden flex rounded-md items-center w-full px-2 py-2 text-sm font-semibold tracking-wide text-white cursor-pointer hover:bg-white/10"
+          >
+            <a href="{% if request.user %}{{request.user.get_absolute_url}}{% endif %}" class="flex items-center justify-between">
+              <svg class="w-8 h-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+              Settings
+            </a>
+          </li>
+
+
+          <li
+            class="group flex rounded-md items-center w-full px-2 py-2 text-sm font-semibold tracking-wide text-white cursor-pointer hover:bg-white/10"
+          >
+            <a href="{% url 'account_logout' %}" class="flex items-center justify-between">
+              <svg class="w-8 h-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+              Log out
+            </a>
+          </li>
+          {% else %}
+          <li
+            class="group flex rounded-md items-center w-full px-2 py-2 text-sm font-semibold tracking-wide text-white cursor-pointer hover:bg-white/10"
+          >
+            <a href="{% url 'account_login' %}" class="flex items-center text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 mr-2 text-white " viewBox="0 0 512 512"><title>Log In</title><path d="M392 80H232a56.06 56.06 0 00-56 56v104h153.37l-52.68-52.69a16 16 0 0122.62-22.62l80 80a16 16 0 010 22.62l-80 80a16 16 0 01-22.62-22.62L329.37 272H176v104c0 32.05 33.79 56 64 56h152a56.06 56.06 0 0056-56V136a56.06 56.06 0 00-56-56zM80 240a16 16 0 000 32h96v-32z"  fill="#fff"/></svg>
+              Sign In
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

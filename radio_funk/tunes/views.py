@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Tunes
+from .models import Stations
 
 # Create your views here.
 # def home(request):

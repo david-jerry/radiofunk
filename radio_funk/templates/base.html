@@ -1,127 +1,218 @@
-{% load static i18n tailwind_tags heroicons %}<!DOCTYPE html>
+{% load static i18n tailwind_tags unicorn %}
+{% url 'home' as home_url %}
+
+<!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
-<html lang="{{ LANGUAGE_CODE }}" class="max-w-[100vw] max-h-[100vh]">
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+{% get_language_info_list for LANGUAGES as languages %}
+<html lang="{{ LANGUAGE_CODE }}"  dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}" class="max-w-full max-h-screen {% if dark %}dark{% endif %}" x-data="{dark:{{dark|lower}}}" :class="{'dark':dark === true, '':dark === false}">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>{% block title %}Radio Funk{% endblock title %}</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Online Radio & Podcasting Software" />
     <meta name="author" content="David Jeremiah" />
+    <meta name="keywords" content="radio funk,Online radio,live podcast,make money from podcast,websites like spotify,earn from streaming audio files,{% block kw %}{% endblock kw%}">
 
-    <link rel="icon" href="{% static 'images/favicons.svg' %}" />
+
+    <link rel="icon" href="{% static 'images/favicons.svg' %}" type="image/svg" sizes="16x16" />
+
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;0,800;1,300;1,400;1,600;1,800&display=swap">
 
     {% block css %}
-
-    {% if messages %}
-    <!-- <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">    <link
-    href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Public+Sans:wght@300;400&family=Paytone+One&Abril+Fatface&family=Architects+Daughter&family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500&display=swap"
-    rel="stylesheet"> -->
-    {% endif %}
-
     <!-- Your stuff: Third-party CSS libraries go here -->
     <!-- This file stores project-specific CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.3.3/dist/flowbite.min.css" />
+    <!-- <link rel="stylesheet" href="https://unpkg.com/flowbite@1.3.3/dist/flowbite.min.css"/> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
 
     {% endblock css %}
+    <link rel="preload" href="{% static 'css/project.css' %}" as="style" />
+    <link rel="stylesheet" href="{% static 'css/project.css' %}" />
+    <!-- {% tailwind_preload_css %}
+    {% tailwind_css %} -->
+
+    <link href="{% static 'css/iziToast.min.css' %}" rel="stylesheet">
+
+
+
+
+
+
     <!-- Le javascript
     ================================================== -->
     {# Placed at the top of the document so pages load faster with defer #}
+    {% unicorn_scripts %}
+
 
     {% block javascript %}
     <!-- Bootstrap JS -->
     <!-- Your stuff: Third-party javascript libraries go here -->
-    <script defer src="https://unpkg.com/flowbite@1.3.3/dist/flowbite.js"></script>
-    <script defer src="https://unpkg.com/flowbite@1.3.3/dist/datepicker.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- <script defer src="https://unpkg.com/flowbite@1.3.3/dist/flowbite.js"></script>
+    <script defer src="https://unpkg.com/flowbite@1.3.3/dist/datepicker.js"></script> -->
     <script async src="https://kit.fontawesome.com/cb5449eda5.js" crossorigin="anonymous"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script async type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script async src="https://apis.google.com/js/platform.js"></script>
+    <script async defer type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script async nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <link href="{% static 'css/icons.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- place project specific Javascript in this file -->
-
+    <script defer src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script async src="https://unpkg.com/htmx.org@1.7.0"></script>
     {% endblock javascript %}
+
+
+
+
 
     {{ form.media }}
 
-    <link rel="preload" href="{% static 'css/project.css' %}" as="style" />
-    <link rel="stylesheet" href="{% static 'css/project.css' %}" />
 
 
-    {% tailwind_preload_css %}
-    {% tailwind_css %}
-
-    <link href="{% static 'css/iziToast.min.css' %}" rel="preload" as="style">
-    <link href="{% static 'css/iziToast.min.css' %}" rel="stylesheet">
   </head>
+  {% if request.path == home_url and device == "Mobile" %}
+  <body onload="iziToast.show({'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{playlist:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
+  {% elif request.path == home_url %}
+  <body onload="iziToast.show({'maxWidth':'50%', 'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{playlist:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
+  {% else %}
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{playlist:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-white-200 bg-white-bg text-font relative">
+  {% endif %}
 
-  <body class="min-h-screen min-w-[100vw] max-w-[100vw] flex font-body transition-all duration-200 ease-out">
+    {% include 'snippets/sidenav.html' %}
+    {% include 'snippets/rightnav.html' %}
 
+    <main class="flex-auto flex flex-col max-h-screen max-w-full overflow-x-hidden relative pb-28 md:pb-4" @click="lang_open = false">
+      <div class="shadow-md dark:bg-black bg-white-200 flex items-center w-full p-4 justify-between max-h-14 z-20 bg-">
+        <div class="flex items-center space-x-5 leading-none w-auto">
+          <div class="flex items-center space-x-3">
+            {% if not device == "Mobile" %}
+            <svg id="hback" onclick="back()" class="hidden md:flex w-6 h-6 fill-current cursor-not-allowed" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z" clip-rule="evenodd"></path></svg>
+            <svg id="hforward" onclick="forward()" class="hidden md:flex w-6 h-6 fill-current cursor-not-allowed" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"></path></svg>
+            {% else %}
+            <a href="/" class="md:hidden flex items-center space-x-1 w-full dark:text-white-200 text-font-darker">
+              <h1 class="text-2xl font-extrabold dark:text-white-200 uppercase tracking-wider leading-none">Radio<span class="text-primary underline leading-none">funk</span></h1>
+            </a>
+            {% endif %}
+          </div>
+          {% block search_component %}{% endblock search_component %}
+        </div>
+        <div class="flex items-center space-x-4">
+          <button :class="{'':dark === true, 'hidden':dark === false}" x-on:click="dark = false, iziToast.error({'message':'Dark Mode Deactivated', 'id':'error', 'color':'red', 'title':'DARK MODE', 'timeout': 5000, 'resetOnHover': true, 'balloon': true,})" hx-put="{% url 'lmode' %}" hx-trigger="click" hx-swap="outerHTML" class="block" type="button">
+            <svg class="w-6 h-6 text-font-darker dark:text-primary" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+          <button :class="{'hidden':dark === true, '':dark === false}" x-on:click="dark = true, iziToast.success({'message':'Dark Mode Activated', 'id':'success', 'color':'green', 'title':'DARK MODE', 'timeout': 5000, 'resetOnHover': true, 'balloon': true})" hx-post="{% url 'mode' %}" hx-trigger="click" hx-swap="outerHTML" class="block" type="button">
+            <svg class="w-6 h-6 text-font-darker dark:text-primary" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+          </button>
 
-    {% include "snippets/sidenav.html" %}
+          <div @click="notif = ! notif" class="flex items-center relative cursor-pointer transition-all duration-200">
+            <svg class="w-6 h-6 dark:text-white-200 text-font-darker hover:shadow-xl" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path></svg>
+            <div class="h-2 w-2 rounded-full bg-red-600 absolute border-2 dark:border-gray-800 border-white-200 top-0 right-1"></div>
+          </div>
+        </div>
+      </div>
+      <!-- TODO: convert this to notification component -->
+      <div :class="{'right-4':notif === true, '-right-full':notif === false}" class="absolute z-20 p-4 top-14 -right-full dark:bg-black/80 bg-white-200/80 w-52 h-min duration-200 ease-in-out shadow-xl rounded-b-lg md:flex md:flex-col space-y-4">
+        <span class="block uppercase border-b-2 font-black dark:text-white-bg text-2xl text-left">notifications</span>
+        <a href="/" class="flex items-center space-x-2 p-2 w-full h-min rounded-md hover:bg-white-200/10 leading-none">
+          <div class="w-2/3">
+            <span class="block text-xl font-black truncate">Notification Heading</span>
+            <span class="block text-md font-light truncate">New podcast within your location has been added!</span>
+          </div>
+          <div class="w-1/3 text-right">
+            <span class="block text-md font-black truncate uppercase">UNREAD</span>
+            <span class="block text-sm font-light truncate">Now</span>
+          </div>
+        </a>
+        <a href="javascript:;" class="w-full block uppercase bg-live-bg hover:bg-live-bg/70 text-white-200 p-1 rounded-b-lg text-center duration-300">view all</a>
+      </div>
 
+      <!-- <div class="flex items-center space-x-2">
+        {% for g in genres %}
+        <p class="h-min p-2 rounded-full">{{g.name|title}}</p>
+        {% endfor %}
+      </div> -->
 
-    <main class="relative p-4">
-      {% include "snippets/search.html" %}
       {% block content %} {% endblock content %}
 
-      <div id="musicList" class="flex items-center space-x-6 min-h-[64px] min-w-[calc(100%_-_4rem)] md:min-w-[calc(100%_-_6rem)] md:left-[6rem] left-[4rem] bottom-0 z-[60] fixed bg-gray-900 border-t-2 border-t-yellow-400 py-1 px-3">
-        <div class="img-area w-[60px] min-h-[60px] max-h-[60px] relative justify-items-center hover:cursor-pointer hover:shadow-xl flex items-center p-1">
-          <img src="{% static 'images/card/manage-uploads.svg' %}" alt="" class="flex object-cover object-center w-[60px] h-[60px]">
-        </div>
-
-        <div class="play-pause hover:scale-110 reltaive w-[34px] h-[34px] p-1 justify-items-center hover:cursor-pointer hover:shadow-xl flex items-center rounded-full bg-yellow-200 transition-shadow duration-300 ease-in-out text-center">
-          <svg class="flex w-[34px] h-[34px] object-cover items-center text-yellow-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-        </div>
-
-        <div class="song-details reltaive min-w-[30%] max-w-[30%]">
-          <h3 class="name text-yellow-400 font-black tracking-wide truncate text-sm">Name</h3>
-          <p class="artist text-gray-400 font-normal truncate text-xs animate-pulse">Listening</p>
-        </div>
-
-        <div class="reltaive w-[34px] h-[34px] p-1 justify-items-center hover:cursor-pointer hover:shadow-xl flex items-center rounded-full bg-yellow-200 transition-shadow duration-300 ease-in-out text-center">
-          <svg id="prev" class="flex w-[34px] h-[34px] object-cover items-center text-yellow-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.445 14.832A1 1 0 0010 14v-2.798l5.445 3.63A1 1 0 0017 14V6a1 1 0 00-1.555-.832L10 8.798V6a1 1 0 00-1.555-.832l-6 4a1 1 0 000 1.664l6 4z"></path></svg>
-        </div>
-
-        <div class="progress-area">
-          <div class="progress-bar">
-            <audio id="main-audio" src=""></audio>
-          </div>
-          <div class="song-timer w-full justify-between flex">
-            <span class="current-time">0:00</span>
-            <span class="max-duration">0:00</span>
-          </div>
-        </div>
-
-        <div class="reltaive w-[34px] h-[34px] p-1 justify-items-center hover:cursor-pointer hover:shadow-xl flex items-center rounded-full bg-yellow-200 transition-shadow duration-300 ease-in-out text-center">
-          <svg id="next" class="flex w-[34px] h-[34px] object-cover items-center text-yellow-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M4.555 5.168A1 1 0 003 6v8a1 1 0 001.555.832L10 11.202V14a1 1 0 001.555.832l6-4a1 1 0 000-1.664l-6-4A1 1 0 0010 6v2.798l-5.445-3.63z"></path></svg>
-        </div>
-
-        <div class="reltaive w-[34px] h-[34px] p-1 justify-items-center hover:cursor-pointer hover:shadow-xl flex items-center rounded-full transition-shadow duration-300 ease-in-out text-center">
-          <svg id="moreMusic" class="flex w-[34px] h-[34px] object-cover items-center text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path></svg>
-        </div>
-
-        <div id="list" class="hidden music-list absolute bg-gray-900 min-w-[384px] max-w-[384px] min-h-min max-h-96 right-3 bottom-[77px] pb-3 px-4 rounded-lg transition-all duration-500 ease-out z-50 overflow-y-scroll scrollbar-hide">
-          <div class="header z-[51] fixed flex items-center justify-between min-w-[354px] max-w-[354px] bg-gray-900 py-3 rounded-t-lg">
-            <div class="row flex items-center space-x-6">
-              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-              <span>Listening List</span>
-            </div>
-            <svg id="close" class="w-6 h-6 cursor-pointer hover:shadow-xl" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
-          </div>
-          <ul class="overflow-y-scroll scrollbar-hide mt-[48px]">
-            <!-- here li list are coming from js -->
-          </ul>
-        </div>
-
+      <div :class="{'translate-x-2':lang_open === true, '-translate-x-full':lang_open === false}" class="bottom-3 transform -translate-x-full dark:bg-black/80 bg-white-bg/80 h-min pl-4 py-2 pr-4 shadow-xl rounded-lg absolute md:flex md:items-center space-x-4 z-20 duration-200 ease-in-out">
+        {% for language in languages %}
+        <!-- <a href="/{{language.code}}/?next=/{{language.code}}{{request.path|slice:'3:'}}" class="flex items-center space-x-2 hover:text-primary {% if LANGUAGE_CODE == language.code %}text-primary{% else %}{% if dark %}text-gray-50{% else %}text-font-darker{% endif %}{% endif %} transition-all duration-200 ease-in-out"> -->
+        <a href="/{{language.code}}/" class="flex items-center space-x-2 hover:text-podcast-bg dark:hover:text-live-bg {% if LANGUAGE_CODE == language.code %}dark:text-live-bg text-podcast-bg{% else %} dark:text-white-200 text-font-darker {% endif %} transition-all duration-200 ease-in-out">
+          <img class="fill-current" src="/static/images/flags/png/{{ language.code }}.png" alt="{{ language.code }} flag" />
+          <span class="font-black block">{{ language.code|upper }}</span>
+        </a>
+        {% endfor %}
       </div>
-      <!-- <audio class="min-w-[calc(100%_-_4rem)] md:min-w-[calc(100%_-_6rem)] md:left-24 left-16 bottom-0 z-50 fixed bg-gray-900" preload="auto" id="audio" controls="controls" onended="func12();" src=""></audio> -->
+
+      <!-- playlist form -->
+      <div  :class="{'max-w-0':playlist === false, 'w-screen':playlist === true}" class="duration-300 h-full absolute bg-black/70 top-0 left-0 justify-center items-center flex">
+        <div :class="{'hidden':playlist === false, 'flex-col':playlist === true}" class="mx-auto rounded-md my-auto md:w-[512px] w-[320px] h-min bg-white-bg/70 dark:bg-black/60 p-4 space-y-4">
+          <h2 class="font-black text-4xl uppercase">create playlist</h2>
+          <form action="" class="w-full space-y-2">
+            <input placeholder="Playlist Title" type="text" class="focus:outline-none focus:border-none bg-white-bg dark:text-font appearance-none border-none w-full rounded py-2 px-3 leading-tight">
+            <textarea placeholder="Playlist Description" class="focus:outline-none focus:border-none bg-white-bg dark:text-font appearance-none border-none w-full rounded py-2 px-3 leading-tight"></textarea>
+            <div class="flex items-center justify-between space-x-2 text-black">
+              <button type="reset" class="bg-primary hover:bg-primary/70 duration-300 uppercase font-black text-xl w-1/3 rounded p-2">reset</button>
+              <a href="javascript:;" @click="playlist = ! playlist" class="bg-live-bg hover:bg-live-bg/70 text-center duration-300 uppercase font-black text-xl w-1/3 rounded p-2">close</a>
+              <button type="submit" class="bg-podcast-bg hover:bg-podcast-bg/70 duration-300 uppercase font-black text-xl w-1/3 rounded p-2">create</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
     </main>
 
 
-
     {% block modal %}{% endblock modal %}
+    <script src="{% static 'js/iziToast.min.js' %}"></script>
+
+    <!-- Toast alert script -->
+    {% for message in messages %}
+    <script>
+      //iziToast.{{ message.tags }}({
+
+          iziToast.{{ message.tags }}({
+            timeout: 5000,
+            resetOnHover: true,
+            position: 'bottomRight',
+            drag: true,
+            pauseOnHover: true,
+            transitionIn: 'fadeInUp',
+            transitionOut: 'fadeOutDown',
+            transitionInMobile: 'fadeInUp',
+            transitionOutMobile: 'fadeOutDown',
+            close: true,
+            displayMode: 2,
+            progressBar: true,
+            progressBarEasing: 'ease',
+            color: '{% if message.tags == "success" %}green{% elif message.tags == "warning" %}yellow{% elif message.tags == "info" %}blue{% else %}red{% endif %}',
+            icon: '{% if message.tags == "success" %}fa fa-thumbs-up{% elif message.tags == "warning" %}fa fa-exclamation-triangle{elif message.tags == "info"}fa fa-info-circle{% else %}fa fa-bug{% endif %}',
+            balloon: true,
+            id: '{{ message.tags }}',
+            title: '{{ message.tags|capfirst }}',
+            message: '{{ message }}',
+          });
+    </script>
+    {% endfor %}
+
+
+
+    <script>
+      {% if not settings.PRODUCTION %}
+        var home = "http://" + window.location.hostname + ":8000/{{LANGUAGE_CODE}}/"
+      {% else %}
+        var home = "https://" + window.location.hostname + "/{{LANGUAGE_CODE}}/"
+      {% endif %}
+    </script>
+
 
     {% block inline_javascript %}
     {% comment %} Script tags with only code, no src (defer by default). To run
@@ -134,41 +225,7 @@
     {% endcomment %}
     {% endblock inline_javascript %}
 
-    {% if messages %}
-    <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <!-- <script crossorigin="anonymous" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>    Your stuff: Third-party javascript libraries go here -->
-    <script src="{% static 'js/iziToast.min.js' %}"></script>
-    {% endif %}
 
-    {% for message in messages %}
-    <script type=text/javascript>
-      iziToast.settings({
-        timeout: 5000,
-        position: 'topRight',
-        drag: true,
-        pauseOnHover: true,
-        transitionIn: 'fadeInUp',
-        transitionOut: 'fadeOutDown',
-        transitionInMobile: 'fadeInUp',
-        transitionOutMobile: 'fadeOutDown',
-        close: true,
-        displayMode: "replace",
-        progressBar: true,
-        progressBarEasing: 'ease',
-        color: '{% if message.tags == "alert-success" %}green{% elif message.tags == "alert-warning" %}yellow{% elif message.tags == "alert-info" %}blue{% else %}red{% endif %}'
-      });
-      //iziToast.{{ message.tags }}({
-      iziToast.show({
-          balloon: true,
-          layout: 2,
-          id: '{{ message.tags }}',
-          title: '{{ message.tags|capfirst }}',
-          message: '{{ message }}',
-          icon: '{% if message.tags == "alert-success" %}fa-solid fa-thumbs-up{% elif message.tags == "alert-warning" %}fa-solid fa-triangle-exclamation{elif message.tags == "alert-info"}fa-solid fa-circle-info{% else %}fa-solid fa-bug{% endif %}',
-      });
-    </script>
-    {% endfor %}
 
     <script>
       function audioPlay(div) {
@@ -214,42 +271,3 @@
 
 
 
-<!-- {% for r in all_radios %}
-            <li id="audioFiles" class="z-[60] relative flex items-center justify-between space-x-15 cursor-pointer hover:bg-white/10 py-2 px-4 rounded-lg group transition ease-out">
-              <div class="flex items-center">
-                <img
-                  src="{% if r.image %}{{r.image.thumbnail.url}}{% else %}{% static 'images/album.jpg' %}{% endif %}"
-                  alt=""
-                  height="48"
-                  width="48"
-                  objectFit="contain"
-                  class="rounded-xl h-12 w-12 object-cover mr-3"
-                />
-                <div>
-                  <h4 class="text-white text-sm font-semibold truncate max-w-[120px]">
-                    {{r.name|title}}
-                  </h4>
-                  <p
-                    class="text-[rgb(179,179,179)] text-[13px] font-semibold group-hover:text-white"
-                  >
-                    {{r.description|safe|truncatechars:20}}
-                  </p>
-                </div>
-              </div>
-
-              <div class="md:ml-auto flex items-center space-x-2">
-                <div
-                  class="flex items-center rounded-full border-2 border-[#262626] w-[85px] h-10 relative cursor-pointer group-hover:border-white/40"
-                >
-                  <div class="text-[12px] ml-3 icon text-[#868686] hover:text-red-600 h-6 w-6">
-                    {% heroicon 'heart' style='solid' %}
-                  </div>
-                  <a href="javascript:;" data-value="{{r.mp3url}}" onclick="audioPlay(this.getAttribute('data-value'))"
-                    class="h-6 w-6 rounded-full border text-yellow-900 border-yellow-200 flex items-center justify-center absolute -right-[-10px] bg-[#dcdc21] icon hover:scale-110"
-                  >
-                    {% heroicon 'play' style='solid' %}
-                  </a>
-                </div>
-              </div>
-            </li>
-            {% endfor %}-->

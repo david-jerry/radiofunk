@@ -5,8 +5,13 @@ from django.utils.translation import gettext_lazy as _
 
 from radio_funk.users.forms import UserAdminChangeForm, UserAdminCreationForm
 
+from .models import Settings, Privacy, Wallet
+
 User = get_user_model()
 
+admin.site.register(Settings)
+admin.site.register(Privacy)
+admin.site.register(Wallet)
 
 @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):

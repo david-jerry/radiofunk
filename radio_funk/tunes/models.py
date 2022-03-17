@@ -2,6 +2,8 @@ import geocoder
 
 from django.db import models
 from django.conf import settings
+from django.contrib.gis.db.models import PointField, Manager as GeoManager
+from django.contrib.gis.geos import Point
 from django.db.models import (
     CASCADE,
     DO_NOTHING,
@@ -11,6 +13,8 @@ from django.db.models import (
     DecimalField,
     ManyToManyField,
     URLField,
+    TextField,
+    FloatField,
     FileField,
     ForeignKey,
     ImageField,
@@ -19,96 +23,66 @@ from django.db.models import (
     PositiveSmallIntegerField,
     UUIDField,
 )
+from radio_funk.utils.storages import get_radio_upload_folder
 
 from tinymce import HTMLField
 from stdimage import StdImageField
 from model_utils.models import TimeStampedModel
 from countries_plus.models import Country as CountryField
 
+from radio_funk.genre.models import Genre
+from .managers import RadioManager
+
 mapbox_access_token = settings.MAPBOX_KEY
 
+User = settings.AUTH_USER_MODEL
+
 # Create your models here.
-class Gift(TimeStampedModel):
-    name = CharField(max_length=255, blank=False, unique=True)
-    description = HTMLField('Gift Story')
-    image = StdImageField(upload_to="gift/gif", blank=True, variations={'thumbnail': {"width": 100, "height": 100, "crop": True}})
-    price = DecimalField(max_digits=20, decimal_places=2, default=0)
-
-    def __str__(self):
-        return self.name.title()
-
-    class Meta:
-        managed = True
-        verbose_name = "Gift Item"
-        verbose_name_plural = "Gift Items"
-        ordering = ["-created"]
-
-class Genre(TimeStampedModel):
-    name = CharField(max_length=255, blank=False, null=True, unique=True)
-    active = BooleanField(default=False)
-    description = HTMLField('Genre Description')
-
-    def __str__(self):
-        return self.name.title()
-
-    class Meta:
-        managed = True
-        verbose_name = "Podcast & Radio Genre"
-        verbose_name_plural = "Podcast & Radio Genres"
-        ordering = ["-created"]
-
-class Tunes(TimeStampedModel):
-    PODCAST = "Podcast"
-    STATION = "Station"
-    TYPE = (
-        (PODCAST, 'Podcast'),
-        (STATION, 'Station')
-    )
-
+class Stations(TimeStampedModel):
+    model_name="Stations"
 
     name = CharField(max_length=255, blank=False, null=True, unique=True)
     description = HTMLField('Tune Description')
-    image = StdImageField(upload_to="tune/album_art", blank=True, variations={'thumbnail': {"width": 250, "height": 250, "crop": True}})
-    mp3url = URLField(blank=False)
-    country = ForeignKey(CountryField, on_delete=CASCADE, default="US")
-    active = BooleanField(default=False)
-    genre = ManyToManyField('Genre')
-    tune_type = CharField(max_length=8, blank=True, null=True, choices=TYPE, default=STATION)
+    logo = StdImageField(upload_to=get_radio_upload_folder, blank=True, variations={'thumbnail': {"width": 250, "height": 250, "crop": True}})
+    stream_url = URLField(blank=False)
+    genre = ManyToManyField(Genre, blank=True)
+
     creator = ForeignKey('users.User', related_name='creator', on_delete=DO_NOTHING)
     website = URLField(blank=True)
 
-    address = models.TextField(default="P.O. Box 3000 Halifax, NS B3J 3E9")
-    phone = CharField(max_length=14, blank=True, null=True, default="+(902) 420-8311")
-    lat = models.FloatField(blank=True, null=True)
-    long = models.FloatField(blank=True, null=True)
+    country = ForeignKey(CountryField, on_delete=CASCADE, default="US")
+    address = TextField(blank=True, null=True)
+    phone = CharField(max_length=20, blank=True, null=True, default="+(902) 420-8311")
+
+    lat = FloatField(blank=True, null=True)
+    long = FloatField(blank=True, null=True)
+    location = PointField(srid=4326, geography=True, blank=True, null=True)
+
+    active = BooleanField(default=False)
+
+    like = ManyToManyField(User, related_name="radio_likes", default=None, blank=True)
+
+    objects = GeoManager()
+    managers = RadioManager()
 
     def __str__(self):
         return self.name.title()
 
     class Meta:
         managed = True
-        verbose_name = "Podcast & Radio Upload"
-        verbose_name_plural = "Podcast & Radio Uploads"
+        verbose_name = "Radio Upload"
+        verbose_name_plural = "Radio Uploads"
         ordering = ["-created"]
 
+    @property
+    def get_like_count(self):
+        return self.like.count()
 
     def save(self, *args, **kwargs):
         g = geocoder.mapbox(self.address, key=mapbox_access_token)
         g = g.latlng  # returns => [lat, long]
         self.lat = g[0]
         self.long = g[1]
-        return super(Tunes, self).save(*args, **kwargs)
+        self.location = Point(self.long, self.lat, srid=4326)
+        return super(Stations, self).save(*args, **kwargs)
 
-class PodcastGift(TimeStampedModel):
-    podcast = ForeignKey('Tunes', related_name='podcast', on_delete=DO_NOTHING)
-    gift = ForeignKey('Gift', related_name='gift', on_delete=DO_NOTHING)
-    sender = ForeignKey('users.User', related_name='gifter', on_delete=DO_NOTHING)
-
-    def __str__(self):
-        return f"{self.podcase.name.title()} Gifts"
-
-    class Meta:
-        managed = True
-        verbose_name = "Podcast Gift"
-        verbose_name_plural = "Podcast Gifts"
-        ordering = ["-created"]

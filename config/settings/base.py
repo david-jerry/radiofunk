@@ -3,6 +3,7 @@ Base settings to build other settings files upon.
 """
 from __future__ import absolute_import, unicode_literals
 
+import os
 import mimetypes
 from pathlib import Path
 
@@ -27,6 +28,7 @@ if READ_DOT_ENV_FILE:
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = env.bool("DJANGO_DEBUG", False)
+PRODUCTION = env.bool("PRODUCTION", False)
 # Local time zone. Choices are
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
@@ -44,13 +46,34 @@ USE_L10N = True
 USE_TZ = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#locale-paths
 LOCALE_PATHS = [str(ROOT_DIR / "locale")]
+# https://docs.djangoproject.com/en/dev/ref/settings/#locale-paths
+LANGUAGES = (
+    ('af', _('African')),
+    ('ar', _('Arabic')),
+    ('en', _('English')),
+    ('es', _('Spanish')),
+    ('fr', _('French')),
+)
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'af',}, # African
+        {'code': 'ar',}, # Arabic
+        {'code': 'en',}, # English
+        {'code': 'es',}, # Spanish
+        {'code': 'fr',}, # French
+    ),
+    'default': {
+        'fallbacks': ['en'],
+        'hide_untranslated': False,
+    }
+}
 
 MESSAGE_TAGS = {
-    messages.DEBUG: 'alert-info',
-    messages.INFO: 'alert-info',
-    messages.SUCCESS: 'alert-success',
-    messages.WARNING: 'alert-warning',
-    messages.ERROR: 'alert-danger'
+    messages.DEBUG: 'info',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger'
 }
 
 # DATABASES
@@ -58,7 +81,7 @@ MESSAGE_TAGS = {
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    "default": env.db("DATABASE_URL", default="postgres:///radio_funk"),
+    "default": env.db("DATABASE_URL", default="postgis:///radio_funk"),
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
@@ -74,8 +97,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 # APPS
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
+    'leaflet',
     "tinymce",
     "filebrowser",
+
+    'jet.dashboard',
+    'jet',
 
     "admin_honeypot",
 
@@ -90,6 +117,7 @@ DJANGO_APPS = [
     "django.contrib.humanize",  # Handy template tags
     "django.contrib.admin",
     "django.contrib.admindocs",
+    'django.contrib.gis',
     "django.forms",
 ]
 THIRD_PARTY_APPS = [
@@ -112,19 +140,37 @@ THIRD_PARTY_APPS = [
     "tailwind",
     "theme",
 
-    # icons
-    'heroicons',
-    # 'fontawesome-free',
+    'django_social_share',
 
     # image resize automatic
     'stdimage',
 
     'countries_plus',
+
+    'rosetta',
+    'parler',
+
+    # IP Address and Location
+    'geoip2',
+    # Get User phone details from IP
+    'django_user_agents',
+
+    # reactive django
+    'django_unicorn',
+
+    # photo gallery
+    # 'photologue',
+    # 'sortedm2m',
+
+    'django_browser_reload'
 ]
 
 LOCAL_APPS = [
     "radio_funk.users",
+    "radio_funk.genre",
     "radio_funk.tunes",
+    "radio_funk.mode",
+    "radio_funk.podcast",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -197,8 +243,12 @@ MIDDLEWARE = [
     "django.middleware.common.BrokenLinkEmailsMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
     'htmlmin.middleware.MarkRequestMiddleware',
+
+    'django_user_agents.middleware.UserAgentMiddleware',
+
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 # STATIC
@@ -245,7 +295,6 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "radio_funk.users.context_processors.allauth_settings",
                 "radio_funk.utils.context_processors.context_data",
             ],
         },
@@ -275,7 +324,7 @@ CSRF_COOKIE_HTTPONLY = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-browser-xss-filter
 SECURE_BROWSER_XSS_FILTER = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
-X_FRAME_OPTIONS = "DENY"
+X_FRAME_OPTIONS = "SAMESITE"
 
 # EMAIL
 # ------------------------------------------------------------------------------
@@ -295,7 +344,7 @@ ADMIN_URL = "portal/"
 ADMIN_DOC_URL = "portal/doc/"
 ADMIN_FILEBROWSER_URL = "portal/filebrowser/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [("""David Jeremiah""", "noreply@radiofunk.io")]
+ADMINS = [("""Webmaster""", "noreply@radiofunk.io"), ("""Developer""", "info@darkcodr.com")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 
@@ -405,7 +454,7 @@ SPECTACULAR_SETTINGS = {
 # ------------------------------------------------------------------------------
 # minifying django HTML Files
 HTML_MINIFY = True
-EXCLUDE_FROM_MINIFYING = ('^jet/', '^admin/', '^ckeditor/')
+EXCLUDE_FROM_MINIFYING = ('^jet/', '^admin/', '^tinymce/', '^filebrowser/')
 KEEP_COMMENTS_ON_MINIFYING = True
 
 # https://django-tailwind.readthedocs.io/en/latest/installation.html
@@ -426,11 +475,11 @@ FILEBROWSER_ADMIN_VERSIONS = ["thumbnail", "small", "medium", "big", "large"]
 
 # Maximum size, in bytes, of a request before it will be streamed to the
 # file system instead of into memory.
-FILE_UPLOAD_MAX_MEMORY_SIZE = 26214400  # i.e. 25.0 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 262144000  # i.e. 25.0 MB
 
 # Maximum size in bytes of request data (excluding file uploads) that will be
 # read before a SuspiciousOperation (RequestDataTooBig) is raised.
-DATA_UPLOAD_MAX_MEMORY_SIZE = 26214400  # i.e. 2.5 MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 262144000  # i.e. 2.5 MB
 
 # Maximum number of GET/POST parameters that will be read before a
 # SuspiciousOperation (TooManyFieldsSent) is raised.
@@ -451,6 +500,8 @@ THOUSAND_SEPARATOR = ","
 NUMBER_GROUPING = 3
 
 JET_CHANGE_FORM_SIBLING_LINKS = True
+# TODO: Add google analytics client_secret file
+# JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = (str(APPS_DIR / "client_secrets.json"),)
 JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultIndexDashboard'
 JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'
 JET_THEMES = [
@@ -490,6 +541,7 @@ JET_THEMES = [
 TINYMCE_DEFAULT_CONFIG = {
     "selector": "textarea",
     "height": "260px",
+    "width": "80%",
     'theme':'modern',
     'statusbar':'True',
     "menubar": "file edit view insert format tools table help",
@@ -515,6 +567,7 @@ TINYMCE_COMPRESSOR = True
 MAPBOX_KEY = env("MAPBOX_KEY")
 
 NPM_BIN_PATH = '/usr/local/bin/npm'
+GEOIP_PATH = str(ROOT_DIR / "geoip")
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -542,3 +595,8 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+PODCASTING_IMG_PATH = "img"
+PAGINATE_BY = 10
+FEED_ENTRIES = None
+

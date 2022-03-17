@@ -7,8 +7,8 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-  mode : 'jit',
-  darkMode: 'media',
+  // mode : 'jit',
+  darkMode: 'class',
   content: [
     /**
      * HTML. Paths to Django template files that will contain Tailwind CSS classes.
@@ -47,14 +47,14 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        xs: '475px',
+        "xs": '475px',
         ...defaultTheme.screens
       },
       fontFamily: {
-        body: ["'Dongle'", "sans-serif"],
-        sans: ["'Source Serif 4'", "system-ui"],
+        "dongle": ["'Dongle'", "sans-serif"],
+        "serif4": ["'Source Serif 4'", "system-ui"],
       },
-      color: {
+      colors: {
         grey : {
           900: "#1F1D2B",
           800: "#252836",
@@ -63,17 +63,19 @@ module.exports = {
           400: "#B7B9D2",
           100: "#EBE6E9"
         },
-        yellow: {
-          400: "#FFCE45",
-          700: "#D4AC2B",
-          900: "#9D5C0D"
-        },
-        primary: "#D4AC2B"
+        "white-200": "#FEFAF2",
+        "white-bg": "#F5E7CC",
+        "backdrop": "#f2f7ff",
+        "font": "#373e4e",
+        "font-darker": "#000000",
+        "primary": "#DAAC1F",
+        "podcast-bg": "#7879F1",
+        "live-bg":"#EB5757",
       },
       boxShadow : {
-        primary : "6px 6px 10px rgba(255,224,51, 0.32)",
-        'inverse-top' : "4px 4px #252B36",
-        'inverse-bottom' : "4px -4px #252B36",
+        "glow": "6px 6px 10px rgba(250, 125, 40, 0.22)",
+        "up": "0px -1px 3px 0px rgba(0, 0, 0, 0.1)",
+        "up-md": "0px -4px 6px -1px rgba(0, 0, 0, 0.1)"
       }
     },
   },

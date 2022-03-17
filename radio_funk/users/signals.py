@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 
 from django.dispatch import receiver
 
-from .models import Wallet, Privacy
+from .models import Wallet, Privacy, Settings
 
 from radio_funk.utils.logger import LOGGER
 
@@ -16,4 +16,5 @@ def user_post_save_signal(sender, created, instance, *args, **kwargs):
     if created:
         Wallet.objects.create(user=instance)
         Privacy.objects.create(user=instance)
+        Settings.objects.create(user=instance)
         LOGGER.info("Sent Registration Email to admin")
