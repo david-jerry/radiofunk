@@ -66,7 +66,7 @@ The following details how to deploy this application.
 
 See detailed [cookiecutter-django Heroku documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html).
 
-
 ### GDAL Heroku buildpacks
-    $ heroku buildpacks:add --index 1 https://github.com/heroku/heroku-geo-buildpack.git
- 
+``` bash
+heroku buildpacks:add --index 1 https://github.com/heroku/heroku-geo-buildpack.git
+``` 
