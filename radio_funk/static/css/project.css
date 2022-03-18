@@ -1309,6 +1309,10 @@ body::-webkit-scrollbar {
   max-height: 60px;
 }
 
+.max-h-56 {
+  max-height: 14rem;
+}
+
 .min-h-full {
   min-height: 100%;
 }
