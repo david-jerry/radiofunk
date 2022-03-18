@@ -1010,6 +1010,22 @@ body::-webkit-scrollbar {
   right: 0px;
 }
 
+.right-full {
+  right: 100%;
+}
+
+.top-16 {
+  top: 4rem;
+}
+
+.top-\[16\] {
+  top: 16;
+}
+
+.top-\[59px\] {
+  top: 59px;
+}
+
 .z-20 {
   z-index: 20;
 }
@@ -3759,6 +3775,11 @@ body::-webkit-scrollbar {
   .md\:px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .md\:px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   .md\:pb-4 {

@@ -74,11 +74,11 @@
 
   </head>
   {% if request.path == home_url and device == "Mobile" %}
-  <body onload="iziToast.show({'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{playlist:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
+  <body onload="iziToast.show({'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{playlist:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
   {% elif request.path == home_url %}
-  <body onload="iziToast.show({'maxWidth':'50%', 'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{playlist:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
+  <body onload="iziToast.show({'maxWidth':'50%', 'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{playlist:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
   {% else %}
-  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{playlist:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-white-200 bg-white-bg text-font relative">
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{playlist:false, search:false, lang_open:false, m_lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-white-200 bg-white-bg text-font relative">
   {% endif %}
 
     {% include 'snippets/sidenav.html' %}
@@ -100,7 +100,7 @@
           {% block search_component %}{% endblock search_component %}
         </div>
         <div class="flex items-center space-x-4">
-          <button @click="lang_open = ! lang_open" class="block cursor-pointer md:hidden focus:border-none border-none">
+          <button @click="m_lang_open = ! m_lang_open" class="block cursor-pointer md:hidden focus:border-none border-none">
             <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clip-rule="evenodd"></path>
             </svg>
@@ -124,7 +124,7 @@
         </div>
       </div>
       <!-- TODO: convert this to notification component -->
-      <div :class="{'right-4':notif === true, '-right-full':notif === false}" class="absolute z-20 p-4 top-14 -right-full dark:bg-black/80 bg-white-200/80 w-52 h-min duration-200 ease-in-out shadow-xl rounded-b-lg md:flex md:flex-col space-y-4">
+      <div :class="{'right-4':notif === true, '-right-full':notif === false}" class="absolute z-20 p-4 top-14 -right-full dark:bg-black/80 bg-white-bg/80 w-52 h-min duration-200 ease-in-out shadow-xl rounded-b-lg md:flex md:flex-col space-y-4">
         <span class="block uppercase border-b-2 font-black dark:text-white-bg text-2xl text-left">notifications</span>
         <a href="/" class="flex items-center space-x-2 p-2 w-full h-min rounded-md hover:bg-white-200/10 leading-none">
           <div class="w-2/3">
@@ -147,7 +147,17 @@
 
       {% block content %} {% endblock content %}
 
-      <div :class="{'md:translate-x-2':lang_open === true, 'md:-translate-x-full':lang_open === false}" class="md:bottom-3 md:transform md:-translate-x-full dark:bg-black/80 bg-white-bg/80 h-min py-2 md:px-4 shadow-xl rounded-lg absolute md:flex md:items-center space-x-4 z-20 duration-200 ease-in-out">
+      <div :class="{'md:translate-x-2':lang_open === true, 'md:-translate-x-full':lang_open === false}" class="hidden md:flex bottom-3 transform -translate-x-full dark:bg-black/80 bg-white-bg/80 h-min py-2 px-4 shadow-xl rounded-lg absolute items-center space-x-4 z-20 duration-200 ease-in-out">
+        {% for language in languages %}
+        <!-- <a href="/{{language.code}}/?next=/{{language.code}}{{request.path|slice:'3:'}}" class="flex items-center space-x-2 hover:text-primary {% if LANGUAGE_CODE == language.code %}text-primary{% else %}{% if dark %}text-gray-50{% else %}text-font-darker{% endif %}{% endif %} transition-all duration-200 ease-in-out"> -->
+        <a href="/{{language.code}}/" class="flex items-center space-x-2 hover:text-podcast-bg dark:hover:text-live-bg {% if LANGUAGE_CODE == language.code %}dark:text-live-bg text-podcast-bg{% else %} dark:text-white-200 text-font-darker {% endif %} transition-all duration-200 ease-in-out">
+          <img class="fill-current" src="{% static 'images/flags/png/' %}{{ language.code }}.png" alt="{{ language.code }} flag" />
+          <span class="font-black block">{{ language.code|upper }}</span>
+        </a>
+        {% endfor %}
+      </div>
+
+      <div :class="{'right-1':m_lang_open === true, '-right-full':m_lang_open === false}" class="flex md:hidden top-[59px] -right-full dark:bg-black/80 bg-white-bg/80 h-min py-2 px-2 shadow-xl rounded-lg absolute items-center space-x-4 z-20 duration-200 ease-in-out">
         {% for language in languages %}
         <!-- <a href="/{{language.code}}/?next=/{{language.code}}{{request.path|slice:'3:'}}" class="flex items-center space-x-2 hover:text-primary {% if LANGUAGE_CODE == language.code %}text-primary{% else %}{% if dark %}text-gray-50{% else %}text-font-darker{% endif %}{% endif %} transition-all duration-200 ease-in-out"> -->
         <a href="/{{language.code}}/" class="flex items-center space-x-2 hover:text-podcast-bg dark:hover:text-live-bg {% if LANGUAGE_CODE == language.code %}dark:text-live-bg text-podcast-bg{% else %} dark:text-white-200 text-font-darker {% endif %} transition-all duration-200 ease-in-out">
