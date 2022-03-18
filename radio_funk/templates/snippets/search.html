@@ -6,12 +6,12 @@
     <!-- TODO: all models come below here in their respective styles -->
     <div class="relative md:flex md:items-start md:space-x-4 space-y-4 w-full h-min py-2">
       {% if object_list %}
-      <div class="flex-col w-full h-2/3 md:w-1/2 space-y-2">
+      <div class="flex-col w-full h-2/3 md:w-1/2">
         <h2 class="font-black text-2xl uppercase">top results</h2>
         {% for obj in object_list %}
           {% with obj|model_name as klass %}
             {% if klass == "User" %}
-            <div class="{% if not forloop.first %}mt-2{% endif %}rounded-md w-full h-min bg-gradient-to-b shadow-md hover:shadow-lg dark:from-gray-800 dark:to-gray-700 from-gray-50 to-gray-200 p-4 duration-300">
+            <div class="mt-2 rounded-md w-full h-min bg-gradient-to-b shadow-md hover:shadow-lg dark:from-gray-800 dark:to-gray-700 from-gray-50 to-gray-200 p-4 duration-300">
               <div class="items-center flex justify-between">
                 <div class="flex items-center space-x-2">
                   <img src="{% if obj.image.thumbnail %}{{obj.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-10 h-10 rounded-full aspect-[1/1]">
@@ -23,7 +23,7 @@
               </div>
             </div>
             {% elif klass == "Stations" %}
-            <div class="rounded-md w-full h-min bg-gradient-to-b shadow-md hover:shadow-lg dark:from-gray-800 dark:to-gray-700 from-gray-50 to-gray-200 p-4 duration-300">
+            <div class="mt-2 rounded-md w-full h-min bg-gradient-to-b shadow-md hover:shadow-lg dark:from-gray-800 dark:to-gray-700 from-gray-50 to-gray-200 p-4 duration-300">
               <div class="items-center flex justify-between">
                 <div class="flex items-center space-x-2">
                   <img src="{{obj.logo.thumbnail.url}}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-10 h-10 rounded-lg">
