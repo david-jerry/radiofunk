@@ -25,6 +25,8 @@ def enable_dark_mode(request):
         # else:
         ip = '8.8.8.8'
 
+    LOGGER.info(f"IP Address: {ip}")
+
     if not Mode.objects.filter(ip=ip, theme='dark').exists():
         Mode.objects.create(ip=ip, theme="dark")
     else:
