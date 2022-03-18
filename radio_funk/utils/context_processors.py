@@ -71,8 +71,8 @@ def context_data(request):
 
     all_radios = Stations.managers.closest(cur_loc=current_loc, dist=5000000000)
     other_radios = Stations.managers.closest(cur_loc=current_loc, dist=5000000000).other_radios(query=location_country)
-    fiftykm_close_radios = Stations.managers.closest(cur_loc=current_loc, dist=500000)[:12] if Stations.managers.closest(cur_loc=current_loc, dist=500000).exists() else None
-    closest_radios = Stations.managers.closest(cur_loc=current_loc, dist=500000)[:12] if Stations.managers.closest(cur_loc=current_loc, dist=500000).exists() else all_radios[:10]
+    fiftykm_close_radios = Stations.managers.closest(cur_loc=current_loc, dist=5000000)[:12] if Stations.managers.closest(cur_loc=current_loc, dist=500000).exists() else None
+    closest_radios = Stations.managers.closest(cur_loc=current_loc, dist=5000000)[:12] if Stations.managers.closest(cur_loc=current_loc, dist=500000).exists() else all_radios[:10]
     active_radios = Stations.managers.active().order_by("created")[:12] if Stations.managers.active().exists() else None
     popular_radios = Stations.managers.popular(cur_loc=current_loc, dist=50000000)[:12] if Stations.managers.popular(cur_loc=current_loc, dist=500000).exists() else all_radios[:10]
     radios_in_country = Stations.managers.closest(cur_loc=current_loc, dist=50000000).country(query=location_country)[:10] if Stations.managers.closest(cur_loc=current_loc, dist=50000000).country(query=location_country).exists() else None
