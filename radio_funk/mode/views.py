@@ -36,12 +36,11 @@ def enable_dark_mode(request):
     """)
 
 
-@require_http_methods(['PUT'])
+@require_http_methods(['PUT', 'POST'])
 def enable_light_mode(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[0]
-        return ip
     else:
         if settings.PRODUCTION:
             ip = request.META.get('REMOTE_ADDR')
