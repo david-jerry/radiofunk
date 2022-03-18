@@ -70,3 +70,6 @@ See detailed [cookiecutter-django Heroku documentation](http://cookiecutter-djan
 ``` bash
 heroku buildpacks:add --index 1 https://github.com/heroku/heroku-geo-buildpack.git
 ``` 
+### Final Thoughts on this project
+
+
