@@ -70,13 +70,13 @@ def context_data(request):
 
 
     all_radios = Stations.managers.closest(cur_loc=current_loc, dist=5000000000)
-    fiftykm_close_radios = Stations.managers.closest(cur_loc=current_loc, dist=50000)[:12] if Stations.managers.closest(cur_loc=current_loc, dist=50000).exists() else None
-    closest_radios = Stations.managers.closest(cur_loc=current_loc, dist=50000)[:12] if Stations.managers.closest(cur_loc=current_loc, dist=50000).exists() else all_radios[:10]
+    fiftykm_close_radios = Stations.managers.closest(cur_loc=current_loc, dist=500000)[:12] if Stations.managers.closest(cur_loc=current_loc, dist=500000).exists() else None
+    closest_radios = Stations.managers.closest(cur_loc=current_loc, dist=500000)[:12] if Stations.managers.closest(cur_loc=current_loc, dist=500000).exists() else all_radios[:10]
     active_radios = Stations.managers.active().order_by("created")[:12] if Stations.managers.active().exists() else None
-    popular_radios = Stations.managers.popular(cur_loc=current_loc, dist=50000)[:12] if Stations.managers.popular(cur_loc=current_loc, dist=50000).exists() else all_radios[:10]
-    radios_in_country = Stations.managers.country(query=location_country_code.upper())[:10] if Stations.managers.country(query=location_country_code.upper()) else None
-    popular_radios_in_country = Stations.managers.popular(cur_loc=current_loc, dist=50000).country(query=location_country_code.upper())[:5] if Stations.managers.popular(cur_loc=current_loc, dist=50000).country(query=location_country_code.upper()) else all_radios[:10]
-    radios_in_country_count = Stations.managers.country(query=location_country_code.upper()).count() if Stations.managers.country(query=location_country_code.upper()) else 0
+    popular_radios = Stations.managers.popular(cur_loc=current_loc, dist=500000)[:12] if Stations.managers.popular(cur_loc=current_loc, dist=500000).exists() else all_radios[:10]
+    radios_in_country = Stations.managers.country(query=location_country)[:10] if Stations.managers.country(query=location_country).exists() else None
+    popular_radios_in_country = popular_radios.country(query=location_country)[:5] if popular_radios.country(query=location_country).exists() else all_radios[:10]
+    radios_in_country_count = closest_radios.country(query=location_country).count() if closest_radios.country(query=location_country).exists() else 0
     # podcasts = Podcasts.objects.all().order_by("created")[:12]
 
     genres = Genre.objects.popular()[:10] if Genre.objects.popular().exists() else None
@@ -176,7 +176,7 @@ def context_data(request):
         'os_version': os_version,
         'user_ip': ip,
         'location_country': location_country,
-        'location_country_code': location_country_code,
+        'location_country': location_country,
         'location_latitude': location_latitude,
         'location_longitude': location_longitude,
         'location_city': location_city,
