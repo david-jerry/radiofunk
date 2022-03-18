@@ -29,6 +29,9 @@ from tinymce import HTMLField
 from stdimage import StdImageField
 from model_utils.models import TimeStampedModel
 from countries_plus.models import Country as CountryField
+from autoslug import AutoSlugField
+
+from django.utils.translation import ugettext_lazy as _
 
 from radio_funk.genre.models import Genre
 from .managers import RadioManager
@@ -42,7 +45,8 @@ class Stations(TimeStampedModel):
     model_name="Stations"
 
     name = CharField(max_length=255, blank=False, null=True, unique=True)
-    description = HTMLField('Tune Description')
+    slug = AutoSlugField(_("slug"), populate_from="name", blank="True", unique="True")
+    description = HTMLField(_('Tune Description'))
     logo = StdImageField(upload_to=get_radio_upload_folder, blank=True, variations={'thumbnail': {"width": 250, "height": 250, "crop": True}})
     stream_url = URLField(blank=False)
     genre = ManyToManyField(Genre, blank=True)
