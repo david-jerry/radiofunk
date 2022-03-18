@@ -12,7 +12,7 @@
 {% endblock javascript %}
 
 
-{% block search_component %}<span class="block dark:text-primary text-font-darker font-extrabold text-2xl truncate leading-none">{{greeting}}, {% if request.user.is_authenticated %}{{request.user.username|title}}{% else %}Partner{% endif %}</span>{% endblock search_component %}
+{% block search_component %}<span class="hidden md:block dark:text-white-bg text-font-darker font-extrabold text-2xl truncate leading-none">{{greeting}}, {% if request.user.is_authenticated %}{{request.user.username|title}}{% else %}Partner{% endif %}. </span>{% endblock search_component %}
 
 
 {% block content %}

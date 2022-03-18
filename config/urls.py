@@ -49,13 +49,13 @@ urlpatterns = i18n_patterns(
         _("radio/"), TemplateView.as_view(template_name="pages/about.html"), name="radio"
     ),
     path(
-        _("podcasts/"), TemplateView.as_view(template_name="pages/about.html"), name="podcasts"
+        _("podcasts/"), TemplateView.as_view(template_name="pages/podcast.html"), name="podcasts"
     ),
     path(
         _("history/"), TemplateView.as_view(template_name="pages/about.html"), name="history"
     ),
     path(
-        _("events/"), TemplateView.as_view(template_name="pages/about.html"), name="events"
+        _("live/"), TemplateView.as_view(template_name="pages/live.html"), name="events"
     ),
 
     # dark mode and light mode urls
