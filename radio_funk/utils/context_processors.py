@@ -32,6 +32,8 @@ def context_data(request):
         else:
             ip = '8.8.8.8'
 
+    LOGGER.info(f"IP ADDRESS: {ip}")
+
     device_type = ""
     browser_type = ""
     browser_version = ""
