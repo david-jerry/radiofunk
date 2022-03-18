@@ -37,8 +37,8 @@ class Mode(TimeStampedModel):
         verbose_name_plural = "Dark or Light Themes"
         ordering = ["-created"]
 
-    def save(self, *args, **kwargs):
-        if self.__class__.objects.count():
-            self.pk = self.__class__.objects.first().pk
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if self.__class__.objects.count():
+    #         self.pk = self.__class__.objects.first().pk
+    #     super().save(*args, **kwargs)
 
