@@ -13,7 +13,7 @@ from radio_funk.mode.models import Mode
 
 # @require_http_methods(['GET', 'POST', 'PUT'])
 def enable_dark_mode(request):
-    xx_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[0]
     else:
