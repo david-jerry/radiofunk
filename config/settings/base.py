@@ -499,7 +499,7 @@ THOUSAND_SEPARATOR = ","
 # THOUSAND_SEPARATOR. 0 means no grouping, 3 means splitting by thousands...
 NUMBER_GROUPING = 3
 
-JET_CHANGE_FORM_SIBLING_LINKS = True
+# JET_CHANGE_FORM_SIBLING_LINKS = True
 # TODO: Add google analytics client_secret file
 # JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = (str(APPS_DIR / "client_secrets.json"),)
 JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultIndexDashboard'
@@ -556,7 +556,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "language": "en",  # To force a specific language instead of the Django current language.
 }
 # TINYMCE_SPELLCHECKER = True
-TINYMCE_COMPRESSOR = True
+# TINYMCE_COMPRESSOR = True
 
 # GOOGLE_CLIENT_ID = env('GOOGLE_CLIENT_ID')
 # GOOGLE_CLIENT_SECRET = env('GOOGLE_CLIENT_SECRET')
