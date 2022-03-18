@@ -20,9 +20,10 @@ from .managers import GenreManager
 class Genre(TimeStampedModel):
     name = CharField(_("Genre Name"), max_length=255, blank=False, null=True, unique=True)
     slug = AutoSlugField(_("Slug"), populate_from="name", unique="True", null=True)
-    active = BooleanField(default=True)
     color = CharField(_("Background Color"), blank=True, max_length=10)
     description = HTMLField(_('Genre Description'))
+
+    active = BooleanField(default=True)
 
     objects = GenreManager()
 
