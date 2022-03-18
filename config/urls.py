@@ -57,13 +57,15 @@ urlpatterns = i18n_patterns(
     path(
         _("events/"), TemplateView.as_view(template_name="pages/about.html"), name="events"
     ),
+
+    # dark mode and light mode urls
     path("dark_mode/", view=enable_dark_mode, name="mode"),
     path("light_mode/", view=enable_light_mode, name="lmode"),
 
     # Django Admin, use {% url 'admin:index' %}
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
-    path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
-    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
+    # path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    # path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     path(settings.ADMIN_URL, admin.site.urls),
     path(settings.ADMIN_DOC_URL, include("django.contrib.admindocs.urls")),
 
