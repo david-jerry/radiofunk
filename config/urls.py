@@ -65,7 +65,9 @@ urlpatterns = i18n_patterns(
     # Django Admin, use {% url 'admin:index' %}
     path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
-    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+
+    path(settings.ADMIN_FILEBROWSER_URL, filebrowser.urls),
+    path('admin/', include('admin_honeypot.urls', 'admin_honeypot')),
     path(settings.ADMIN_URL, admin.site.urls),
     path(settings.ADMIN_DOC_URL, include("django.contrib.admindocs.urls")),
 
@@ -79,7 +81,7 @@ urlpatterns = i18n_patterns(
     # Your stuff: custom urls includes go here
     path('tinymce/', include('tinymce.urls')),
     path('unicorn/', include('django_unicorn.urls')),
-    path(settings.ADMIN_FILEBROWSER_URL, filebrowser.urls),
+    # path(settings.ADMIN_FILEBROWSER_URL, filebrowser.urls),
 
     path("__reload__/", include("django_browser_reload.urls")),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
