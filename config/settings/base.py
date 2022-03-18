@@ -97,10 +97,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 # APPS
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
-    "filebrowser",
-
     'jet.dashboard',
     'jet',
+
+    "filebrowser",
 
     "admin_honeypot",
 

@@ -63,9 +63,9 @@ urlpatterns = i18n_patterns(
     path("light_mode/", view=enable_light_mode, name="lmode"),
 
     # Django Admin, use {% url 'admin:index' %}
-    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
+    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path(settings.ADMIN_URL, admin.site.urls),
     path(settings.ADMIN_DOC_URL, include("django.contrib.admindocs.urls")),
 
