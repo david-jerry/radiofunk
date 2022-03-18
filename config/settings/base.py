@@ -99,8 +99,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 DJANGO_APPS = [
     'leaflet',
 
-    'jet.dashboard',
-    'jet',
+    # 'jet.dashboard',
+    # 'jet',
 
     "admin_honeypot",
 
