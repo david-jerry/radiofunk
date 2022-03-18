@@ -13,16 +13,17 @@ from radio_funk.mode.models import Mode
 
 # @require_http_methods(['GET', 'POST', 'PUT'])
 def enable_dark_mode(request):
-    ip = request.META.get('HTTP_X_FORWARDED_FOR') or request.META.get('REMOTE_ADDR')
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[0]
         return ip
+    elif not x_forwarded_for:
+        ip = request.META.get('REMOTE_ADDR')
     else:
-        if settings.PRODUCTION:
-            ip = request.META.get('REMOTE_ADDR')
-        else:
-            ip = '8.8.8.8'
+        # if settings.PRODUCTION:
+        #     ip = request.META.get('REMOTE_ADDR')
+        # else:
+        ip = '8.8.8.8'
 
     if not Mode.objects.filter(ip=ip, theme='dark').exists():
         Mode.objects.create(ip=ip, theme="dark")
