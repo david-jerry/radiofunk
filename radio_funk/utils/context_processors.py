@@ -79,7 +79,7 @@ def context_data(request):
     radios_in_country_count = Stations.managers.closest(cur_loc=current_loc, dist=50000000).country(query=location_country).count() if Stations.managers.closest(cur_loc=current_loc, dist=50000000).country(query=location_country).exists() else 0
     # podcasts = Podcasts.objects.all().order_by("created")[:12]
 
-    genres = Genre.objects.popular()[:10] if Genre.objects.popular().exists() else None
+    genres = Genre.objects.popular()[:20] if Genre.objects.popular().exists() else None
 
     # if request.user.is_authenticated:
     #     transactions = Transactions.objects.filter(user=request.user)[:20]
