@@ -105,7 +105,7 @@
   </div>
   <!-- body of radio popup -->
   <div class="space-y-2">
-    <div x-transition :class="{'max-h-56 md:max-h-[455px] p-2':radio === true, 'h-0':radio === false }" class="w-full h-0 dark:bg-black/80 bg-white-200/80 space-y-8 overflow-y-scroll scrollbar-hide duration-500">
+    <div x-transition :class="{'max-h-[9rem] md:max-h-[455px] p-2':radio === true, 'h-0':radio === false }" class="w-full h-0 dark:bg-black/80 bg-white-200/80 space-y-8 overflow-y-scroll scrollbar-hide duration-500">
       {% if radios_in_country > 0 %}
       <div>
         <h2 class="font-black text-2xl dark:text-primary text-live-bg">Popular Stations in {{location_country_code|upper}}</h2>

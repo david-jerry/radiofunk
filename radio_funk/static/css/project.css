@@ -1313,6 +1313,18 @@ body::-webkit-scrollbar {
   max-height: 14rem;
 }
 
+.max-h-\[56\] {
+  max-height: 56;
+}
+
+.max-h-\[9re\] {
+  max-height: 9re;
+}
+
+.max-h-\[9rem\] {
+  max-height: 9rem;
+}
+
 .min-h-full {
   min-height: 100%;
 }
