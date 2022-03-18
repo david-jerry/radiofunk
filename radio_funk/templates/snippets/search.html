@@ -53,7 +53,7 @@
             <div class="rounded-md w-full h-min bg-gradient-to-b shadow-md hover:shadow-lg dark:from-gray-800 dark:to-gray-700 from-gray-50 to-gray-200 p-4 duration-300">
               <div class="items-center flex justify-between">
                 <div class="flex items-center space-x-2">
-                  <img src="{{obj.image.thumbnail.url}}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-10 h-10 rounded-lg">
+                  <img src="{% if obj.image.thumbnail %}{{obj.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-10 h-10 rounded-lg">
                   <div class="flex-col text-left w-2/3 truncate leading-none">
                     <h2 class="font-black text-xl leading-none">{{obj.name|upper|truncatechars:16}} <sup class="text-blue-400 leading-none">E</sup></h2>
                     <p class="font-serif4 text-md leading-none">{{obj.description|safe|title|truncatechars:25}}</p>
@@ -88,7 +88,7 @@
     {% for obj in genres %}
       <div class="overflow-hidden relative w-full h-full p-4 rounded-md aspect-[1/1] uppercase font-2xl" style="background-color:{{obj.color|lower}};">
         <div class="my-auto w-full h-full block self-center text-4xl font-black">{{obj.name|upper}}</div>
-        <img src="{{obj.get_most_popular.image.thumbnail.url}}" alt="{{obj.get_most_popuar.name|title}} image" class="z-10 h-2/4 w-2/4 object-contain rotate-45 absolute -bottom-3 -right-3 shadow-lg rounded-md">
+        <img src="{% if obj.get_most_popular.image.thumbnail %}{{obj.get_most_popular.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.get_most_popuar.name|title}} image" class="z-10 h-2/4 w-2/4 object-contain rotate-45 absolute -bottom-3 -right-3 shadow-lg rounded-md">
       </div>
     {% endfor %}
   </div>
