@@ -97,14 +97,15 @@ WSGI_APPLICATION = "config.wsgi.application"
 # APPS
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
-    'leaflet',
-    "tinymce",
     "filebrowser",
 
-    # 'jet.dashboard',
-    # 'jet',
+    'jet.dashboard',
+    'jet',
 
     "admin_honeypot",
+
+    'leaflet',
+    "tinymce",
 
     "django.contrib.auth",
     "django.contrib.contenttypes",
