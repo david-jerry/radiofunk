@@ -32,7 +32,8 @@ def context_data(request):
         else:
             ip = '8.8.8.8'
 
-    Mode.objects.get_or_create(ip=ip, theme="light")
+    if not Mode.objects.filter(ip=ip).exists()
+        Mode.objects.create(ip=ip, theme="light")
 
     device_type = ""
     browser_type = ""
