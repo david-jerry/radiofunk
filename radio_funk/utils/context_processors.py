@@ -75,8 +75,8 @@ def context_data(request):
     active_radios = Stations.managers.active().order_by("created")[:12] if Stations.managers.active().exists() else None
     popular_radios = Stations.managers.popular(cur_loc=current_loc, dist=500000)[:12] if Stations.managers.popular(cur_loc=current_loc, dist=500000).exists() else all_radios[:10]
     radios_in_country = Stations.managers.country(query=location_country)[:10] if Stations.managers.country(query=location_country).exists() else None
-    popular_radios_in_country = popular_radios.country(query=location_country)[:5] if popular_radios.country(query=location_country).exists() else all_radios[:10]
-    radios_in_country_count = closest_radios.country(query=location_country).count() if closest_radios.country(query=location_country).exists() else 0
+    popular_radios_in_country = Stations.managers.popular(cur_loc=current_loc, dist=500000).country(query=location_country)[:5] if Stations.managers.popular(cur_loc=current_loc, dist=500000).country(query=location_country).exists() else all_radios[:10]
+    radios_in_country_count = Stations.managers.closest(cur_loc=current_loc, dist=500000).country(query=location_country).count() if Stations.managers.closest(cur_loc=current_loc, dist=500000).country(query=location_country).exists() else 0
     # podcasts = Podcasts.objects.all().order_by("created")[:12]
 
     genres = Genre.objects.popular()[:10] if Genre.objects.popular().exists() else None
