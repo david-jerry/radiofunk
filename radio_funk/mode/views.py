@@ -13,24 +13,19 @@ from radio_funk.mode.models import Mode
 
 # @require_http_methods(['GET', 'POST', 'PUT'])
 def enable_dark_mode(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    xx_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[0]
-        return ip
-    elif not x_forwarded_for:
-        ip = request.META.get('REMOTE_ADDR')
     else:
-        # if settings.PRODUCTION:
-        #     ip = request.META.get('REMOTE_ADDR')
-        # else:
-        ip = '8.8.8.8'
+        if settings.PRODUCTION:
+            ip = request.META.get('REMOTE_ADDR')
+        else:
+            ip = '8.8.8.8'
 
     LOGGER.info(f"IP Address: {ip}")
 
-    if not Mode.objects.filter(ip=ip, theme='dark').exists():
-        Mode.objects.create(ip=ip, theme="dark")
-    else:
-        Mode.objects.filter(ip=ip, theme='light').update(theme='dark')
+    Mode.objects.filter(ip=ip, theme='light').update(theme='dark')
+
     # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return HttpResponse("""
         <button :class="{'hidden':dark === true, '':dark === false}" x-on:click="dark = true, iziToast.success({'message':'Dark Mode Activated', 'id':'alert-success', 'color':'green', 'title':'DARK MODE', 'timeout': 5000, 'resetOnHover': true, 'balloon': true})" hx-post="/dark_mode/" hx-trigger="click" hx-swap="outerHTML" class="block" type="button">

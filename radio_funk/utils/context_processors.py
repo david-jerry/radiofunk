@@ -32,7 +32,7 @@ def context_data(request):
         else:
             ip = '8.8.8.8'
 
-    LOGGER.info(f"IP ADDRESS: {ip}")
+    Mode.objects.get_or_create(ip=ip, theme="light")
 
     device_type = ""
     browser_type = ""
