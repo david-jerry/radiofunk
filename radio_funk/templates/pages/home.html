@@ -182,7 +182,7 @@
     const map = new mapboxgl.Map({
       container: "map",
       style: "mapbox://styles/mapbox/{% if dark %}dark-v9{% else %}streets-v8{% endif %}",
-      center: [-114.233, 50.688],
+      center: [{{location_longitude}}, {{location_latitude}}],
       zoom: 3,
       pitch: 40,
     });
