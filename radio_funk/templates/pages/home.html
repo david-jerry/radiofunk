@@ -142,9 +142,10 @@
       </div>
       {% endif %}
 
+      {% if other_radios %}
       <div>
         <h2 class="font-black text-4xl dark:text-primary text-live-bg">More Stations</h2>
-        {% for r in all_radios %}
+        {% for r in other_radios %}
           <div class="border-b-[0.75px] dark:border-gray-600 border-gray-400 flex items-center justify-between p-2 w-full dark:hover:bg-black/30 hover:bg-gray-200 hover-trigger">
             <h2 class="font-black text-2xl max-w-4/5 truncate cursor-pointer">{{r.name|title}}</h2>
             <div>
@@ -157,6 +158,7 @@
           </div>
         {% endfor %}
       </div>
+      {% endif %}
     </div>
     <div :class="{'flex p-4':radio === true, 'hidden':radio === false }" class="w-full h-min dark:bg-black bg-white-bg items-center justify-between duration-300">
       <svg @click="search = false" :class="{'dark:text-primary text-live-bg':search === false}" class="w-8 h-8 hover:text-live-bg dark:hover:text-primary duration-300 cursor-pointer" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12 1.586l-4 4v12.828l4-4V1.586zM3.707 3.293A1 1 0 002 4v10a1 1 0 00.293.707L6 18.414V5.586L3.707 3.293zM17.707 5.293L14 1.586v12.828l2.293 2.293A1 1 0 0018 16V6a1 1 0 00-.293-.707z" clip-rule="evenodd"></path></svg>

@@ -25,6 +25,12 @@ class RadioQuerySet(QuerySet):
             qs = qs.active().filter(country__name__icontains=query).distinct()
         return qs
 
+    def other_radios(self, query=None):
+        qs = self
+        if query is not None:
+            qs = qs.active().exclude(country__name__icontains=query).distinct()
+        return qs
+
     def closest(self, dist=None, cur_loc=None):
         qs = self
         if cur_loc is not None and dist is not None:
@@ -52,6 +58,9 @@ class RadioManager(Manager):
         return self.get_queryset().search(query=query)
 
     def country(self, query=None):
+        return self.get_queryset().country(query=query)
+
+    def other_radios(self, query=None):
         return self.get_queryset().country(query=query)
 
     def active(self):

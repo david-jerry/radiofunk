@@ -70,6 +70,7 @@ def context_data(request):
 
 
     all_radios = Stations.managers.closest(cur_loc=current_loc, dist=5000000000)
+    other_radios = Stations.managers.closest(cur_loc=current_loc, dist=5000000000).other_radios(query=location_country)
     fiftykm_close_radios = Stations.managers.closest(cur_loc=current_loc, dist=50000000)[:12] if Stations.managers.closest(cur_loc=current_loc, dist=50000000).exists() else None
     closest_radios = Stations.managers.closest(cur_loc=current_loc, dist=50000000)[:12] if Stations.managers.closest(cur_loc=current_loc, dist=50000000).exists() else all_radios[:10]
     active_radios = Stations.managers.active().order_by("created")[:12] if Stations.managers.active().exists() else None
@@ -158,6 +159,7 @@ def context_data(request):
         'popular_radios': popular_radios,
         'popular_radios_in_country': popular_radios_in_country,
         'radios_in_country_count': radios_in_country_count,
+        'other_radios': other_radios,
 
         'episodes': episodes,
         'popular_episodes': popular_episodes,
