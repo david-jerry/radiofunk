@@ -101,8 +101,8 @@ DJANGO_APPS = [
     "tinymce",
     "filebrowser",
 
-    'jet.dashboard',
-    'jet',
+    # 'jet.dashboard',
+    # 'jet',
 
     "admin_honeypot",
 
