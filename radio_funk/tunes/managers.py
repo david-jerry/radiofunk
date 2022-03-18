@@ -22,8 +22,8 @@ class RadioQuerySet(QuerySet):
     def country(self, query=None):
         qs = self
         if query is not None:
-            lookup = Q(country__name__icontains=query)
-            qs = qs.active().filter(lookup).distinct()
+            qs = qs.active().filter(country__name__icontains=query).distinct()
+        return qs
 
     def closest(self, dist=None, cur_loc=None):
         qs = self
