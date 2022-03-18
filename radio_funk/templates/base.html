@@ -151,7 +151,7 @@
         {% for language in languages %}
         <!-- <a href="/{{language.code}}/?next=/{{language.code}}{{request.path|slice:'3:'}}" class="flex items-center space-x-2 hover:text-primary {% if LANGUAGE_CODE == language.code %}text-primary{% else %}{% if dark %}text-gray-50{% else %}text-font-darker{% endif %}{% endif %} transition-all duration-200 ease-in-out"> -->
         <a href="/{{language.code}}/" class="flex items-center space-x-2 hover:text-podcast-bg dark:hover:text-live-bg {% if LANGUAGE_CODE == language.code %}dark:text-live-bg text-podcast-bg{% else %} dark:text-white-200 text-font-darker {% endif %} transition-all duration-200 ease-in-out">
-          <img class="fill-current" src="/static/images/flags/png/{{ language.code }}.png" alt="{{ language.code }} flag" />
+          <img class="fill-current" src="{% static 'images/flags/png/' %}{{ language.code }}.png" alt="{{ language.code }} flag" />
           <span class="font-black block">{{ language.code|upper }}</span>
         </a>
         {% endfor %}
