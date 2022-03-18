@@ -16,7 +16,7 @@
                 <div class="flex items-center space-x-2">
                   <img src="{% if obj.image.thumbnail %}{{obj.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-10 h-10 rounded-full aspect-[1/1]">
                   <div class="flex-col text-left w-2/3 truncate leading-none">
-                    <h2 class="font-black text-xl leading-none">{% if obj.name %}{{obj.name|upper|truncatewords:4}}{% else %}{{obj.username|title}}{% endif %} <sup class="text-green-400 leading-none">A</sup></h2>
+                    <h2 class="font-black text-xl leading-none">{% if obj.name %}{{obj.name|upper|truncatechars:18}}{% else %}{{obj.username|title}}{% endif %} <sup class="text-green-400 leading-none">A</sup></h2>
                     <p class="text-md leading-none uppercase">popular artist</p>
                   </div>
                 </div>
@@ -28,8 +28,8 @@
                 <div class="flex items-center space-x-2">
                   <img src="{{obj.logo.thumbnail.url}}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-10 h-10 rounded-lg">
                   <div class="flex-col text-left w-2/3 truncate leading-none">
-                    <h2 class="font-black text-xl leading-none">{{obj.name|upper|truncatewords:4}} <sup class="text-primary leading-none">R</sup></h2>
-                    <p class="font-serif4 text-md leading-none">{{obj.description|safe|title|truncatewords:10}}</p>
+                    <h2 class="font-black text-xl leading-none">{{obj.name|upper|truncatechars:15}} <sup class="text-primary leading-none">R</sup></h2>
+                    <p class="font-serif4 text-md leading-none">{{obj.description|safe|title|truncatechars:20}}</p>
                   </div>
                 </div>
               </div>
@@ -55,8 +55,8 @@
                 <div class="flex items-center space-x-2">
                   <img src="{{obj.image.thumbnail.url}}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-10 h-10 rounded-lg">
                   <div class="flex-col text-left w-2/3 truncate leading-none">
-                    <h2 class="font-black text-xl leading-none">{{obj.name|upper|truncatewords:4}} <sup class="text-blue-400 leading-none">E</sup></h2>
-                    <p class="font-serif4 text-md leading-none">{{obj.description|safe|title|truncatewords:10}}</p>
+                    <h2 class="font-black text-xl leading-none">{{obj.name|upper|truncatechars:16}} <sup class="text-blue-400 leading-none">E</sup></h2>
+                    <p class="font-serif4 text-md leading-none">{{obj.description|safe|title|truncatechars:25}}</p>
                   </div>
                 </div>
               </div>
