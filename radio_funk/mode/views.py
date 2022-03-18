@@ -16,10 +16,10 @@ def enable_dark_mode(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[0]
-        return str(ip)
+        return ip
     else:
         if settings.PRODUCTION:
-            ip = str(request.META.get('REMOTE_ADDR'))
+            ip = request.META.get('REMOTE_ADDR')
         else:
             ip = '8.8.8.8'
 
