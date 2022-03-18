@@ -11,7 +11,7 @@ from radio_funk.utils.logger import LOGGER
 
 from radio_funk.mode.models import Mode
 
-@require_http_methods(['PUT'])
+@require_http_methods(['PUT', 'POST'])
 def enable_dark_mode(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -44,9 +44,11 @@ def enable_light_mode(request):
         return str(ip)
     else:
         if settings.PRODUCTION:
-            ip = str(request.META.get('REMOTE_ADDR'))
+            ip = request.META.get('REMOTE_ADDR')
         else:
             ip = '8.8.8.8'
+
+    LOGGER.info(f"IP Address: {ip}")
 
     Mode.objects.filter(ip=ip, theme="dark").update(theme="light")
     # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
