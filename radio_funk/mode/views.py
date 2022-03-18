@@ -11,7 +11,7 @@ from radio_funk.utils.logger import LOGGER
 
 from radio_funk.mode.models import Mode
 
-# @require_http_methods(['GET', 'POST', 'PUT'])
+@require_http_methods(['PUT'])
 def enable_dark_mode(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
