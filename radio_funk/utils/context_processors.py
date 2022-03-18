@@ -32,7 +32,7 @@ def context_data(request):
         else:
             ip = '8.8.8.8'
 
-    if not Mode.objects.filter(ip=ip).exists()
+    if not Mode.objects.filter(ip=ip).exists():
         Mode.objects.create(ip=ip, theme="light")
 
     device_type = ""
