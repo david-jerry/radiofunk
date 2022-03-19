@@ -542,7 +542,7 @@ JET_THEMES = [
 TINYMCE_DEFAULT_CONFIG = {
     "selector": "textarea",
     "height": "260px",
-    "width": "80%",
+    "width": "98%",
     'theme':'modern',
     'statusbar':'True',
     "menubar": "file edit view insert format tools table help",
