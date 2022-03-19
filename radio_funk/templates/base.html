@@ -168,10 +168,10 @@
       </div>
 
       <!-- playlist form -->
-      <div @click="playlist = ! playlist" :class="{'max-w-0':playlist === false, 'w-screen':playlist === true}" class="duration-300 h-full absolute bg-black/70 top-0 left-0 justify-center items-center flex">
+      <div @click="playlist = ! playlist" :class="{'max-w-0':playlist === false, 'w-screen':playlist === true}" class="duration-300 h-full absolute bg-black/70 top-0 left-0 justify-center items-center flex z-40">
 
       </div>
-      <div :class="{'hidden':playlist === false, 'flex-col':playlist === true}" class="hidden z-30 absolute rounded-md left-[50%] top-[50%] transform -translate-x-1/2 -translate-y-1/2 md:w-[512px] w-[320px] h-min bg-white-bg/70 dark:bg-black/60 p-4 space-y-4">
+      <div :class="{'hidden':playlist === false, 'flex-col':playlist === true}" class="hidden z-50 absolute rounded-md left-[50%] top-[50%] transform -translate-x-1/2 -translate-y-1/2 md:w-[512px] w-[320px] h-min bg-white-bg/70 dark:bg-black/60 p-4 space-y-4">
         <h2 class="font-black text-4xl uppercase">create playlist</h2>
         <form action="" class="w-full space-y-2">
           <input placeholder="Playlist Title" type="text" class="focus:outline-none focus:border-none bg-white-bg dark:text-font appearance-none border-none w-full rounded py-2 px-3 leading-tight">
