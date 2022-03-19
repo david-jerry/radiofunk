@@ -185,7 +185,7 @@
       </div>
 
 
-      <div :class="{'bottom-[5.6rem] flex':sub_menu === true, '-bottom-full hidden':sub_menu === false}" class="z-30 mx-auto rounded-t-xl hidden justify-evenly md:hidden flex-col items-center h-min w-[320px] bg-white-bg dark:bg-black absolute -buttom-full left-2 right-2 shadow duration-300">
+      <div :class="{'bottom-[90px] flex':sub_menu === true, '-bottom-full hidden':sub_menu === false}" class="z-30 mx-auto rounded-t-xl hidden justify-evenly md:hidden flex-col items-center h-min w-[320px] bg-white-bg dark:bg-black absolute -buttom-full left-2 right-2 shadow transition-opacity ease-in-out duration-500">
         <div class="flex items-center justify-evenly w-full h-min">
           <a href="{% if user.is_authenticated %}{% url 'users:detail' request.user.username %}{% endif %}" class="hover:bg-black py-3 px-4 dark:hover:bg-white-bg hover:text-white-bg dark:hover:text-black space-y-1 flex items-center flex-col">
             <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
