@@ -74,17 +74,17 @@
 
   </head>
   {% if request.path == home_url and device == "Mobile" %}
-  <body onload="iziToast.show({'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{playlist:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
+  <body onload="iziToast.show({'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{sub_menu:false, playlist:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
   {% elif request.path == home_url %}
-  <body onload="iziToast.show({'maxWidth':'50%', 'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{playlist:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
+  <body onload="iziToast.show({'maxWidth':'50%', 'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{sub_menu:false, playlist:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
   {% else %}
-  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{playlist:false, search:false, lang_open:false, m_lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-white-200 bg-white-bg text-font relative">
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{sub_menu:false, playlist:false, search:false, lang_open:false, m_lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-white-200 bg-white-bg text-font relative">
   {% endif %}
 
     {% include 'snippets/sidenav.html' %}
     {% include 'snippets/rightnav.html' %}
 
-    <main class="flex-auto flex flex-col max-h-screen max-w-full overflow-x-hidden relative pb-28 md:pb-4" @click="lang_open = false">
+    <main class="flex-auto flex flex-col max-h-screen max-w-full overflow-x-hidden overflow-y-hidden relative pb-28 md:pb-4" @click="lang_open = false">
       <div class="shadow-md dark:bg-black bg-white-200 flex items-center w-full p-4 justify-between max-h-14 z-20 bg-">
         <div class="flex items-center space-x-5 leading-none w-auto">
           <div class="flex items-center space-x-3">
@@ -182,6 +182,24 @@
             <button type="submit" class="bg-podcast-bg hover:bg-podcast-bg/70 duration-300 uppercase font-black text-xl w-1/3 rounded p-2">create</button>
           </div>
         </form>
+      </div>
+
+
+      <div :class="{'bottom-[5.6rem]':sub_menu === true, '-bottom-full':sub_menu === false}" class="z-30 mx-auto rounded-t-xl justify-evenly md:hidden flex flex-col items-center h-min w-[320px] bg-white-bg dark:bg-black absolute -buttom-full left-2 right-2 shadow duration-300">
+        <div class="flex items-center justify-evenly w-full h-min">
+          <a href="{% if user.is_authenticated %}{% url 'users:detail' request.user.username %}{% endif %}" class="hover:bg-black py-3 px-4 dark:hover:bg-white-bg hover:text-white-bg dark:hover:text-black space-y-1 flex items-center flex-col">
+            <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+            <span class="text-xl block font-black text-ellipsis overflow-hidden">{% trans 'Profile' %}</span>
+          </a>
+          <a href="javascript:;" class="hover:bg-black py-3 px-4 dark:hover:bg-white-bg hover:text-white-bg dark:hover:text-black space-y-1 flex items-center flex-col">
+            <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"></path><path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+            <span class="text-xl block font-black text-ellipsis overflow-hidden">{% trans 'Playlists' %}</span>
+          </a>
+          <a href="javascript:;" class="hover:bg-black py-3 px-4 dark:hover:bg-white-bg hover:text-white-bg dark:hover:text-black space-y-1 flex items-center flex-col">
+            <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
+            <span class="text-xl block font-black text-ellipsis overflow-hidden">{% trans 'Settings' %}</span>
+          </a>
+        </div>
       </div>
 
 
