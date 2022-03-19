@@ -34,7 +34,7 @@ class RadioQuerySet(QuerySet):
     def closest(self, dist=None, cur_loc=None):
         qs = self
         if cur_loc is not None and dist is not None:
-            qs = qs.active().filter(location__dwithin = (cur_loc, dist)).annotate(distance=GeometryDistance("location", cur_loc)).order_by("distance").order_by("-created").distinct()
+            qs = qs.active().filter(location__dwithin = (cur_loc, dist)).annotate(distance=GeometryDistance("location", cur_loc)).order_by("distance").order_by("name").distinct()
         return qs
 
     def latest(self):

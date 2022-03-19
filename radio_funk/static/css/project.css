@@ -3800,6 +3800,14 @@ body::-webkit-scrollbar {
     bottom: 5.6rem;
   }
 
+  .md\:bottom-4 {
+    bottom: 1rem;
+  }
+
+  .md\:bottom-2 {
+    bottom: 0.5rem;
+  }
+
   .md\:my-auto {
     margin-top: auto;
     margin-bottom: auto;

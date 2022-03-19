@@ -50,54 +50,12 @@
   <div id="search_result" class="w-full h-[calc(100%_-_2.6rem)] md:h-[calc(100%_-_2rem)] flex-col space-y-2 overflow-y-scroll scrollbar-hide">
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
       {% for obj in genres %}
-      <div class="overflow-hidden relative w-full h-full p-4 rounded-md aspect-[1/1] uppercase font-2xl" style="background-color:{{obj.color|lower}};">
-        <div class="my-auto w-full h-full block self-center text-4xl font-black">{{obj.name|upper}}</div>
-        <img src="{% if obj.get_most_popular.image.thumbnail %}{{obj.get_most_popular.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.get_most_popuar.name|title}} image" class="z-10 h-2/4 w-2/4 object-contain rotate-45 absolute -bottom-5 -right-5 shadow-lg rounded-md">
-      </div>
-  {% endfor %}
-  {% for obj in genres %}
-  <div class="overflow-hidden relative w-full h-full p-4 rounded-md aspect-[1/1] uppercase font-2xl" style="background-color:{{obj.color|lower}};">
-    <div class="my-auto w-full h-full block self-center text-4xl font-black">{{obj.name|upper}}</div>
-    <img src="{% if obj.get_most_popular.image.thumbnail %}{{obj.get_most_popular.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.get_most_popuar.name|title}} image" class="z-10 h-2/4 w-2/4 object-contain rotate-45 absolute -bottom-5 -right-5 shadow-lg rounded-md">
-  </div>
-{% endfor %}
-{% for obj in genres %}
-<div class="overflow-hidden relative w-full h-full p-4 rounded-md aspect-[1/1] uppercase font-2xl" style="background-color:{{obj.color|lower}};">
-  <div class="my-auto w-full h-full block self-center text-4xl font-black">{{obj.name|upper}}</div>
-  <img src="{% if obj.get_most_popular.image.thumbnail %}{{obj.get_most_popular.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.get_most_popuar.name|title}} image" class="z-10 h-2/4 w-2/4 object-contain rotate-45 absolute -bottom-5 -right-5 shadow-lg rounded-md">
-</div>
-{% endfor %}
-{% for obj in genres %}
-<div class="overflow-hidden relative w-full h-full p-4 rounded-md aspect-[1/1] uppercase font-2xl" style="background-color:{{obj.color|lower}};">
-  <div class="my-auto w-full h-full block self-center text-4xl font-black">{{obj.name|upper}}</div>
-  <img src="{% if obj.get_most_popular.image.thumbnail %}{{obj.get_most_popular.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.get_most_popuar.name|title}} image" class="z-10 h-2/4 w-2/4 object-contain rotate-45 absolute -bottom-5 -right-5 shadow-lg rounded-md">
-</div>
-{% endfor %}
-{% for obj in genres %}
-<div class="overflow-hidden relative w-full h-full p-4 rounded-md aspect-[1/1] uppercase font-2xl" style="background-color:{{obj.color|lower}};">
-  <div class="my-auto w-full h-full block self-center text-4xl font-black">{{obj.name|upper}}</div>
-  <img src="{% if obj.get_most_popular.image.thumbnail %}{{obj.get_most_popular.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.get_most_popuar.name|title}} image" class="z-10 h-2/4 w-2/4 object-contain rotate-45 absolute -bottom-5 -right-5 shadow-lg rounded-md">
-</div>
-{% endfor %}
-{% for obj in genres %}
-<div class="overflow-hidden relative w-full h-full p-4 rounded-md aspect-[1/1] uppercase font-2xl" style="background-color:{{obj.color|lower}};">
-  <div class="my-auto w-full h-full block self-center text-4xl font-black">{{obj.name|upper}}</div>
-  <img src="{% if obj.get_most_popular.image.thumbnail %}{{obj.get_most_popular.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.get_most_popuar.name|title}} image" class="z-10 h-2/4 w-2/4 object-contain rotate-45 absolute -bottom-5 -right-5 shadow-lg rounded-md">
-</div>
-{% endfor %}
-    {% for obj in genres %}
         <div class="overflow-hidden relative w-full h-full p-4 rounded-md aspect-[1/1] uppercase font-2xl" style="background-color:{{obj.color|lower}};">
           <div class="my-auto w-full h-full block self-center text-4xl font-black">{{obj.name|upper}}</div>
           <img src="{% if obj.get_most_popular.image.thumbnail %}{{obj.get_most_popular.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.get_most_popuar.name|title}} image" class="z-10 h-2/4 w-2/4 object-contain rotate-45 absolute -bottom-5 -right-5 shadow-lg rounded-md">
         </div>
-    {% endfor %}
-    {% for obj in genres %}
-        <div class="overflow-hidden relative w-full h-full p-4 rounded-md aspect-[1/1] uppercase font-2xl" style="background-color:{{obj.color|lower}};">
-          <div class="my-auto w-full h-full block self-center text-4xl font-black">{{obj.name|upper}}</div>
-          <img src="{% if obj.get_most_popular.image.thumbnail %}{{obj.get_most_popular.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.get_most_popuar.name|title}} image" class="z-10 h-2/4 w-2/4 object-contain rotate-45 absolute -bottom-5 -right-5 shadow-lg rounded-md">
-        </div>
-    {% endfor %}
-</div>
+      {% endfor %}
+    </div>
   </div>
 
 </div>
