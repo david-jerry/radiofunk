@@ -33,7 +33,7 @@ class UserQuerySet(QuerySet):
 
     def popular(self):
         try:
-            return self.podcaster().annotate(podcast_count=Count("follower")).order_by('podcast_count')
+            return self.podcaster().annotate(podcast_count=Count("follower")).order_by('podcast_count').order_by('name')
         except IndexError:
             return None
 

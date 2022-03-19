@@ -9,7 +9,7 @@ class GenreQuerySet(QuerySet):
 
     def popular(self):
         try:
-            return self.active().annotate(podcast_count=Count("podcast")).order_by('podcast_count')
+            return self.active().annotate(podcast_count=Count("podcast")).order_by('podcast_count').order_by('name')
         except IndexError:
             return None
 

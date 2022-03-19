@@ -36,7 +36,7 @@ class EpisodeQuerySet(QuerySet):
 
     def popular(self):
         try:
-            return self.published().annotate(podcast_count=Count("like")).order_by('podcast_count')
+            return self.published().annotate(podcast_count=Count("like")).order_by('podcast_count').order_by('name')
         except IndexError:
             return None
 
@@ -89,7 +89,7 @@ class PodcastQuerySet(QuerySet):
 
     def popular(self):
         try:
-            return self.published().annotate(podcast_count=Count("like")).order_by('podcast_count')
+            return self.published().annotate(podcast_count=Count("like")).order_by('podcast_count').order_by('name')
         except IndexError:
             return None
 
@@ -134,7 +134,7 @@ class PlaylistQuerySet(QuerySet):
 
     def popular(self):
         try:
-            return self.public().annotate(podcast_count=Count("like")).order_by('podcast_count')
+            return self.public().annotate(podcast_count=Count("like")).order_by('podcast_count').order_by('name')
         except IndexError:
             return None
 
