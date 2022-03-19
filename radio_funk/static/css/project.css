@@ -3861,6 +3861,10 @@ body::-webkit-scrollbar {
     max-height: 455px;
   }
 
+  .md\:max-h-\[355px\] {
+    max-height: 355px;
+  }
+
   .md\:w-\[512px\] {
     width: 512px;
   }
