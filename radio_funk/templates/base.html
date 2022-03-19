@@ -84,7 +84,7 @@
     {% include 'snippets/sidenav.html' %}
     {% include 'snippets/rightnav.html' %}
 
-    <main class="flex-auto flex flex-col max-h-screen max-w-full overflow-x-hidden overflow-y-hidden relative pb-28 md:pb-4" @click="lang_open = false">
+    <main class="flex-auto flex flex-col max-h-screen max-w-full overflow-hidden relative pb-28 md:pb-4" @click="lang_open = false">
       <div class="shadow-md dark:bg-black bg-white-200 flex items-center w-full p-4 justify-between max-h-14 z-20 bg-">
         <div class="flex items-center space-x-5 leading-none w-auto">
           <div class="flex items-center space-x-3">
@@ -171,7 +171,7 @@
       <div @click="playlist = ! playlist" :class="{'max-w-0':playlist === false, 'w-screen':playlist === true}" class="duration-300 h-full absolute bg-black/70 top-0 left-0 justify-center items-center flex">
 
       </div>
-      <div :class="{'hidden':playlist === false, 'flex-col':playlist === true}" class="z-50 mx-auto rounded-md my-auto md:w-[512px] w-[320px] h-min bg-white-bg/70 dark:bg-black/60 p-4 space-y-4">
+      <div :class="{'hidden':playlist === false, 'flex-col':playlist === true}" class="hidden z-30 absolute rounded-md left-[50%] top-[50%] transform -translate-x-1/2 -translate-y-1/2 md:w-[512px] w-[320px] h-min bg-white-bg/70 dark:bg-black/60 p-4 space-y-4">
         <h2 class="font-black text-4xl uppercase">create playlist</h2>
         <form action="" class="w-full space-y-2">
           <input placeholder="Playlist Title" type="text" class="focus:outline-none focus:border-none bg-white-bg dark:text-font appearance-none border-none w-full rounded py-2 px-3 leading-tight">
@@ -185,7 +185,7 @@
       </div>
 
 
-      <div :class="{'bottom-[5.6rem]':sub_menu === true, '-bottom-full':sub_menu === false}" class="z-30 mx-auto rounded-t-xl justify-evenly md:hidden flex flex-col items-center h-min w-[320px] bg-white-bg dark:bg-black absolute -buttom-full left-2 right-2 shadow duration-300">
+      <div :class="{'bottom-[5.6rem]':sub_menu === true, '-bottom-full':sub_menu === false}" class="z-30 mx-auto rounded-t-xl flex justify-evenly md:hidden flex-col items-center h-min w-[320px] bg-white-bg dark:bg-black absolute -buttom-full left-2 right-2 shadow duration-300">
         <div class="flex items-center justify-evenly w-full h-min">
           <a href="{% if user.is_authenticated %}{% url 'users:detail' request.user.username %}{% endif %}" class="hover:bg-black py-3 px-4 dark:hover:bg-white-bg hover:text-white-bg dark:hover:text-black space-y-1 flex items-center flex-col">
             <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
@@ -198,6 +198,22 @@
           <a href="javascript:;" class="hover:bg-black py-3 px-4 dark:hover:bg-white-bg hover:text-white-bg dark:hover:text-black space-y-1 flex items-center flex-col">
             <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
             <span class="text-xl block font-black text-ellipsis overflow-hidden">{% trans 'Settings' %}</span>
+          </a>
+        </div>
+        <div class="flex items-center justify-evenly w-full h-min">
+          <a href="javascript:;" @click="playlist = ! playlist, sub_menu = ! sub_menu" class="hover:bg-black py-3 px-4 dark:hover:bg-white-bg hover:text-white-bg dark:hover:text-black space-y-1 flex items-center flex-col">
+            <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V8z" clip-rule="evenodd"></path></svg>
+            <span class="text-xl block font-black text-ellipsis overflow-hidden leading-none">{% trans 'Create' %}</span>
+            <span class="text-xl block font-black text-ellipsis overflow-hidden leading-none">{% trans 'Playlist' %}</span>
+          </a>
+          <a href="javascript:;" class="hover:bg-black py-3 px-4 dark:hover:bg-white-bg hover:text-white-bg dark:hover:text-black space-y-1 flex items-center flex-col">
+            <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+            <span class="text-xl block font-black text-ellipsis overflow-hidden leading-none">{% trans 'Go' %}</span>
+            <span class="text-xl block font-black text-ellipsis overflow-hidden leading-none">{% trans 'Live' %}</span>
+          </a>
+          <a href="{% if user.is_authenticated %}{% url 'account_logout' %}{% endif %}" class="hover:bg-black py-3 px-4 dark:hover:bg-white-bg text-red-600 space-y-1 flex items-center flex-col">
+            <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+            <span class="text-xl block font-black text-ellipsis overflow-hidden">{% trans 'Logout' %}</span>
           </a>
         </div>
       </div>
