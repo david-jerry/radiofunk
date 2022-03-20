@@ -291,7 +291,7 @@
           index: "{{r.id}}",
           name: "{{r.name|title}}",
           img: "{{r.image.thumbnail.url}}",
-          src: "{{r.mp3url}}"
+          src: "{{r.stream_url}}"
       }{% if not forloop.last %},{% endif %}
       {% endfor %}
       ]

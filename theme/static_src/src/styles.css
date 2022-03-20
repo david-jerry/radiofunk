@@ -94,38 +94,16 @@
 
   /* Marker tweaks */
 
-  .croppedIcon {
-    clip-path: inset(0 50% 0 0);
-  }
 
   .progress-area{
-    height: 6px;
-    width: 100%;
-    border-radius: 50px;
-    background: #EBE6E9;
-    cursor: pointer;
+    @apply h-[6px] w-[40%] rounded-lg dark:bg-white-bg bg-black cursor-pointer;
   }
   .progress-area .progress-bar{
-    height: inherit;
-    width: 0%;
-    position: relative;
-    border-radius: inherit;
-    background: linear-gradient(90deg, #FFCE45 0%, #D4AC2B 100%);
+    @apply h-[inherit] w-[0%] relative rounded-[inherit] bg-live-bg dark:bg-primary;
   }
   .progress-bar::before{
     content: "";
-    position: absolute;
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
-    top: 50%;
-    right: -5px;
-    z-index: 2;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-50%);
-    background: inherit;
-    transition: opacity 0.2s ease;
+    @apply absolute h-[12px] w-[12px] rounded-full top-[40%] -right-[5px] z-[2] opacity-0 pointer-events-none -translate-y-[40%] bg-inherit transition-opacity duration-200 ease-in-out;
   }
   .progress-area:hover .progress-bar::before{
     opacity: 1;
@@ -135,8 +113,7 @@
     margin-top: 2px;
   }
   .song-timer span{
-    font-size: 13px;
-    color: #ABBBC2;
+    @apply text-sm text-live-bg dark:text-primary
   }
 }
 
