@@ -58,7 +58,7 @@
 {% block javascript %}
 {{ block.super }}
 <script defer src="https://unpkg.com/wavesurfer.js"></script>
-<script async src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
 {% endblock javascript %}
 
 
@@ -224,7 +224,7 @@
       id: "{{r.id}}",
       radio_name: "{{r.name|title}}",
       radio_country: "{{r.country.name|title}}",
-
+      uri: "{{r.stream_url}}"
     },
     {% endfor %}
   ];
