@@ -1326,14 +1326,18 @@ body::-webkit-scrollbar {
   max-height: 3.5rem;
 }
 
+.max-h-\[9rem\] {
+  max-height: 9rem;
+}
+
+.max-h-\[11\.5rem\] {
+  max-height: 11.5rem;
+}
+
 .max-h-min {
   max-height: -webkit-min-content;
   max-height: -moz-min-content;
   max-height: min-content;
-}
-
-.max-h-\[9rem\] {
-  max-height: 9rem;
 }
 
 .max-h-\[calc\(100\%_-_18rem\)\] {
@@ -1352,24 +1356,12 @@ body::-webkit-scrollbar {
   max-height: 60px;
 }
 
-.max-h-\[rem\] {
-  max-height: rem;
+.max-h-\[\.5rem\] {
+  max-height: .5rem;
 }
 
-.max-h-\[10rem\] {
-  max-height: 10rem;
-}
-
-.max-h-\[10\.5rem\] {
-  max-height: 10.5rem;
-}
-
-.max-h-\[1\.5rem\] {
-  max-height: 1.5rem;
-}
-
-.max-h-\[11\.5rem\] {
-  max-height: 11.5rem;
+.max-h-\[8\.5rem\] {
+  max-height: 8.5rem;
 }
 
 .min-h-full {
@@ -2225,13 +2217,13 @@ body::-webkit-scrollbar {
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 
+.bg-white-200\/80 {
+  background-color: rgb(254 250 242 / 0.8);
+}
+
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-white-200\/80 {
-  background-color: rgb(254 250 242 / 0.8);
 }
 
 .bg-gray-100 {
