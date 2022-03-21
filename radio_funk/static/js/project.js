@@ -17,7 +17,8 @@ musicList = wrapper.querySelector("#playlist"),
 pauseSVG = "<path fill-rule='evenodd' d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z' clip-rule='evenodd'></path>";
 playSVG = "<path fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z' clip-rule='evenodd'></path>";
 
-let musicIndex = Math.floor((Math.random() * sourceData.length) + 1);
+// let musicIndex = Math.floor((Math.random() * sourceData.length) + 1);
+let musicIndex = sourceData[0].index;
 isMusicPaused = true;
 
 window.addEventListener("load", ()=>{
@@ -25,11 +26,11 @@ window.addEventListener("load", ()=>{
   playingSong();
 });
 
-function loadMusic(indexNumb){
-  musicName.innerText = sourceData[indexNumb - 1].radio_name;
-  musicDefine.innerText = sourceData[indexNumb - 1].radio_country;
-  musicImg.src = sourceData[indexNumb - 1].img;
-  mainAudio.src = sourceData[indexNumb - 1].uri;
+function loadMusic(index){
+  musicName.innerText = sourceData[index - 1].radio_name;
+  musicDefine.innerText = sourceData[index - 1].radio_country;
+  musicImg.src = sourceData[index - 1].img;
+  mainAudio.src = sourceData[index - 1].uri;
 };
 
 //play music function
@@ -153,7 +154,8 @@ const Tracks = musicList.querySelectorAll("a");
 //play particular song from the list onclick of li tag
 function playingSong(trackIndex){
 
-  for (let j = trackIndex; j <= Tracks.length; j++) {
+  for (let j = 0; j < Tracks.length; j++) {
+    console.log(Tracks[j].getAttribute("li-index"))
     let audioTag = Tracks[j].querySelector(".audio-duration");
 
     if(Tracks[j].classList.contains("playing") && Tracks[j].getAttribute("li-index") != trackIndex){
@@ -165,7 +167,7 @@ function playingSong(trackIndex){
     }
 
     //if the li tag index is equal to the trackIndex then add playing class in it
-    if(Tracks[j].getAttribute("li-index") === trackIndex){
+    if(Tracks[j].getAttribute("li-index") == trackIndex){
       Tracks[j].classList.add("playing");
       audioTag.classList.add("text-green-400")
       audioTag.innerText = "Playing";
