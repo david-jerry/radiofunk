@@ -11,6 +11,9 @@ mainAudio = wrapper.querySelector("#main-audio"),
 progressArea = wrapper.querySelector(".progress-area"),
 progressBar = progressArea.querySelector(".progress-bar"),
 musicList = wrapper.querySelector("#playlist"),
+radioKm = wrapper.querySelector("#radioKm");
+radioCountry = wrapper.querySelector("#radioC");
+radioOthers = wrapper.querySelector("#radioOthers");
 // moreMusicBtn = wrapper.querySelector("#moreMusic"),
 // closemoreMusic = wrapper.querySelector("#close");
 
@@ -157,29 +160,108 @@ progressArea.addEventListener("click", (e)=>{
 
 //play particular song from the list onclick of li tag
 function playingSong(trackIndex){
-  const Tracks = musicList.querySelectorAll("a");
+  if (musicList != null || musicList != undefined) {
+    const Tracks = musicList.querySelectorAll("a .track");
+    for (let j = 0; j <= Tracks.length; j++) {
 
-  for (let j = 0; j <= Tracks.length; j++) {
-
-    if(Tracks[j].querySelector(".track").getAttribute("li-index") !== trackIndex){
-      if(Tracks[j].classList.contains("playing")) {
-        let audioTag = Tracks[j].querySelector(".audio-duration");
-        Tracks[j].querySelector(".track").classList.remove("playing");
-        audioTag.classList.remove("text-green-400")
-        audioTag.innerText = sourceData[trackIndex].radio_country;
+      if(Tracks[j].getAttribute("li-index") != trackIndex){
+        if(Tracks[j].classList.contains("playing")) {
+          let audioTag = Tracks[j].querySelector(".audio-duration");
+          Tracks[j].classList.remove("playing");
+          audioTag.classList.remove("text-green-400", "animate:pulse")
+          audioTag.innerText = sourceData[j].radio_country;
+        }
+        //audioTag.innerText = "Paused";
       }
-      //audioTag.innerText = "Paused";
-    }
 
-    //if the li tag index is equal to the trackIndex then add playing class in it
-    if(Tracks[j].querySelector(".track").getAttribute("li-index") === trackIndex){
-      let audioTag = Tracks[j].querySelector(".audio-duration");
-      Tracks[j].querySelector(".track").classList.add("playing");
-      audioTag.classList.add("text-green-400")
-      audioTag.innerText = "Playing";
-    }
+      //if the li tag index is equal to the trackIndex then add playing class in it
+      if(Tracks[j].getAttribute("li-index") === trackIndex){
+        let audioTag = Tracks[j].querySelector(".audio-duration");
+        Tracks[j].classList.add("playing");
+        audioTag.classList.add("text-green-400", "animate:pulse")
+        audioTag.innerText = "Playing";
+      }
 
-    Tracks[j].querySelector(".track").setAttribute("onclick", "clicked(this)");
+      Tracks[j].setAttribute("onclick", "clicked(this)");
+    };
+  }
+
+  if (radioCountry != null || radioCountry != undefined) {
+    const countryTracks = radioCountry.querySelectorAll("a .track");
+    for (let j = 0; j <= countryTracks.length; j++) {
+      if(countryTracks[j].getAttribute("li-index") != trackIndex){
+        if(countryTracks[j].classList.contains("playing")) {
+          let audioTag = countryTracks[j].querySelector(".audio-duration");
+          countryTracks[j].classList.remove("playing");
+          audioTag.classList.remove("text-green-400", "animate:pulse")
+          audioTag.innerText = sourceData[j].radio_country;
+        }
+        //audioTag.innerText = "Paused";
+      }
+
+      //if the li tag index is equal to the trackIndex then add playing class in it
+      if(countryTracks[j].getAttribute("li-index") === trackIndex){
+        let audioTag = countryTracks[j].querySelector(".audio-duration");
+        countryTracks[j].classList.add("playing");
+        audioTag.classList.add("text-green-400", "animate:pulse")
+        audioTag.innerText = "Playing";
+      }
+
+      countryTracks[j].setAttribute("onclick", "clicked(this)");
+    };
+  }
+
+  if (radioKm != null || radioKm != undefined) {
+    const kmTracks = radioKm.querySelectorAll("a .track");
+
+    for (let j = 0; j <= kmTracks.length; j++) {
+      if(kmTracks[j].getAttribute("li-index") != trackIndex){
+        if(kmTracks[j].classList.contains("playing")) {
+          let audioTag = kmTracks[j].querySelector(".audio-duration");
+          kmTracks[j].classList.remove("playing");
+          audioTag.classList.remove("text-green-400", "animate:pulse")
+          audioTag.innerText = sourceData[j].radio_country;
+        }
+        //audioTag.innerText = "Paused";
+      }
+
+      //if the li tag index is equal to the trackIndex then add playing class in it
+      if(kmTracks[j].getAttribute("li-index") === trackIndex){
+        let audioTag = kmTracks[j].querySelector(".audio-duration");
+        kmTracks[j].classList.add("playing");
+        audioTag.classList.add("text-green-400", "animate:pulse")
+        audioTag.innerText = "Playing";
+      }
+
+      kmTracks[j].setAttribute("onclick", "clicked(this)");
+    };
+
+  }
+
+  if (radioOthers != null || radioOthers != undefined) {
+    const otherTracks = radioOthers.querySelectorAll("a .track");
+
+    for (let j = 0; j <= otherTracks.length; j++) {
+      if(otherTracks[j].getAttribute("li-index") != trackIndex){
+        if(otherTracks[j].classList.contains("playing")) {
+          let audioTag = otherTracks[j].querySelector(".audio-duration");
+          otherTracks[j].classList.remove("playing");
+          audioTag.classList.remove("text-green-400", "animate:pulse")
+          audioTag.innerText = sourceData[j].radio_country;
+        }
+        //audioTag.innerText = "Paused";
+      }
+
+      //if the li tag index is equal to the trackIndex then add playing class in it
+      if(otherTracks[j].getAttribute("li-index") === trackIndex){
+        let audioTag = otherTracks[j].querySelector(".audio-duration");
+        otherTracks[j].classList.add("playing");
+        audioTag.classList.add("text-green-400", "animate:pulse")
+        audioTag.innerText = "Playing";
+      }
+
+      otherTracks[j].setAttribute("onclick", "clicked(this)");
+    }
   }
 };
 
@@ -191,8 +273,8 @@ function clicked(element){
   trackIndex = getLiIndex; //updating current song index with clicked li index
   if (element.classList.contains("playing")) {
     loadMusic(trackIndex);
-    playingSong(trackIndex);
     playMusic();
+    playingSong(trackIndex);
     // element.querySelector(".audio-duration").classList.add("text-green-400")
     // element.querySelector(".audio-duration").innerHTML = "Playing"
   } else {
@@ -205,8 +287,8 @@ function clicked(element){
 function mapPlay(element){
   let getIndex = element.getAttribute("data-index");
   radioIndex = getIndex; //updating current song index with clicked li index
-  loadMusic(radioIndex);
   playMusic();
+  loadMusic(radioIndex);
   playingSong(radioIndex);
 };
 
@@ -216,8 +298,8 @@ function tapped(element){
   radioIndex = getIndex; //updating current song index with clicked li index
   if (element.classList.contains("playing")) {
     loadMusic(radioIndex);
-    playingSong(radioIndex);
     playMusic();
+    playingSong(radioIndex);
     // element.classList.add("animate-pulse")
     // element.innerHTML = pauseSVG;
   } else {

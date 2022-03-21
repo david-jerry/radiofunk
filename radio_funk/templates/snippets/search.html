@@ -23,7 +23,7 @@
               </div>
             </div>
             {% elif klass == "Stations" %}
-            <div class="mt-2 rounded-md w-full h-min bg-gradient-to-b shadow-md hover:shadow-lg dark:from-gray-800 dark:to-gray-700 from-gray-50 to-gray-200 p-4 duration-300">
+            <div li-index="{{r.id}}" onclick="clicked(this)" class="mt-2 rounded-md w-full h-min bg-gradient-to-b shadow-md hover:shadow-lg dark:from-gray-800 dark:to-gray-700 from-gray-50 to-gray-200 p-4 duration-300">
               <div class="items-center flex justify-between">
                 <div class="flex items-center space-x-2">
                   <img src="{{obj.logo.thumbnail.url}}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-10 h-10 rounded-lg">
@@ -71,7 +71,7 @@
     <h2 class="font-black text-2xl uppercase">popular stations</h2>
     <div class="flex items-center overflow-x-auto w-full h-min py-2 space-x-4">
       {% for r in stations %}
-      <div class="rounded-md aspect-[1/1] w-48 flex-none bg-blue-400 uppercase font-2xl">
+      <div li-index="{{r.id}}" onclick="clicked(this)" class="rounded-md aspect-[1/1] w-48 flex-none bg-blue-400 uppercase font-2xl">
         <p class="block self-center mx-auto">{{r.name|title}}</p>
       </div>
       {% endfor %}
