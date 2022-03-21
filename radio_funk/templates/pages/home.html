@@ -83,11 +83,11 @@
     </div>
     <div x-transition :class="{'max-h-[9rem] md:max-h-[355px] p-2 flex flex-col':radio === true, 'h-0 hidden':radio === false}" class="w-full h-0 dark:bg-black/80 bg-white-200/80 space-y-8 overflow-y-scroll scrollbar-hide duration-500">
       {% if radios_in_country > 0 %}
-      <div>
+      <div class="radiolist">
         <h2 class="font-black text-2xl dark:text-primary text-live-bg">Popular Stations in {{location_country_code|upper}}</h2>
         {% for r in popular_radios_in_country %}
-          <div onclick="tapped(this)" class="border-b-[0.75px] dark:border-gray-600 border-gray-400 flex items-center justify-between p-2 w-full dark:hover:bg-black/30 hover:bg-gray-200 hover-trigger">
-            <div :class="{'text-live-bg dark:text-primary':waveform_{{r.id}} === true, '':waveform_{{r.id}} === false}" class="flex-col items-start w-full space-y-0">
+          <a href="javascript:;" class="border-b-[0.75px] dark:border-gray-600 border-gray-400 flex items-center justify-between p-2 w-full dark:hover:bg-black/30 hover:bg-gray-200 hover-trigger">
+            <div li-index="{{r.id}}" onclick="clicked(this)" :class="{'text-live-bg dark:text-primary':waveform_{{r.id}} === true, '':waveform_{{r.id}} === false}" class="flex-col items-start w-[70%] flex-none space-y-0">
               <h2 class="font-black text-2xl w-[80%] cursor-pointer">{{r.name|title}}</h2>
               <p class="w-[20%] truncate">{{r.country.name|title}}</p>
             </div>
@@ -99,17 +99,17 @@
               <svg class="w-6 h-6 text-red-600 cursor-pointer" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
               {% endif %}
             </div>
-          </div>
+          </a>
         {% endfor %}
       </div>
       {% endif %}
 
       {% if closes_fifty %}
-      <div>
+      <div class="radiolist">
         <h2 class="font-black text-2xl dark:text-primary text-live-bg">Closest Stations 50km</h2>
         {% for r in closes_fifty %}
-          <div onclick="tapped(this)" class="border-b-[0.75px] dark:border-gray-600 border-gray-400 flex items-center justify-between p-2 w-full dark:hover:bg-black/30 hover:bg-gray-200 hover-trigger">
-            <div :class="{'text-live-bg dark:text-primary':waveform_{{r.id}} === faltruese, '':waveform_{{r.id}} === false}" class="flex-col items-start w-full space-y-0">
+          <a href="javascript:;" class="border-b-[0.75px] dark:border-gray-600 border-gray-400 flex items-center justify-between p-2 w-full dark:hover:bg-black/30 hover:bg-gray-200 hover-trigger">
+            <div li-index="{{r.id}}" onclick="clicked(this)" :class="{'text-live-bg dark:text-primary':waveform_{{r.id}} === faltruese, '':waveform_{{r.id}} === false}" class="flex-col items-start w-[70%] flex-none space-y-0">
               <h2 class="font-black text-2xl w-[80%] cursor-pointer">{{r.name|title}}</h2>
               <p class="w-[20%] truncate">{{r.country.name|title}}</p>
             </div>
@@ -121,17 +121,17 @@
               <svg class="w-6 h-6 text-red-600 cursor-pointer" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
               {% endif %}
             </div>
-          </div>
+          </a>
         {% endfor %}
       </div>
       {% endif %}
 
       {% if other_radios %}
-      <div>
+      <div class="radiolist">
         <h2 class="font-black text-2xl dark:text-primary text-live-bg">More Stations</h2>
         {% for r in other_radios %}
-          <div onclick="tapped(this)" class="border-b-[0.75px] dark:border-gray-600 border-gray-400 flex items-center justify-between p-2 w-full dark:hover:bg-black/30 hover:bg-gray-200 hover-trigger">
-            <div :class="{'text-live-bg dark:text-primary':waveform_{{r.id}} === true, '':waveform_{{r.id}} === false}" class="flex-col items-start w-full space-y-0">
+          <a href="javascript:;" class="border-b-[0.75px] dark:border-gray-600 border-gray-400 flex items-center justify-between p-2 w-full dark:hover:bg-black/30 hover:bg-gray-200 hover-trigger">
+            <div li-index="{{r.id}}" onclick="clicked(this)" :class="{'text-live-bg dark:text-primary':waveform_{{r.id}} === true, '':waveform_{{r.id}} === false}" class="flex-col items-start w-[70%] flex-none space-y-0">
               <h2 class="font-black text-2xl w-[80%] cursor-pointer">{{r.name|title}}</h2>
               <p class="w-[20%] truncate">{{r.country.name|title}}</p>
             </div>
@@ -143,7 +143,7 @@
               <svg class="w-6 h-6 text-red-600 cursor-pointer" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
               {% endif %}
             </div>
-          </div>
+          </a>
         {% endfor %}
       </div>
       {% endif %}
@@ -162,19 +162,19 @@
       <div id="playlist" :class="{'max-h-[10rem] md:max-h-[355px] p-2 flex flex-col':radio_search === false, 'h-0 hidden':radio_search === true}" class="list-group hidden overflow-y-scroll scrollbar-hide w-full h-0">
         <template x-for="item in filteredRadios" :key="item.id">
           <!-- <a :href="`${item.uri}`" class="list-group-item border-b-[0.75px] dark:border-gray-600 border-gray-400 flex items-center justify-between p-2 w-full dark:hover:bg-black/30 hover:bg-gray-200 hover-trigger"> -->
-          <a href="javascript:;" :li-index="item.data" :id="item.class" onclick="clicked(this)" class="list-group-item border-b-[0.75px] dark:border-gray-600 border-gray-400 flex items-center justify-between p-2 w-full dark:hover:bg-black/30 hover:bg-gray-200 hover-trigger">
-            <div :class="{'text-live-bg dark:text-primary':item.class === true, '':item.class === false}" class="flex-col items-start w-full space-y-0">
+          <a href="javascript:;" :id="item.class" class="list-group-item border-b-[0.75px] dark:border-gray-600 border-gray-400 flex items-center justify-between p-2 w-full h-min dark:hover:bg-black/30 hover:bg-gray-200 hover-trigger">
+            <div :li-index="item.data" onclick="clicked(this)" :class="{'text-live-bg dark:text-primary':item.class === true, '':item.class === false}" class="track flex-col items-start w-[70%] flex-none space-y-0">
               <h2 class="font-black text-2xl w-[80%] uppercase cursor-pointer" x-text="item.radio_name"></h2>
               <p :id="item.duration" class="w-[20%] truncate audio-duration" x-text="item.radio_country"></p>
               <audio :class="item.audio" :src="item.uri"></audio>
             </div>
 
-            <div class="flex items-center hover-target space-x-3">
+            <div class="flex items-center hover-target h-full">
               <!-- <svg @click="item.class = true" class="cursor-pointer w-6 h-6 hover:scale-110 dark:text-primary text-live-bg duration-200" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg> -->
               {% if not loved %}
-              <svg class="w-6 h-6 text-red-600 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+              <svg class="block w-10 h-10 text-red-600 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
               {% else %}
-              <svg class="w-6 h-6 text-red-600 cursor-pointer" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
+              <svg class="block w-10 h-10 text-red-600 cursor-pointer" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
               {% endif %}
             </div>
           </a>

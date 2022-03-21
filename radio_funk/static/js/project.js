@@ -151,27 +151,27 @@ const Tracks = musicList.querySelectorAll("a");
 // };
 
 //play particular song from the list onclick of li tag
-function playingSong(musicIndex){
+function playingSong(trackIndex){
 
-  for (let j = musicIndex; j <= Tracks.length; j++) {
+  for (let j = trackIndex; j <= Tracks.length; j++) {
     let audioTag = Tracks[j].querySelector(".audio-duration");
 
-    if(Tracks[j].classList.contains("playing") && Tracks[j].getAttribute("li-index") != musicIndex){
+    if(Tracks[j].classList.contains("playing") && Tracks[j].getAttribute("li-index") != trackIndex){
       Tracks[j].classList.remove("playing");
       let adDuration = audioTag.getAttribute("t-duration");
       audioTag.classList.remove("text-green-400")
-      audioTag.innerText = sourceData[musicIndex].radio_country;
+      audioTag.innerText = sourceData[trackIndex - 1].radio_country;
       //audioTag.innerText = "Paused";
     }
 
-    //if the li tag index is equal to the musicIndex then add playing class in it
-    if(Tracks[j].getAttribute("li-index") == musicIndex){
-      Tracks[j].classList.toggle("playing");
+    //if the li tag index is equal to the trackIndex then add playing class in it
+    if(Tracks[j].getAttribute("li-index") === trackIndex){
+      Tracks[j].classList.add("playing");
       audioTag.classList.add("text-green-400")
       audioTag.innerText = "Playing";
     }
 
-    Tracks[j].setAttribute("onclick", "clicked(this)");
+    Tracks[j].querySelector(".track").setAttribute("onclick", "clicked(this)");
   }
 };
 
@@ -179,10 +179,15 @@ function playingSong(musicIndex){
 //particular li clicked function
 function clicked(element){
   let getLiIndex = element.getAttribute("li-index");
-  musicIndex = getLiIndex; //updating current song index with clicked li index
-  loadMusic(musicIndex);
-  playMusic();
-  playingSong(musicIndex);
+  element.classList.toggle("playing")
+  trackIndex = getLiIndex; //updating current song index with clicked li index
+  if (element.classList.contains("playing")) {
+    loadMusic(trackIndex);
+    playMusic();
+    playingSong(trackIndex);
+  } else {
+    pauseMusic();
+  }
 };
 
 function mapPlay(element){

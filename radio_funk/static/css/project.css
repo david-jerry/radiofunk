@@ -1576,6 +1576,22 @@ body::-webkit-scrollbar {
   width: 11rem;
 }
 
+.w-\[\] {
+  width: ;
+}
+
+.w-\[70\] {
+  width: 70;
+}
+
+.w-\[70\%\] {
+  width: 70%;
+}
+
+.w-\[full\] {
+  width: full;
+}
+
 .min-w-\[47\%\] {
   min-width: 47%;
 }
