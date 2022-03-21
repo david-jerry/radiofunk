@@ -159,20 +159,22 @@ progressArea.addEventListener("click", (e)=>{
 function playingSong(trackIndex){
   const Tracks = musicList.querySelectorAll("a");
 
-  for (let j = 0; j < Tracks.length; j++) {
+  for (let j = 0; j <= Tracks.length; j++) {
 
-    if(Tracks[j].classList.contains("playing")){
-      let audioTag = Tracks[j].querySelector(".audio-duration");
-      Tracks[j].classList.remove("playing");
-      audioTag.classList.remove("text-green-400")
-      audioTag.innerText = sourceData[trackIndex].radio_country;
+    if(Tracks[j].querySelector(".track").getAttribute("li-index") !== trackIndex){
+      if(Tracks[j].classList.contains("playing")) {
+        let audioTag = Tracks[j].querySelector(".audio-duration");
+        Tracks[j].querySelector(".track").classList.remove("playing");
+        audioTag.classList.remove("text-green-400")
+        audioTag.innerText = sourceData[trackIndex].radio_country;
+      }
       //audioTag.innerText = "Paused";
     }
 
     //if the li tag index is equal to the trackIndex then add playing class in it
-    if(Tracks[j].getAttribute("li-index") == trackIndex){
+    if(Tracks[j].querySelector(".track").getAttribute("li-index") === trackIndex){
       let audioTag = Tracks[j].querySelector(".audio-duration");
-      Tracks[j].classList.add("playing");
+      Tracks[j].querySelector(".track").classList.add("playing");
       audioTag.classList.add("text-green-400")
       audioTag.innerText = "Playing";
     }
