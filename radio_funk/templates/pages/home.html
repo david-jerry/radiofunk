@@ -160,10 +160,10 @@
 
     <div x-data="loadRadios()" class="dark:bg-black/80 bg-white-200/80 duration-500 h-min">
       <div id="playlist" :class="{'max-h-[10rem] md:max-h-[355px] p-2 flex flex-col':radio_search === false, 'h-0 hidden':radio_search === true}" class="list-group hidden overflow-y-scroll scrollbar-hide w-full h-0">
-        <template x-for="item in filteredRadios" :key="item.id">
+        <template x-for="(item, index) in filteredRadios" :key="item.id">
           <!-- <a :href="`${item.uri}`" class="list-group-item border-b-[0.75px] dark:border-gray-600 border-gray-400 flex items-center justify-between p-2 w-full dark:hover:bg-black/30 hover:bg-gray-200 hover-trigger"> -->
           <a href="javascript:;" :id="item.class" class="list-group-item border-b-[0.75px] dark:border-gray-600 border-gray-400 flex items-center justify-between p-2 w-full h-min dark:hover:bg-black/30 hover:bg-gray-200 hover-trigger">
-            <div :li-index="item.data" onclick="clicked(this)" :class="{'text-live-bg dark:text-primary':item.class === true, '':item.class === false}" class="track flex-col items-start w-[70%] flex-none space-y-0">
+            <div :li-index="item.id" onclick="clicked(this)" :class="{'text-live-bg dark:text-primary':item.class === true, '':item.class === false}" class="track flex-col items-start w-[70%] flex-none space-y-0">
               <h2 class="font-black text-2xl w-[80%] uppercase cursor-pointer" x-text="item.radio_name"></h2>
               <p :id="item.duration" class="w-[20%] truncate audio-duration" x-text="item.radio_country"></p>
               <audio :class="item.audio" :src="item.uri"></audio>

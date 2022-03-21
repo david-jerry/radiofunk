@@ -17,20 +17,25 @@ musicList = wrapper.querySelector("#playlist"),
 pauseSVG = "<path fill-rule='evenodd' d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z' clip-rule='evenodd'></path>";
 playSVG = "<path fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z' clip-rule='evenodd'></path>";
 
-// let musicIndex = Math.floor((Math.random() * sourceData.length) + 1);
-let musicIndex = sourceData[0].index;
+let musicIndex = Math.floor((Math.random() * sourceData.length) + 1);
+// let musicIndex = sourceData[0].index;
 isMusicPaused = true;
-
 window.addEventListener("load", ()=>{
   loadMusic(musicIndex);
   playingSong();
 });
 
 function loadMusic(index){
-  musicName.innerText = sourceData[index - 1].radio_name;
-  musicDefine.innerText = sourceData[index - 1].radio_country;
-  musicImg.src = sourceData[index - 1].img;
-  mainAudio.src = sourceData[index - 1].uri;
+  // if(sourceData[index])
+  for(let t = 0; t < sourceData.length; t++) {
+    if (sourceData[t].id == index) {
+      console.log(sourceData[t].id)
+      musicName.innerText = sourceData[t].radio_name;
+      musicDefine.innerText = sourceData[t].radio_country;
+      musicImg.src = sourceData[t].img;
+      mainAudio.src = sourceData[t].uri;
+    }
+  }
 };
 
 //play music function
@@ -131,7 +136,6 @@ progressArea.addEventListener("click", (e)=>{
   playingSong();
 });
 
-const Tracks = musicList.querySelectorAll("a");
 
 // let create li tags according to array length for list
 // for (let i = 1; i <= sourceData.length; i++) {
@@ -153,21 +157,21 @@ const Tracks = musicList.querySelectorAll("a");
 
 //play particular song from the list onclick of li tag
 function playingSong(trackIndex){
+  const Tracks = musicList.querySelectorAll("a");
 
   for (let j = 0; j < Tracks.length; j++) {
-    console.log(Tracks[j].getAttribute("li-index"))
-    let audioTag = Tracks[j].querySelector(".audio-duration");
 
-    if(Tracks[j].classList.contains("playing") && Tracks[j].getAttribute("li-index") != trackIndex){
+    if(Tracks[j].classList.contains("playing")){
+      let audioTag = Tracks[j].querySelector(".audio-duration");
       Tracks[j].classList.remove("playing");
-      let adDuration = audioTag.getAttribute("t-duration");
       audioTag.classList.remove("text-green-400")
-      audioTag.innerText = sourceData[trackIndex - 1].radio_country;
+      audioTag.innerText = sourceData[trackIndex].radio_country;
       //audioTag.innerText = "Paused";
     }
 
     //if the li tag index is equal to the trackIndex then add playing class in it
     if(Tracks[j].getAttribute("li-index") == trackIndex){
+      let audioTag = Tracks[j].querySelector(".audio-duration");
       Tracks[j].classList.add("playing");
       audioTag.classList.add("text-green-400")
       audioTag.innerText = "Playing";
@@ -181,14 +185,18 @@ function playingSong(trackIndex){
 //particular li clicked function
 function clicked(element){
   let getLiIndex = element.getAttribute("li-index");
-  element.classList.toggle("playing")
+  element.classList.add("playing")
   trackIndex = getLiIndex; //updating current song index with clicked li index
   if (element.classList.contains("playing")) {
     loadMusic(trackIndex);
-    playMusic();
     playingSong(trackIndex);
+    playMusic();
+    // element.querySelector(".audio-duration").classList.add("text-green-400")
+    // element.querySelector(".audio-duration").innerHTML = "Playing"
   } else {
     pauseMusic();
+    // element.querySelector(".audio-duration").classList.remove("text-green-400")
+    // element.querySelector(".audio-duration").innerHTML = "0.00"
   }
 };
 
@@ -206,8 +214,8 @@ function tapped(element){
   radioIndex = getIndex; //updating current song index with clicked li index
   if (element.classList.contains("playing")) {
     loadMusic(radioIndex);
-    playMusic();
     playingSong(radioIndex);
+    playMusic();
     // element.classList.add("animate-pulse")
     // element.innerHTML = pauseSVG;
   } else {
