@@ -11,7 +11,7 @@ class UserQuerySet(QuerySet):
         return self.filter(is_active=True)
 
     def podcaster(self):
-        return self.active().filter(podcaster=False)
+        return self.active().filter(podcaster=True)
 
     def search(self, query=None):
         qs = self

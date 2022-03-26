@@ -25,7 +25,8 @@ from countries_plus.models import Country
 from django.utils.timezone import now
 
 from .managers import UserObjManager
-
+from radio_funk.tunes.models import Stations
+from radio_funk.podcast.models import Podcast
 class User(AbstractUser):
     """
     Default custom user model for radio_funk.
@@ -121,3 +122,28 @@ class Settings(TimeStampedModel):
         verbose_name_plural = "Sound Settings"
         ordering = [ "-created"]
 
+class FavoriteStations(TimeStampedModel):
+    user = OneToOneField(User, on_delete=CASCADE, related_name=_("favoritestation"))
+    stations = ManyToManyField(Stations, related_name="stations", symmetrical=False, blank=True)
+
+    def __str__(self):
+        return f"{self.user.name.title()} favorite stations"
+
+    class Meta:
+        managed = True
+        verbose_name = "Favorite Station"
+        verbose_name_plural = "Favorite Stations"
+        ordering = [ "-created"]
+
+class FavoritePodcasts(TimeStampedModel):
+    user = OneToOneField(User, on_delete=CASCADE, related_name=_("favoritepodcast"))
+    podcasts = ManyToManyField(Podcast, related_name="podcasts", symmetrical=False, blank=True)
+
+    def __str__(self):
+        return f"{self.user.name.title()} favorite podcasts"
+
+    class Meta:
+        managed = True
+        verbose_name = "Favorite Podcast"
+        verbose_name_plural = "Favorite Podcasts"
+        ordering = [ "-created"]

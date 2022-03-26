@@ -30,6 +30,7 @@ from stdimage import StdImageField
 from model_utils.models import TimeStampedModel
 from countries_plus.models import Country as CountryField
 from autoslug import AutoSlugField
+from django.urls import reverse
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -81,6 +82,10 @@ class Stations(TimeStampedModel):
     @property
     def get_like_count(self):
         return self.like.count()
+
+    def get_absolute_url(self):
+        return reverse("radio:radio_detail", kwargs={"slug": self.slug})
+
 
     def save(self, *args, **kwargs):
         g = geocoder.mapbox(self.address, key=mapbox_access_token)

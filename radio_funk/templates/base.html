@@ -1,4 +1,4 @@
-{% load static i18n tailwind_tags unicorn %}
+{% load static i18n tailwind_tags %}
 {% url 'home' as home_url %}
 
 <!DOCTYPE html>
@@ -46,7 +46,6 @@
     <!-- Le javascript
     ================================================== -->
     {# Placed at the top of the document so pages load faster with defer #}
-    {% unicorn_scripts %}
 
 
     {% block javascript %}
@@ -74,18 +73,18 @@
 
   </head>
   {% if request.path == home_url and device == "Mobile" %}
-  <body onload="iziToast.show({'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{sub_menu:false, playlist:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
+  <body onload="iziToast.show({'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, sub_menu:false, playlist:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
   {% elif request.path == home_url %}
-  <body onload="iziToast.show({'maxWidth':'50%', 'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{sub_menu:false, playlist:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
+  <body onload="iziToast.show({'maxWidth':'50%', 'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, sub_menu:false, playlist:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
   {% else %}
-  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{sub_menu:false, playlist:false, search:false, lang_open:false, m_lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-white-200 bg-white-bg text-font relative">
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, sub_menu:false, playlist:false, search:false, lang_open:false, m_lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-white-200 bg-white-bg text-font relative">
   {% endif %}
 
     {% include 'snippets/sidenav.html' %}
     {% include 'snippets/rightnav.html' %}
 
     <main class="flex-auto flex flex-col max-h-screen max-w-full overflow-hidden relative pb-28 md:pb-4" @click="lang_open = false">
-      <div class="shadow-md dark:bg-black bg-white-200 flex items-center w-full p-4 justify-between max-h-14 z-20 bg-">
+      <div class="backdrop-blur-md shadow-md dark:bg-black/30 bg-white-200/30 flex items-center w-full p-4 justify-between max-h-14 z-20">
         <div class="flex items-center space-x-5 leading-none w-auto">
           <div class="flex items-center space-x-3">
             {% if not device == "Mobile" %}
@@ -139,11 +138,6 @@
         <a href="javascript:;" class="w-full block uppercase bg-live-bg hover:bg-live-bg/70 dark:bg-primary dark:hover:bg-primary/70 text-white-200 dark:text-font-darker p-1 rounded-b-lg text-center duration-300">view all</a>
       </div>
 
-      <!-- <div class="flex items-center space-x-2">
-        {% for g in genres %}
-        <p class="h-min p-2 rounded-full">{{g.name|title}}</p>
-        {% endfor %}
-      </div> -->
 
       {% block content %} {% endblock content %}
 
@@ -173,13 +167,17 @@
       </div>
       <div :class="{'hidden':playlist === false, 'flex-col':playlist === true}" class="hidden z-50 absolute rounded-md left-[50%] top-[50%] transform -translate-x-1/2 -translate-y-1/2 md:w-[512px] w-[320px] h-min bg-white-bg/70 dark:bg-black/60 p-4 space-y-4">
         <h2 class="font-black text-4xl uppercase">create playlist</h2>
-        <form action="" class="w-full space-y-2">
-          <input placeholder="Playlist Title" type="text" class="focus:outline-none focus:border-none bg-white-bg dark:text-font appearance-none border-none w-full rounded py-2 px-3 leading-tight">
-          <textarea placeholder="Playlist Description" class="focus:outline-none focus:border-none bg-white-bg dark:text-font appearance-none border-none w-full rounded py-2 px-3 leading-tight"></textarea>
+        <form class="w-full space-y-2">
+          {% csrf_token %}
+          <input placeholder="Playlist Title" name="ptitle" type="text" class="focus:outline-none focus:border-none bg-white-bg dark:text-font appearance-none border-none w-full rounded py-2 px-3 leading-tight">
+          <textarea name="pdesc" placeholder="Playlist Description" class="focus:outline-none focus:border-none bg-white-bg dark:text-font appearance-none border-none w-full rounded py-2 px-3 leading-tight"></textarea>
+        <div class="flex items-center w-full space-x-2">
+          <input type="checkbox" name="private" class="rounded text-live-bg dark:text-primary"> <span class="uppercase text-sm font-black">make this private</span>
+        </div>
           <div class="flex items-center justify-between space-x-2 text-black">
             <button type="reset" class="bg-primary hover:bg-primary/70 duration-300 uppercase font-black text-xl w-1/3 rounded p-2">reset</button>
             <a href="javascript:;" @click="playlist = ! playlist" class="bg-live-bg hover:bg-live-bg/70 text-center duration-300 uppercase font-black text-xl w-1/3 rounded p-2">close</a>
-            <button type="submit" class="bg-podcast-bg hover:bg-podcast-bg/70 duration-300 uppercase font-black text-xl w-1/3 rounded p-2">create</button>
+            <button hx-post="{% url 'podcast:create_playlist' %}" @click="playlist = false, iziToast.success({'message':'Playlist Created Successfully', 'id':'success', 'color':'green', 'title':'PLAYLIST', 'timeout': 5000, 'resetOnHover': true, 'balloon': true,})" type="submit" class="bg-podcast-bg hover:bg-podcast-bg/70 duration-300 uppercase font-black text-xl w-1/3 rounded p-2">create</button>
           </div>
         </form>
       </div>
@@ -255,7 +253,7 @@
     {% endfor %}
 
 
-
+    {% if not request.user_agent.is_mobile %}
     <script>
       {% if not settings.PRODUCTION %}
         var home = "http://" + window.location.hostname + ":8000/{{LANGUAGE_CODE}}/"
@@ -264,6 +262,8 @@
       {% endif %}
     </script>
 
+    <script src="{% static 'js/history.js' %}"></script>
+    {% endif %}
 
     {% block inline_javascript %}
     {% comment %} Script tags with only code, no src (defer by default). To run
@@ -278,7 +278,7 @@
 
 
 
-    <script>
+    <!-- <script>
       function audioPlay(div) {
         var audio = document.getElementById('audio');
         audio.src = div;
@@ -295,8 +295,7 @@
       }{% if not forloop.last %},{% endif %}
       {% endfor %}
       ]
-    </script>
-    <script async src="{% static 'js/project.js' %}"></script>
+    </script> -->
   </body>
 </html>
 

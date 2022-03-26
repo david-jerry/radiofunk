@@ -1,6 +1,10 @@
-{% load static i18n tailwind_tags %}<!DOCTYPE html>
+{% load static i18n tailwind_tags %}
+
+<!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
-<html lang="{{ LANGUAGE_CODE }}" class="h-full bg-gray-900">
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+{% get_language_info_list for LANGUAGES as languages %}
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}" class="max-w-full max-h-screen {% if dark %}dark{% endif %}" x-data="{dark:{{dark|lower}}}" :class="{'dark':dark === true, '':dark === false}">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -8,8 +12,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Online Radio & Podcasting Software" />
     <meta name="author" content="David Jeremiah" />
+    <meta name="keywords" content="radio funk,Online radio,live podcast,make money from podcast,websites like spotify,earn from streaming audio files,{% block kw %}{% endblock kw%}">
 
     <link rel="icon" href="{% static 'images/favicons.svg' %}" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;0,800;1,300;1,400;1,600;1,800&display=swap">
 
     {% block css %}
 
@@ -42,8 +49,8 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- place project specific Javascript in this file -->
-    {% endblock javascript %} {{ form.media }} {% tailwind_preload_css %}
-    {% tailwind_css %}
+    {% endblock javascript %}
+    {{ form.media }}
 
     <link rel="preload" href="{% static 'css/project.css' %}" as="style" />
     <link rel="stylesheet" href="{% static 'css/project.css' %}" />
@@ -52,12 +59,14 @@
     <link href="{% static 'css/icons.min.css' %}" rel="stylesheet" type="text/css" />
 
     <script src="{% static 'js/iziToast.min.js' %}" crossorigin="anonymous"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script async src="https://unpkg.com/htmx.org@1.7.0"></script>
 
   </head>
 
-  <body class="font-body h-full">
-    <svg data-tooltip-target="tooltip-back" data-tooltip-placement="right" type="button" class="w-9 h-9 fixed top-4 left-4 text-yellow-400 font-black cursor-pointer" onclick="history.back()" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
-    <div id="tooltip-back" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-bold text-gray-900 bg-yellow-400 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{}" class="transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-white-200 bg-white-bg text-font text-2xl relative">
+    <svg data-tooltip-target="tooltip-back" data-tooltip-placement="right" type="button" class="w-9 h-9 fixed top-4 left-4 dark:text-primary font-black cursor-pointer" onclick="history.back()" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
+    <div id="tooltip-back" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-xl font-bold text-gray-900 bg-live-bg rounded-lg shadow-sm opacity-0 tooltip dark:bg-primary">
         Back
         <div class="tooltip-arrow" data-popper-arrow></div>
     </div>
@@ -70,27 +79,31 @@
   </body>
 
   {% for message in messages %}
-  <script type=text/javascript>
-    iziToast.settings({
-      timeout: 9000,
-      position: 'topLeft',
-      drag: true,
-      pauseOnHover: true,
-      transitionIn: 'flipInX',
-      transitionOut: 'flipOutX',
-      transitionInMobile: 'fadeInUp',
-      transitionOutMobile: 'fadeOutDown',
-      close: true,
-      progressBar: true,
-      progressBarEasing: 'ease',
-      icon: 'icone-{{ message.tags }}',
-    });
-    iziToast.{{ message.tags }}({
-      id: '{{ message.tags }}',
-      title: '{{ message.tags|capfirst }}',
-      message: '{{ message }}',
-    });
-  </script>
-  {% endfor %}
+    <script>
+      //iziToast.{{ message.tags }}({
+
+          iziToast.{{ message.tags }}({
+            timeout: 5000,
+            resetOnHover: true,
+            position: 'bottomRight',
+            drag: true,
+            pauseOnHover: true,
+            transitionIn: 'fadeInUp',
+            transitionOut: 'fadeOutDown',
+            transitionInMobile: 'fadeInUp',
+            transitionOutMobile: 'fadeOutDown',
+            close: true,
+            displayMode: 2,
+            progressBar: true,
+            progressBarEasing: 'ease',
+            color: '{% if message.tags == "success" %}green{% elif message.tags == "warning" %}yellow{% elif message.tags == "info" %}blue{% else %}red{% endif %}',
+            icon: '{% if message.tags == "success" %}fa fa-thumbs-up{% elif message.tags == "warning" %}fa fa-exclamation-triangle{elif message.tags == "info"}fa fa-info-circle{% else %}fa fa-bug{% endif %}',
+            balloon: true,
+            id: '{{ message.tags }}',
+            title: '{{ message.tags|capfirst }}',
+            message: '{{ message }}',
+          });
+    </script>
+    {% endfor %}
 
 </html>

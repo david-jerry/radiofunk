@@ -125,7 +125,6 @@ class PlaylistQuerySet(QuerySet):
         if query is not None:
             lookup = (
                 Q(name__icontains=query) |
-                Q(description__icontains=query) |
                 Q(owner__name__icontains=query) |
                 Q(owner__username__icontains=query)
             )

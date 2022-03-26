@@ -1,0 +1,22 @@
+
+{% if playlists %}
+{% for p in playlists %}
+  <div class="flex items-center space-x-2">
+    <div class="w-10 h-10 rounded overflow-hidden">
+      <img src="{{p.podcast.first.image.thumbnail.url}}" alt="" class="w-10 h-5 object-cover">
+      <img src="{{p.podcast.last.image.thumbnail.url}}" alt="" class="w-10 h-5 object-cover">
+    </div>
+    <div class="flex flex-col items-start text-left w-auto h-10">
+      <h2 class="text-2xl font-black text-live bg dark:text primary uppercase leading-none">
+        {{p.name}}
+      </h2>
+      <p class="text-sm truncate leading-nones">
+        {{p.description|safe|truncatechars:120}}
+      </p>
+    </div>
+  </div>
+{% endfor %}
+{% else %}
+<p>No playlist currently</p>
+{% endif %}
+  

@@ -14,6 +14,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
 
 from radio_funk.mode.views import enable_dark_mode, enable_light_mode
+from .views import ExploreView, search_view, genre_detail
 # TODO: Add google analytics client_secret file
 # from jet.dashboard.dashboard_modules import google_analytics_views
 # from jet.dashboard.dashboard import Dashboard, AppIndexDashboard
@@ -43,13 +44,16 @@ sitemaps = {
 urlpatterns = i18n_patterns(
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path(
-        _("discovery/"), TemplateView.as_view(template_name="pages/search.html"), name="discover"
+        _("explore/"), view=ExploreView.as_view(), name="discover"
+    ),
+    path(
+        _("explore/q/"), view=search_view, name="search"
+    ),
+    path(
+        _("genre/<slug>/"), view=genre_detail, name="genre_detail"
     ),
     path(
         _("radio/"), TemplateView.as_view(template_name="pages/about.html"), name="radio"
-    ),
-    path(
-        _("podcasts/"), TemplateView.as_view(template_name="pages/podcast.html"), name="podcasts"
     ),
     path(
         _("history/"), TemplateView.as_view(template_name="pages/about.html"), name="history"
@@ -73,15 +77,15 @@ urlpatterns = i18n_patterns(
 
     # User management
     path('rosetta/', include('rosetta.urls')),
-    # path('photologue/', include('photologue.urls', namespace='photologue')),
     path(_("users/"), include("radio_funk.users.urls", namespace="users")),
     path(_("accounts/"), include("allauth.urls")),
-    path(_("podcast/"), include("podcast.urls")),
+    path(_("podcast/"), include("podcast.urls", namespace="podcast")),
+    path(_("stations/"), include("tunes.urls", namespace="radio")),
+
 
     # Your stuff: custom urls includes go here
     path('tinymce/', include('tinymce.urls')),
     path('unicorn/', include('django_unicorn.urls')),
-    # path(settings.ADMIN_FILEBROWSER_URL, filebrowser.urls),
 
     path("__reload__/", include("django_browser_reload.urls")),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

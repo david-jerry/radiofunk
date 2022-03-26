@@ -10,9 +10,9 @@
 <div>
   <img class="mx-auto h-12 w-auto animate-bounce" src="{% static 'images/favicons.svg' %}" alt="Workflow">
   <h2 class="mt-6 text-center text-3xl font-extrabold text-white">Sign in to your account</h2>
-  <p class="mt-2 text-center text-sm text-slate-400">
+  <p class="mt-2 text-center text-xl text-slate-400">
     Or
-    <a href="{{signup_url}}" class="font-medium text-yellow-600 hover:text-yellow-500"> get started with a free account </a>
+    <a href="{{signup_url}}" class="font-medium dark:text-primary dark:hover:text-primary/80"> get started with a free account </a>
   </p>
 </div>
 
@@ -29,22 +29,22 @@
   <div class="rounded-md shadow-sm -space-y-px">
     <div id="div_id_login">
       <label class="form-label requiredField sr-only" for="id_login">E-mail<span class="asteriskField">*</span></label>
-      <input autocomplete="email" class="textinput textInput form-control fbc-has-badge fbc-UID_1 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-sm" id="id_login" name="login" placeholder="E-mail address" required="" type="email">
+      <input autocomplete="email" class="textinput textInput form-control fbc-has-badge fbc-UID_1 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-xl" id="id_login" name="login" placeholder="E-mail address" required="" type="email">
     </div>
     <div id="div_id_password">
       <label class="form-label requiredField sr-only" for="id_password">Password<span class="asteriskField">*</span></label>
-      <input autocomplete="current-password" class="textinput textInput form-control appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-sm" id="id_password" name="password" placeholder="Password" required="" type="password">
+      <input autocomplete="current-password" class="textinput textInput form-control appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:z-10 sm:text-xl" id="id_password" name="password" placeholder="Password" required="" type="password">
     </div>
   </div>
 
   <div class="flex items-center justify-between">
     <div class="flex items-center" id="div_id_remember">
-      <input class="checkboxinput form-check-input h-4 w-4 text-yellow-600 focus:ring-yellow-500 border-gray-300 rounded" id="id_remember" name="remember" type="checkbox">
-      <label class="form-check-label ml-2 block text-sm text-yellow-600" for="id_remember">Remember Me</label>
+      <input class="checkboxinput form-check-input h-4 w-4 dark:text-primary focus:ring-yellow-500 border-gray-300 rounded" id="id_remember" name="remember" type="checkbox">
+      <label class="form-check-label ml-2 block text-xl dark:text-primary" for="id_remember">Remember Me</label>
     </div>
 
-    <div class="text-sm">
-      <a class="button secondaryAction font-medium text-yellow-600 hover:text-yellow-500" href="{% url 'account_reset_password' %}">{% translate "Forgot Password?" %}</a>
+    <div class="text-xl">
+      <a class="button secondaryAction font-medium dark:text-primary hover:dark:text-primary" href="{% url 'account_reset_password' %}">{% translate "Forgot Password?" %}</a>
     </div>
   </div>
 
@@ -53,7 +53,7 @@
   {% endif %}
 
   <div>
-    <button type="submit" class="primaryAction group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-bold rounded-md text-yellow-900 bg-yellow-400 hover:bg-yellow-300 focus:outline-none focus:ring-0 focus:shadow-primary hover:shadow-primary">
+    <button type="submit" class="primaryAction group relative w-full flex justify-center py-2 px-4 border border-transparent text-xl font-bold rounded-md text-yellow-900 bg-yellow-400 hover:bg-yellow-300 focus:outline-none focus:ring-0 focus:shadow-primary hover:shadow-primary">
       <span class="absolute left-0 inset-y-0 flex items-center pl-3">
         <!-- Heroicon name: solid/lock-closed -->
         <svg class="h-5 w-5 text-yellow-900" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

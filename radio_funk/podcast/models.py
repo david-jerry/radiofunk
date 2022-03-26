@@ -277,7 +277,7 @@ class Podcast(TimeStampedModel):
         return "http://{0}{1}".format(Site.objects.get_current(), self.get_absolute_url())
 
     def get_absolute_url(self):
-        return reverse("podcast_detail", kwargs={"slug": self.slug})
+        return reverse("podcast:podcast_detail", kwargs={"slug": self.slug})
 
     @property
     def latest_episode(self):
@@ -381,7 +381,7 @@ class Episodes(TimeStampedModel):
         return self.like.count()
 
     def get_absolute_url(self):
-        return reverse("podcast_episode_detail",
+        return reverse("podcast:podcast_episode_detail",
                        kwargs={"podcast_slug": self.podcast.slug, "slug": self.slug})
 
     def get_next(self):
@@ -446,7 +446,7 @@ class Playlist(TimeStampedModel):
     slug = AutoSlugField(_("slug"), populate_from="name", unique="True")
     description = HTMLField(_('Playlist Description'))
     owner = ForeignKey(User, on_delete=DO_NOTHING, related_name="playlist_author")
-    podcast = ManyToManyField(Podcast)
+    podcast = ManyToManyField(Podcast, default=None, related_name="playlist_podcast")
 
     private = BooleanField(default=False)
 
@@ -467,7 +467,8 @@ class Playlist(TimeStampedModel):
     def get_like_count(self):
         return self.like.count()
 
-
+    def get_absolute_url(self):
+        return reverse("podcast:playlist_detail", kwargs={"slug": self.slug})
 
 
 

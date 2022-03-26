@@ -31,7 +31,7 @@ class Genre(TimeStampedModel):
         return self.name.title()
 
     def get_most_popular(self):
-        return self.episode.all().annotate(podcast_count=Count("like")).order_by('podcast_count').first()
+        return self.podcast.all().annotate(podcast_count=Count("like")).order_by('podcast_count').first()
 
     def get_all_podcast(self):
         return self.podcast.all()

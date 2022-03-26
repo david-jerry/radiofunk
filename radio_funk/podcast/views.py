@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 import random
 
 from django.shortcuts import render
@@ -18,45 +19,86 @@ from radio_funk.tunes.models import Stations
 from radio_funk.utils.logger import LOGGER
 
 # Create your views here.
+class PodcastListview(ListView):
+    model = Podcast
+    allow_empty = True
+    queryset = Podcast.managers.popular()
+    template_name = "podcast/podcast.html"
+
+podcast_list = PodcastListview.as_view()
+
+
+class PodcastDetailview(DetailView):
+    model = Podcast
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+    template_name = 'snippets/podcast_detail.html'
+
+podcast_detail = PodcastDetailview.as_view()
+
+
 @require_http_methods(['POST', 'GET'])
-def search_view(request):
-    template_name = "snippets/search.html"
-    paginate_by = 20
-    count = 0
-    qs_lookup = None
+@login_required
+def create_playlist(request):
+    user = request.user
+    title = request.POST.get('ptitle')
+    desc = request.POST.get('pdesc')
+    p = request.POST.get('private')
 
-    r = random.randint(0, 255)
-    g = random.randint(0, 255)
-    b = random.randint(0, 255)
-    rgb = [r,g,b]
-
-    hexa = "#"+''.join([random.choice('ABCDEF0123456789') for i in range(6)])
-
-
-    query = request.POST.get('q', None)
-    if query is not None:
-        ep_res = Episodes.objects.search(query=query)
-        rd_res = Stations.managers.search(query=query)
-        pd_res = Podcast.managers.search(query=query)
-        usr_res = User.managers.search(query=query)
-        pl_res = Playlist.objects.search(query=query)
-        qs_lookup = sorted(chain(
-                            usr_res,
-                            rd_res,
-                        ), key=lambda instance:instance.created, reverse = True)[:4]
-        count = len(qs_lookup)
+    if p == "on":
+        private = True
     else:
-        qs_lookup = None
-        count = 0
+        private = False
 
-    context = {
-        'count': count,
-        'query': query,
-        'episodes': ep_res,
-        'stations': rd_res,
-        'podcasts': pd_res,
-        'playlist': pl_res,
-        'podcasters': usr_res,
-        'object_list': qs_lookup,
-    }
-    return render(request, template_name, context)
+
+    playlist = Playlist.objects.create(name=title,description=desc,owner=user,private=private)
+    playlist.podcast.add()
+    LOGGER.info(playlist.id)
+
+    # add user to likes increasing it by 1
+    user.playlist_likes.add(playlist.id)
+
+    # get all user playlists
+    playlists = user.playlist_author.all()
+
+    return render(request, 'snippets/playlists.html', context={'playlists':playlists})
+
+
+
+@require_http_methods(['POST', 'GET'])
+@login_required
+def podcast_like(request, slug):
+    podcast = Podcast.managers.get(slug=slug)
+    user = request.user
+    user.podcast_likes.add(podcast.id)
+    return HttpResponse("""
+        <svg class="block w-10 h-10 text-red-600 cursor-pointer" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd">
+            </path>
+        </svg>
+    """)
+
+
+
+@require_http_methods(['POST', 'GET'])
+@login_required
+def podcast_unlike(request, slug):
+    podcast = Podcast.managers.get(slug=slug)
+    user = request.user
+    user.podcast_likes.remove(podcast.id)
+    return HttpResponse("""
+        <svg class="block w-10 h-10 text-red-600 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+            </path>
+        </svg>
+    """)
+
+class PlaylistDetail(DetailView):
+    model = Playlist
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+    template_name = 'users/playlist_detail.html'
+
+playlist_detail = PlaylistDetail.as_view()
+
+
