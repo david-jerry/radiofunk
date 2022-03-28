@@ -25,6 +25,12 @@ class PodcastListview(ListView):
     queryset = Podcast.managers.popular()
     template_name = "podcast/podcast.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["popular_podcasts"] = Podcast.managers.popular()[:4]
+        return context
+
+
 podcast_list = PodcastListview.as_view()
 
 
@@ -32,7 +38,7 @@ class PodcastDetailview(DetailView):
     model = Podcast
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
-    template_name = 'snippets/podcast_detail.html'
+    template_name = 'podcast/podcast_detail.html'
 
 podcast_detail = PodcastDetailview.as_view()
 
@@ -65,17 +71,18 @@ def create_playlist(request):
 
 
 
+
+
 @require_http_methods(['POST', 'GET'])
 @login_required
 def podcast_like(request, slug):
     podcast = Podcast.managers.get(slug=slug)
     user = request.user
     user.podcast_likes.add(podcast.id)
-    return HttpResponse("""
-        <svg class="block w-10 h-10 text-red-600 cursor-pointer" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd">
-            </path>
-        </svg>
+    return HttpResponse(f"""
+        <button hx-post="/podcast/{podcast.slug}/like/" hx-swap="outerHTML" hx-target="this" @click="pof_{podcast.id} = true" :class="pof_{podcast.id} ? 'hidden' : ''" type="button" class="rounded-full px-4 border pt-1 leading-none border-black dark:border-white-200 text-2xl hover:bg-black dark:hover:bg-white-200 hover:text-white-200 dark:hover:text-black duration-200">
+            Follow
+        </button>
     """)
 
 
@@ -86,11 +93,10 @@ def podcast_unlike(request, slug):
     podcast = Podcast.managers.get(slug=slug)
     user = request.user
     user.podcast_likes.remove(podcast.id)
-    return HttpResponse("""
-        <svg class="block w-10 h-10 text-red-600 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-            </path>
-        </svg>
+    return HttpResponse(f"""
+        <button hx-post="/podcast/{podcast.slug}/unlike/" hx-swap="outerHTML" hx-target="this" @click="pof_{podcast.id} = false" :class="pof_{podcast.id} ? '' : 'hidden'" type="button" class="rounded-full px-4 border pt-1 leading-none border-black dark:border-white-200 text-2xl bg-black dark:bg-white-200 dark:hover:text-white-200 text-white-200 hover:text-black dark:text-black hover:bg-transparent dark:hover:bg-transparent duration-200">
+            Unfollow
+        </button>
     """)
 
 class PlaylistDetail(DetailView):

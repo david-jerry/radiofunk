@@ -1,7 +1,24 @@
 {% extends "base.html" %}
 {% load static i18n %}
 
-{% block search_component %}<span class="hidden md:block dark:text-white-bg text-font-darker font-extrabold text-2xl truncate leading-none">{{greeting}}, {% if request.user.is_authenticated %}{{request.user.username|title}}{% else %}Partner{% endif %}. </span>{% endblock search_component %}
+{% block search_component %}<span class="hidden md:block dark:text-white-bg text-font-darker font-extrabold text-2xl truncate leading-none">{{object.name|title}} Genre</span>{% endblock search_component %}
 
 {% block content %}
+<div class="p-4 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8 gap-6">
+  {% for obj in podcasts %}
+  <a href="{{obj.get_absolute_url}}" class="rounded-md w-full flex-col flex items-center h-min shadow-md p-1 hover:shadow-lg hover:scale-105 duration-300">
+    <div class="flex-col flex items-center space-y-1">
+      <img src="{% if obj.image.thumbnail %}{{obj.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-36 h-36 rounded-lg">
+      <div class="flex-col text-left w-full px-2 truncate leading-none">
+        <h2 class="font-black text-xl leading-none">{{obj.name|upper|truncatechars:16}}</h2>
+        <p class="text-md leading-none">{{obj.author.username|title|truncatechars:16}}</p>
+      </div>
+    </div>
+  </a>
+  {% empty %}
+  <div class="p-2 w-full text-center h-min">
+    No Podcast for the {{object.name|title}} Genre
+  </div>
+  {% endfor %}
+</div>
 {% endblock content %}

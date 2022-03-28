@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static i18n humanize %}
+
+{% block search_component %}<span class="hidden md:block dark:text-white-bg text-font-darker font-extrabold text-2xl truncate leading-none">{{object.name|title}}</span>{% endblock search_component %}
+
+{% block content %}
+<div class="relative max-w-full h-full -mt-20 text-black dark:text-white-200">
+  <div class="flex-none bg-gradient-to-b from-podcast-bg w-full h-min pt-24 px-4 pb-8 space-y-3">
+    <div class="flex items-center space-x-2">
+      <img src="{{object.image.thumbnail.url}}" alt="{{object.name}} cover photo" class="object-contain rounded-md md:w-32 md:h-32 w-20 h-20">
+      <div class="flex-col leading-none p-0 -space-y-1">
+        <div class="flex items-center space-x-3 overflow-x-scroll scrollbar-hide">
+          {% for g in object.genre.all %}
+          <a href="{{g.get_absolute_url}}" class="bg-black/40 dark:bg-white-200/30 uppercase text-white-200 w-24 text-center border-none shadow hover:scale-105 duration-200 rounded-full border pt-1 leading-none text-md font-black">{{g.name|title}}</a>
+          {% endfor %}
+        </div>
+        <h1 class="text-4xl md:text-6xl leading-none truncate">{{object.name}}</h1>
+        <p class="text-md">{{object.description|capfirst|safe}}</p>
+      </div>
+    </div>
+    <div class="flex items-center space-x-4" x-data="{pof_{{object.id}}:{% if user in object.like.all %}true{% else %}false{% endif %}}">
+      {% if user.is_authenticated %}
+      <button hx-post="{% url 'podcast:podcast_like' object.slug %}" hx-swap="outerHTML" hx-target="this" @click="pof_{{object.id}} = true" :class="pof_{{object.id}} ? 'hidden' : ''" type="button" class="rounded-full px-4 border pt-1 leading-none border-black dark:border-white-200 text-2xl hover:bg-black dark:hover:bg-white-200 hover:text-white-200 dark:hover:text-black duration-200">Follow</button>
+      <button hx-post="{% url 'podcast:podcast_unlike' object.slug %}" hx-swap="outerHTML" hx-target="this" @click="pof_{{object.id}} = false" :class="pof_{{object.id}} ? '' : 'hidden'" type="button" class="rounded-full px-4 border pt-1 leading-none border-black dark:border-white-200 text-2xl bg-black dark:bg-white-200 dark:hover:text-white-200 text-white-200 hover:text-black dark:text-black hover:bg-transparent dark:hover:bg-transparent duration-200">Unfollow</button>
+      {% else %}
+      <span class="block text-2xl font-black">{{object.get_like_count|intword}} Follower{% if object.get_like_count > 1%}s{% endif %}</span>
+      {% endif %}
+      <svg class="w-6 h-6 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+      <svg class="w-6 h-6 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path></svg>
+    </div>
+  </div>
+  <div class="flex-none overflow-y-scroll scrollbar-hide w-full h-[calc(100%_-_12rem)] md:h-[calc(100%_-_17rem)] pb-4 px-4">
+    {% for ep in object.podcast.all %}
+    <div class="dark:bg-black/40 bg-white/40 max-w-full p-2 flex items-start leading-none space-x-2 hover:bg-white/90 hover:shadow-md dark:hover:bg-black/90 dark:hover:shadow-md duration-200 rounded">
+      <img src="{{ep.image.thumbnail.url}}" alt="{{ep.name|title}} photo" class="w-20 h-20 object-cover rounded-md">
+      <div class="flex-col w-[calc(100%_-_3.8rem)] pr-4">
+        <h3 class="text-xl leading-none">Ep.{{forloop.counter}} {{ep.name|title}}</h3>
+        <p class="text-sm leading-none tracking-tighter truncate">{{ep.description|capfirst|safe|truncatechars:120}}</p>
+        <div class="flex items-center space-x-1 mt-2">
+          <svg class="w-4 h-4 block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <p class="text-md font-black">{{ep.created|date:"M Y"}}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

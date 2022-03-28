@@ -25,6 +25,18 @@ class GenreDetailView(DetailView):
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
 
+    def get_queryset(self):
+        slug = self.kwargs.get("slug")
+        return Genre.objects.active().filter(slug=slug).distinct()
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        slug = self.kwargs.get("slug")
+        context["podcasts"] = Podcast.managers.published().filter(genre__slug=slug)
+        return context
+
+
 genre_detail = GenreDetailView.as_view()
 
 # @require_http_methods(['POST', 'GET'])
@@ -58,11 +70,12 @@ def search_view(request):
         ep_res = Episodes.objects.search(query=query)
         pd_res = Podcast.managers.search(query=query)
         usr_res = User.managers.search(query=query)
-        pl_res = Playlist.objects.search(query=query)
-        qs_lookup = sorted(chain(ep_res,
-pd_res,
-usr_res,
-pl_res), key=lambda instance:instance.created, reverse = True)[:20]
+        if request.user.is_authenticated:
+            pl_res = Playlist.objects.search(query=query)
+            qs_lookup = sorted(chain(ep_res, pd_res, usr_res, pl_res), key=lambda instance:instance.created, reverse = True)[:20]
+        else:
+            pl_res = None
+            qs_lookup = sorted(chain(ep_res, pd_res, usr_res), key=lambda instance:instance.created, reverse = True)[:20]
         count = len(qs_lookup)
 
 
@@ -75,7 +88,8 @@ pl_res), key=lambda instance:instance.created, reverse = True)[:20]
 
         'episodes': ep_res[:30],
         'podcasts': pd_res[:30],
-        'playlists': pl_res[:30],
+
+        'playlists': pl_res[:30] if pl_res is not None else None,
         'podcasters': usr_res[:20],
 
         'object_list': qs_lookup,

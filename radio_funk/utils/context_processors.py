@@ -68,6 +68,19 @@ def context_data(request):
     popular_podcasters = User.managers.popular()
     podcasters = User.managers.podcaster()
 
+    bedtime_podcasts = Podcast.managers.published().filter(
+        reduce(
+            operator.or_, (
+                Q(genre__name__icontains=x)
+            for x in ["night", "sleep", "rest"]))
+        ).filter(
+        reduce(
+            operator.or_, (
+                Q(name__icontains=x)
+            for x in ["night", "sleep", "rest"]))
+        ).order_by("-created")[:20]
+    moods_podcasts = Podcast.managers.published().filter(reduce(operator.or_, (Q(genre__name__icontains=x) for x in ["love", "romance", "erotic", "sexual", "sad", "happy", "emotional"]))).filter(reduce(operator.or_, (Q(name__icontains=x) for x in ["love", "romance", "erotic", "sexual", "sad", "happy", "emotional"]))).order_by("-created")[:20]
+    podcast_documentary = Podcast.managers.published().search(query="documentary")[:20] if Podcast.managers.published().search(query="documentary").exists() else None
 
     all_radios = Stations.managers.closest(cur_loc=current_loc, dist=5000000000)
     other_radios = Stations.managers.closest(cur_loc=current_loc, dist=5000000000).other_radios(query=location_country)
@@ -150,6 +163,9 @@ def context_data(request):
         "new_podcasters": new_podcasters,
         "popular_podcasters": popular_podcasters,
         "podcasters": podcasters,
+        "bedtime_podcasts": bedtime_podcasts,
+        "moods_podcasts": moods_podcasts,
+        'podcast_documentary': podcast_documentary,
 
         'active_radios':active_radios,
         'c_radios':closest_radios,

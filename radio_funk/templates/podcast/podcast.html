@@ -7,144 +7,85 @@
 <div class="w-auto h-full px-4 py-3 flex flex-col space-y-12 scrollbar-hide overflow-y-scroll">
   <div class="flex flex-col space-y-1 flex-none h-min py-1 w-auto">
     <div class="flex items-center justify-between py-2">
-      <span class="text-xl">The closest radio station within 50km</span>
-      <a href="javascript:;" class="fnt-extrabold uppercase text-sm dark:text-primary text-font-darker">View More</a>
+      <span class="text-xl">Top Rated Podcast</span>
     </div>
-    <div class="flex items-center overflow-x-scroll scrollbar-hide max-w-[100%] h-min space-x-4 transition-all duration-200 py-2">
-      {% for r in c_radios %}
-      <div class="flex flex-col flex-none rounded-md h-min w-[240px] bg-gradient-to-b shadow-md hover:shadow-lg dark:from-gray-800 dark:to-gray-700 from-gray-50 to-gray-200 p-4 duration-300">
-        <div class="w-full rounded-md overflow-hidden aspect-[1/1] mb-2 relative hover-trigger">
-          <img src="https://source.unsplash.com/random/240X240/?radio+station/{{r.id}}" alt="Photo by RODNAE Productions from Pexels" class="aspect-[1/1] w-full object-cover object-center opacity-80 hover:opacity-100 duration-300">
-          <div class="rounded-md dark:bg-gray-300 bg-gray-100 hover:scale-105 absolute w-10 h-10 top-1 left-1 p-1 justify-items-center hover:cursor-pointer hover:shadow-md place-content-center flex items-center duration-300 ease-in text-center">
-            <img class="w-full h-full object-contain dark:bg-gray-300 bg-gray-100" src="{% if r.logo %}{{r.logo.thumbnail.url}}{% else %}{% static 'images/logo-in.svg' %}{% endif %}" alt="{{r.name}} Logo">
-          </div>
-          <div class="hover-target hover:scale-105 absolute w-8 h-8 p-1 justify-items-center hover:cursor-pointer hover:shadow-md bottom-4 right-4 flex items-center rounded-full bg-podcast-bg duration-300 ease-in text-center">
-            <svg class="flex w-6 h-6 object-cover items-center text-gray-200" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-          </div>
-        </div>
-        <h3 class="font-black text-2xl leading-none text-podcast-bg">{{r.name|title|truncatechars:19}}</h3>
-        <p class="font-extralight truncate text-xl leading-none">{{r.description|title|truncatechars:20|safe}}</p>
-      </div>
-      {% empty %}
-      <div class="flex flex-col flex-none rounded-md h-full w-full bg-gray-300 text-center">
-        NO ITEM
-      </div>
+    <div class="scrollbar-hide flex items-center w-full h-min space-x-6 p-2 overflow-x-auto">
+      {% for obj in popular_podcasts %}
+        <a href="{{obj.get_absolute_url}}" class="rounded-md w-36 h-min shadow-md p-1 hover:shadow-lg hover:scale-105 duration-300">
+            <div class="flex-col flex items-center space-y-1">
+              <img src="{% if obj.image.thumbnail %}{{obj.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-36 h-36 rounded-lg">
+              <div class="flex-col text-left w-full px-2 truncate leading-none">
+                <h2 class="font-black text-xl leading-none">{{obj.name|upper|truncatechars:16}}</h2>
+                <p class="text-md leading-none">{{obj.author.username|title|truncatechars:16}}</p>
+              </div>
+            </div>
+        </a>
       {% endfor %}
-
-    </div>
+      </div>
   </div>
 
-  {% if sleep_time and sleep_episodes %}
+  {% if sleep_time and bedtime_podcasts %}
   <div class="flex flex-col space-y-1 flex-none h-min py-1 w-auto">
     <div class="flex items-center justify-between py-2">
       <span class="text-2xl font-black">Bed Time</span>
-      <a href="javascript:;" class="fnt-extrabold uppercase text-sm dark:text-primary text-font-darker">View More</a>
     </div>
-    <div class="flex flex-none items-center overflow-x-scroll scrollbar-hide max-w-[100%] h-full space-x-4">
-      {% for r in sleep_episodes %}
-      <div class="flex flex-col flex-none rounded-md h-min w-[240px] bg-gradient-to-b shadow-md hover:shadow-lg dark:from-gray-800 dark:to-gray-700 from-gray-50 to-gray-200 p-4 duration-300">
-        <div class="w-full rounded-md overflow-hidden aspect-[1/1] mb-2 relative hover-trigger">
-          <img src="https://source.unsplash.com/random/240X240/?radio+station/{{r.id}}" alt="Photo by RODNAE Productions from Pexels" class="aspect-[1/1] w-full object-cover object-center opacity-80 hover:opacity-100 duration-300">
-          <div class="rounded-md dark:bg-gray-300 bg-gray-100 hover:scale-105 absolute w-10 h-10 top-1 left-1 p-1 justify-items-center hover:cursor-pointer hover:shadow-md place-content-center flex items-center duration-300 ease-in text-center">
-            <img class="w-full h-full object-contain dark:bg-gray-300 bg-gray-100 src="{% if r.image %}{{r.image.thumbnail.url}}{% else %}{% static 'images/logo-in.svg' %}{% endif %}" alt="{{r.name}} Logo">
-          </div>
-          <div class="hover-target hover:scale-105 absolute w-8 h-8 p-1 justify-items-center hover:cursor-pointer hover:shadow-md bottom-4 right-4 flex items-center rounded-full bg-podcast-bg duration-300 ease-in text-center">
-            <svg class="flex w-6 h-6 object-cover items-center text-gray-200" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-          </div>
-        </div>
-        <h3 class="font-black text-2xl leading-none text-podcast-bg">{{r.name|title|truncatechars:19}}</h3>
-        <p class="font-extralight truncate text-xl leading-none">{{r.description|title|truncatechars:20|safe}}</p>
-      </div>
-      {% empty %}
-      <div class="flex flex-col flex-none rounded-md h-full w-full bg-gray-300 text-center">
-        NO ITEM
-      </div>
+    <div class="scrollbar-hide flex items-center w-full h-min space-x-6 p-2 overflow-x-auto">
+      {% for obj in bedtime_podcasts %}
+        <a href="{{obj.get_absolute_url}}" class="rounded-md w-36 h-min shadow-md p-1 hover:shadow-lg hover:scale-105 duration-300">
+            <div class="flex-col flex items-center space-y-1">
+              <img src="{% if obj.image.thumbnail %}{{obj.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-36 h-36 rounded-lg">
+              <div class="flex-col text-left w-full px-2 truncate leading-none">
+                <h2 class="font-black text-xl leading-none">{{obj.name|upper|truncatechars:16}}</h2>
+                <p class="text-md leading-none">{{obj.author.username|title|truncatechars:16}}</p>
+              </div>
+            </div>
+        </a>
       {% endfor %}
-    </div>
+      </div>
   </div>
   {% endif %}
 
-  {% if episodes %}
+  {% if moods_podcasts %}
   <div class="flex flex-col space-y-1 flex-none h-min py-1 w-auto">
     <div class="flex items-center justify-between py-2">
-      <span class="text-2xl font-black">Recent Episodes</span>
-      <a href="javascript:;" class="fnt-extrabold uppercase text-sm dark:text-primary text-font-darker">View More</a>
+      <span class="text-2xl font-black">Moods Podcasts</span>
     </div>
     <div class="flex flex-none items-center overflow-x-scroll scrollbar-hide max-w-[100%] h-full space-x-4">
-      {% for r in episodes %}
-      <div class="flex flex-col flex-none rounded-md h-min w-[240px] bg-gradient-to-b shadow-md hover:shadow-lg dark:from-gray-800 dark:to-gray-700 from-gray-50 to-gray-200 p-4 duration-300">
-        <div class="w-full rounded-md overflow-hidden aspect-[1/1] mb-2 relative hover-trigger">
-          <img src="{% if r.image %}{{r.image.thumbnail.url}}{% else %}{% static 'images/logo-in.svg' %}{% endif %}" alt="Photo by RODNAE Productions from Pexels" class="aspect-[1/1] w-full object-cover object-center opacity-80 hover:opacity-100 duration-300">
-          <div class="hover-target hover:scale-105 absolute w-8 h-8 p-1 justify-items-center hover:cursor-pointer hover:shadow-md bottom-4 right-4 flex items-center rounded-full bg-podcast-bg duration-300 ease-in text-center">
-            <svg class="flex w-6 h-6 object-cover items-center text-gray-200" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+      {% for obj in moods_podcasts %}
+      <a href="{{obj.get_absolute_url}}" class="rounded-md w-36 h-min shadow-md p-1 hover:shadow-lg hover:scale-105 duration-300">
+        <div class="flex-col flex items-center space-y-1">
+          <img src="{% if obj.image.thumbnail %}{{obj.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-36 h-36 rounded-lg">
+          <div class="flex-col text-left w-full px-2 truncate leading-none">
+            <h2 class="font-black text-xl leading-none">{{obj.name|upper|truncatechars:16}}</h2>
+            <p class="text-md leading-none">{{obj.author.username|title|truncatechars:16}}</p>
           </div>
         </div>
-        <h3 class="font-black text-2xl leading-none text-podcast-bg">{{r.name|title|truncatechars:19}}</h3>
-        <p class="font-extralight truncate text-xl leading-none">{{r.description|title|truncatechars:20|safe}}</p>
-      </div>
-      {% empty %}
-      <div class="flex flex-col flex-none rounded-md h-full w-full bg-gray-300 text-center">
-        NO ITEM
-      </div>
+      </a>
       {% endfor %}
     </div>
   </div>
   {% endif %}
 
-  {% if documentary %}
+  {% if podcast_documentary %}
   <div class="flex flex-col space-y-1 flex-none h-min py-1 w-auto">
     <div class="flex items-center justify-between py-2">
-      <span class="text-2xl font-black">Documentary</span>
-      <a href="javascript:;" class="fnt-extrabold uppercase text-sm dark:text-primary text-font-darker">View More</a>
+      <span class="text-2xl font-black">Podcast Documentaries</span>
     </div>
     <div class="flex flex-none items-center overflow-x-scroll scrollbar-hide max-w-[100%] h-full space-x-4">
-      {% for r in documentary %}
-      <div class="flex flex-col flex-none rounded-md h-min w-[240px] bg-gradient-to-b shadow-md hover:shadow-lg dark:from-gray-800 dark:to-gray-700 from-gray-50 to-gray-200 p-4 duration-300">
-        <div class="w-full rounded-md overflow-hidden aspect-[1/1] mb-2 relative hover-trigger">
-          <img src="{% if r.image %}{{r.image.thumbnail.url}}{% else %}{% static 'images/logo-in.svg' %}{% endif %}" alt="Photo by RODNAE Productions from Pexels" class="aspect-[1/1] w-full object-cover object-center opacity-80 hover:opacity-100 duration-300">
-          <div class="hover-target hover:scale-105 absolute w-8 h-8 p-1 justify-items-center hover:cursor-pointer hover:shadow-md bottom-4 right-4 flex items-center rounded-full bg-podcast-bg duration-300 ease-in text-center">
-            <svg class="flex w-6 h-6 object-cover items-center text-gray-200" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+      {% for obj in podcast_documentary %}
+      <a href="{{obj.get_absolute_url}}" class="rounded-md w-36 h-min shadow-md p-1 hover:shadow-lg hover:scale-105 duration-300">
+        <div class="flex-col flex items-center space-y-1">
+          <img src="{% if obj.image.thumbnail %}{{obj.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-36 h-36 rounded-lg">
+          <div class="flex-col text-left w-full px-2 truncate leading-none">
+            <h2 class="font-black text-xl leading-none">{{obj.name|upper|truncatechars:16}}</h2>
+            <p class="text-md leading-none">{{obj.author.username|title|truncatechars:16}}</p>
           </div>
         </div>
-        <h3 class="font-black text-2xl leading-none text-podcast-bg">{{r.name|title|truncatechars:19}}</h3>
-        <p class="font-extralight truncate text-xl leading-none">{{r.description|title|truncatechars:20|safe}}</p>
-      </div>
-      {% empty %}
-      <div class="flex flex-col flex-none rounded-md h-full w-full bg-gray-300 text-center">
-        NO ITEM
-      </div>
+      </a>
       {% endfor %}
-
     </div>
   </div>
   {% endif %}
 
-  {% if moods %}
-  <div class="flex flex-col space-y-1 flex-none h-min py-1 w-auto">
-    <div class="flex items-center justify-between py-2">
-      <span class="text-2xl font-black">Emotions</span>
-      <a href="javascript:;" class="fnt-extrabold uppercase text-sm dark:text-primary text-font-darker">View More</a>
-    </div>
-    <div class="flex flex-none items-center overflow-x-scroll scrollbar-hide max-w-[100%] h-full space-x-4">
-      {% for r in moods %}
-      <div class="flex flex-col flex-none rounded-md h-min w-[240px] bg-gradient-to-b shadow-md hover:shadow-lg dark:from-gray-800 dark:to-gray-700 from-gray-50 to-gray-200 p-4 duration-300">
-        <div class="w-full rounded-md overflow-hidden aspect-[1/1] mb-2 relative hover-trigger">
-          <img src="{% if r.image %}{{r.image.thumbnail.url}}{% else %}{% static 'images/logo-in.svg' %}{% endif %}" alt="Photo by RODNAE Productions from Pexels" class="aspect-[1/1] w-full object-cover object-center opacity-80 hover:opacity-100 duration-300">
-          <div class="hover-target hover:scale-105 absolute w-8 h-8 p-1 justify-items-center hover:cursor-pointer hover:shadow-md bottom-4 right-4 flex items-center rounded-full bg-podcast-bg duration-300 ease-in text-center">
-            <svg class="flex w-6 h-6 object-cover items-center text-gray-200" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-          </div>
-        </div>
-        <h3 class="font-black text-2xl leading-none text-podcast-bg">{{r.name|title|truncatechars:19}}</h3>
-        <p class="font-extralight truncate text-xl leading-none">{{r.description|title|truncatechars:20|safe}}</p>
-      </div>
-      {% empty %}
-      <div class="flex flex-col flex-none rounded-md h-full w-full bg-gray-300 text-center">
-        NO ITEM
-      </div>
-      {% endfor %}
-
-    </div>
-  </div>
-  {% endif %}
 </div>
 {% endblock content %}

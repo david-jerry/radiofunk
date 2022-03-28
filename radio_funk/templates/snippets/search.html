@@ -73,7 +73,7 @@
       <div class="flex items-center justify-between px-2">
         <h2 class="font-black text-2xl">Top Playlists</h2>
 
-        <a href="{% url 'users:playlist' %}" class="dark:text-primary text-xl uppercase font-black">view more</a>
+        <a href="{% url 'users:playlist' request.user.username %}" class="dark:text-primary text-xl uppercase font-black">view more</a>
       </div>
       <div class="scrollbar-hide flex items-center w-full h-min space-x-6 p-2 overflow-x-auto">
       {% for obj in playlists %}
