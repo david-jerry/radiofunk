@@ -98,18 +98,21 @@
   .progress-area{
     @apply h-[6px] w-[40%] rounded-lg dark:bg-white-bg bg-black cursor-pointer;
   }
-  .progress-area .progress-bar{
+  .progress-area .progress-bar,
+  .podcast-progress-area .podcast-progress-bar{
     @apply h-[inherit] w-[0%] relative rounded-[inherit] bg-live-bg dark:bg-primary;
   }
-  .progress-bar::before{
+  .progress-bar::before,
+  .pdcast-progress-bar::before{
     content: "";
     @apply absolute h-[12px] w-[12px] rounded-full top-[40%] -right-[5px] z-[2] opacity-0 pointer-events-none -translate-y-[40%] bg-inherit transition-opacity duration-200 ease-in-out;
   }
-  .progress-area:hover .progress-bar::before{
+  .progress-area:hover .progress-bar::before,
+  .podcast-progress-area:hover .podcast-progress-bar::before{
     opacity: 1;
     pointer-events: auto;
   }
-  .progress-area .song-timer{
+  .progress-area .song-timer,{
     margin-top: 2px;
   }
   .song-timer span{

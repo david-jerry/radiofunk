@@ -51,6 +51,9 @@ from django.db.models import (
     UUIDField,
 )
 
+import mutagen
+from mutagen.mp3 import MP3
+
 from tinymce import HTMLField
 from stdimage import StdImageField
 from model_utils.models import TimeStampedModel
@@ -300,6 +303,7 @@ class Episodes(TimeStampedModel):
     podcast = ForeignKey(Podcast, on_delete=PROTECT, related_name="podcast")
 
     audio = FileField(_("AudioFile"), blank=True, upload_to=get_norm_audio_upload_folder, validators=[FileExtensionValidator(allowed_extensions=['mp3'])])
+
     # audio_min = FileField(_("AudioFile_lo"), blank=True, upload_to=get_lo_audio_upload_folder, validators=[FileExtensionValidator(allowed_extensions=['mp3'])])
     # audio_high = FileField(_("AudioFile_hi"), blank=True, upload_to=get_hi_audio_upload_folder, validators=[FileExtensionValidator(allowed_extensions=['mp3'])])
 
@@ -343,11 +347,16 @@ class Episodes(TimeStampedModel):
     def __str__(self):
         return self.name.title()
 
+    @property
+    def duration(self):
+        dur = mutagen.File(self.audio).info
+        return int(dur.length) / 60
+
     class Meta:
         managed = True
         verbose_name = "Podcast Episode"
         verbose_name_plural = "Podcast Episodes"
-        ordering = ["-created"]
+        ordering = ["created"]
 
     # def clean(self):
     #     super().clean()

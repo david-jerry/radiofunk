@@ -194,7 +194,7 @@ def context_data(request):
         'os_version': os_version,
         'user_ip': ip,
         'location_country': location_country,
-        'location_country': location_country,
+        'location_country_code': location_country_code,
         'location_latitude': location_latitude,
         'location_longitude': location_longitude,
         'location_city': location_city,

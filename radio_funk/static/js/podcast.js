@@ -1,6 +1,5 @@
-// Browser history back and forward button
-/* Project specific Javascript goes here. */
 const wrapper = document.querySelector(".wrapper"),
+
 musicImg = wrapper.querySelector(".img-area img"),
 musicName = wrapper.querySelector(".song-details .name"),
 musicDefine = wrapper.querySelector(".song-details .artist"),
@@ -11,21 +10,18 @@ mainAudio = wrapper.querySelector("#main-audio"),
 progressArea = wrapper.querySelector(".progress-area"),
 progressBar = progressArea.querySelector(".progress-bar"),
 musicList = wrapper.querySelector("#playlist"),
-radioKm = wrapper.querySelector("#radioKm"),
-radioCountry = wrapper.querySelector("#radioC"),
-radioOthers = wrapper.querySelector("#radioOthers"),
-// moreMusicBtn = wrapper.querySelector("#moreMusic"),
-// closemoreMusic = wrapper.querySelector("#close");
+
 
 pauseSVG = "<path fill-rule='evenodd' d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z' clip-rule='evenodd'></path>";
 playSVG = "<path fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z' clip-rule='evenodd'></path>";
 
-let musicIndex = Math.floor((Math.random() * sourceData.length) + 1);
-// let musicIndex = sourceData[0].index;
+let musicIndex = sourceData[0].index;
+
 isMusicPaused = true;
+
 window.addEventListener("load", ()=>{
   loadMusic(musicIndex);
-  playingSong();
+  // playingSong();
 });
 
 function loadMusic(index){
@@ -33,16 +29,15 @@ function loadMusic(index){
   for(let t = 0; t < sourceData.length; t++) {
     if (sourceData[t].id == index) {
       console.log(sourceData[t].id)
-      musicName.innerText = sourceData[t].radio_name;
-      musicDefine.innerText = sourceData[t].radio_country;
+      musicName.innerText = "Ep-" + sourceData[t].index + " " + sourceData[t].name;
+      musicDefine.innerText = sourceData[t].author;
       musicImg.src = sourceData[t].img;
       mainAudio.src = sourceData[t].uri;
     }
   }
 };
 
-//play music function
-function playMusic(){
+function playMusic() {
   wrapper.classList.add("paused");
   playPauseBtn.querySelector("svg").innerHTML = pauseSVG;
   playPauseBtn.classList.add("animate-spin")
@@ -50,7 +45,8 @@ function playMusic(){
   musicDefine.classList.add("text-green-400")
   musicDefine.classList.remove("text-live-bg", "dark:text-primary")
   mainAudio.play();
-};
+}
+
 
 //pause music function
 function pauseMusic(){
@@ -139,37 +135,18 @@ progressArea.addEventListener("click", (e)=>{
   playingSong();
 });
 
-
-// let create li tags according to array length for list
-// for (let i = 1; i <= sourceData.length; i++) {
-//   //let's pass the song name, artist from the array
-//   console.log(i);
-//   let liAudioDuartionTag = musicList.querySelector(`#dur_${i}`);
-//   let liAudioTag = musicList.querySelector(`.aud_${i}`);
-//   liAudioTag.addEventListener("loadeddata", ()=>{
-//     let duration = liAudioTag.duration;
-//     let totalMin = Math.floor(duration / 60);
-//     let totalSec = Math.floor(duration % 60);
-//     if(totalSec < 10){ //if sec is less than 10 then add 0 before it
-//       totalSec = `0${totalSec}`;
-//     };
-//     liAudioDuartionTag.innerText = `${totalMin}:${totalSec}`; //passing total duation of song
-//     liAudioDuartionTag.setAttribute("t-duration", `${totalMin}:${totalSec}`); //adding t-duration attribute with total duration value
-//   });
-// };
-
-//play particular song from the list onclick of li tag
 function playingSong(trackIndex){
   if (musicList != null || musicList != undefined) {
-    const Tracks = musicList.querySelectorAll("a .track");
+    const Tracks = musicList.querySelectorAll(".list-group-item");
     for (let j = 0; j <= Tracks.length; j++) {
 
       if(Tracks[j].getAttribute("li-index") != trackIndex){
         if(Tracks[j].classList.contains("playing")) {
           let audioTag = Tracks[j].querySelector(".audio-duration");
+          Tracks[j].querySelector("svg").innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>`
           Tracks[j].classList.remove("playing");
-          audioTag.classList.remove("text-green-400", "animate:pulse")
-          audioTag.innerText = sourceData[j].radio_country;
+          Tracks[j].querySelector("svg").classList.remove("text-green-400", "animate-pulse");
+          Tracks[j].querySelector(".date").classList.remove("text-green-400", "animate-pulse");
         }
         //audioTag.innerText = "Paused";
       }
@@ -177,97 +154,18 @@ function playingSong(trackIndex){
       //if the li tag index is equal to the trackIndex then add playing class in it
       if(Tracks[j].getAttribute("li-index") === trackIndex){
         let audioTag = Tracks[j].querySelector(".audio-duration");
+        Tracks[j].querySelector("svg").innerHTML = `<path stroke-linecap='round' stroke-linejoin='round' stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>`
         Tracks[j].classList.add("playing");
-        audioTag.classList.add("text-green-400", "animate:pulse")
-        audioTag.innerText = "Playing";
+        Tracks[j].querySelector("svg").classList.add("text-green-400", "animate-pulse")
+        Tracks[j].querySelector(".date").classList.add("text-green-400", "animate-pulse");
       }
 
-      Tracks[j].setAttribute("onclick", "clicked(this)");
+      Tracks[j].setAttribute("onclick", "playpodcast(this)");
     };
   }
+}
 
-  if (radioCountry != null || radioCountry != undefined) {
-    const countryTracks = radioCountry.querySelectorAll("a .track");
-    for (let j = 0; j <= countryTracks.length; j++) {
-      if(countryTracks[j].getAttribute("li-index") != trackIndex){
-        if(countryTracks[j].classList.contains("playing")) {
-          let audioTag = countryTracks[j].querySelector(".audio-duration");
-          countryTracks[j].classList.remove("playing");
-          audioTag.classList.remove("text-green-400", "animate:pulse")
-          audioTag.innerText = sourceData[j].radio_country;
-        }
-        //audioTag.innerText = "Paused";
-      }
-
-      //if the li tag index is equal to the trackIndex then add playing class in it
-      if(countryTracks[j].getAttribute("li-index") === trackIndex){
-        let audioTag = countryTracks[j].querySelector(".audio-duration");
-        countryTracks[j].classList.add("playing");
-        audioTag.classList.add("text-green-400", "animate:pulse")
-        audioTag.innerText = "Playing";
-      }
-
-      countryTracks[j].setAttribute("onclick", "clicked(this)");
-    };
-  }
-
-  if (radioKm != null || radioKm != undefined) {
-    const kmTracks = radioKm.querySelectorAll("a .track");
-
-    for (let j = 0; j <= kmTracks.length; j++) {
-      if(kmTracks[j].getAttribute("li-index") != trackIndex){
-        if(kmTracks[j].classList.contains("playing")) {
-          let audioTag = kmTracks[j].querySelector(".audio-duration");
-          kmTracks[j].classList.remove("playing");
-          audioTag.classList.remove("text-green-400", "animate:pulse")
-          audioTag.innerText = sourceData[j].radio_country;
-        }
-        //audioTag.innerText = "Paused";
-      }
-
-      //if the li tag index is equal to the trackIndex then add playing class in it
-      if(kmTracks[j].getAttribute("li-index") === trackIndex){
-        let audioTag = kmTracks[j].querySelector(".audio-duration");
-        kmTracks[j].classList.add("playing");
-        audioTag.classList.add("text-green-400", "animate:pulse")
-        audioTag.innerText = "Playing";
-      }
-
-      kmTracks[j].setAttribute("onclick", "clicked(this)");
-    };
-
-  }
-
-  if (radioOthers != null || radioOthers != undefined) {
-    const otherTracks = radioOthers.querySelectorAll("a .track");
-
-    for (let j = 0; j <= otherTracks.length; j++) {
-      if(otherTracks[j].getAttribute("li-index") != trackIndex){
-        if(otherTracks[j].classList.contains("playing")) {
-          let audioTag = otherTracks[j].querySelector(".audio-duration");
-          otherTracks[j].classList.remove("playing");
-          audioTag.classList.remove("text-green-400", "animate:pulse")
-          audioTag.innerText = sourceData[j].radio_country;
-        }
-        //audioTag.innerText = "Paused";
-      }
-
-      //if the li tag index is equal to the trackIndex then add playing class in it
-      if(otherTracks[j].getAttribute("li-index") === trackIndex){
-        let audioTag = otherTracks[j].querySelector(".audio-duration");
-        otherTracks[j].classList.add("playing");
-        audioTag.classList.add("text-green-400", "animate:pulse")
-        audioTag.innerText = "Playing";
-      }
-
-      otherTracks[j].setAttribute("onclick", "clicked(this)");
-    }
-  }
-};
-
-
-//particular li clicked function
-function clicked(element){
+function playpodcast(element){
   let getLiIndex = element.getAttribute("li-index");
   element.classList.add("playing")
   trackIndex = getLiIndex; //updating current song index with clicked li index
@@ -275,6 +173,7 @@ function clicked(element){
     loadMusic(trackIndex);
     playMusic();
     playingSong(trackIndex);
+
     // element.querySelector(".audio-duration").classList.add("text-green-400")
     // element.querySelector(".audio-duration").innerHTML = "Playing"
   } else {
@@ -283,32 +182,6 @@ function clicked(element){
     // element.querySelector(".audio-duration").innerHTML = "0.00"
   }
 };
-
-function mapPlay(element){
-  let getIndex = element.getAttribute("data-index");
-  radioIndex = getIndex; //updating current song index with clicked li index
-  playMusic();
-  loadMusic(radioIndex);
-  playingSong(radioIndex);
-};
-
-function tapped(element){
-  let getIndex = element.getAttribute("data-index");
-  element.classList.toggle("playing")
-  radioIndex = getIndex; //updating current song index with clicked li index
-  if (element.classList.contains("playing")) {
-    loadMusic(radioIndex);
-    playMusic();
-    playingSong(radioIndex);
-    // element.classList.add("animate-pulse")
-    // element.innerHTML = pauseSVG;
-  } else {
-    pauseMusic();
-    // element.classList.remove("animate-pulse")
-    // element.innerHTML = playSVG;
-  }
-};
-
 
 
 

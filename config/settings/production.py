@@ -106,6 +106,8 @@ MEDIA_URL = f"https://{aws_s3_domain}/media/"
 PRIVATE_FILE_STORAGE = "radio_funk.utils.storages.PrivateRootS3Boto3Storage"
 PRIVATE_URL = f"https://{aws_s3_domain}/private/"
 
+ADMIN_MEDIA_PREFIX = STATIC_URL + "admin/"
+
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email

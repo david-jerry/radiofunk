@@ -71,6 +71,11 @@ def create_playlist(request):
 
 
 
+# @login_required
+# def download_episode(request, slug, pslug):
+#     ep = Episodes.managers.get(slug=slug, podcast__slug=pslug)
+#     filename = ep.audio_file.name
+#     response = HttpResponse(ep.audio_file, content_type='audio/mpeg')
 
 
 @require_http_methods(['POST', 'GET'])
