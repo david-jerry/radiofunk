@@ -21,11 +21,12 @@ pauseSVG = "<path fill-rule='evenodd' d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a
 playSVG = "<path fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z' clip-rule='evenodd'></path>";
 
 let musicIndex = Math.floor((Math.random() * sourceData.length) + 1);
+// console.log(musicIndex)
 // let musicIndex = sourceData[0].index;
 isMusicPaused = true;
 window.addEventListener("load", ()=>{
   loadMusic(musicIndex);
-  playingSong();
+  playingSong(musicIndex);
 });
 
 function loadMusic(index){
@@ -136,7 +137,7 @@ progressArea.addEventListener("click", (e)=>{
 
   mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
   playMusic(); //calling playMusic function
-  playingSong();
+  // playingSong();
 });
 
 
@@ -162,8 +163,8 @@ progressArea.addEventListener("click", (e)=>{
 function playingSong(trackIndex){
   if (musicList != null || musicList != undefined) {
     const Tracks = musicList.querySelectorAll("a .track");
-    for (let j = 0; j <= Tracks.length; j++) {
-
+    for (let j = 0; j < Tracks.length; j++) {
+      console.log(Tracks.length)
       if(Tracks[j].getAttribute("li-index") != trackIndex){
         if(Tracks[j].classList.contains("playing")) {
           let audioTag = Tracks[j].querySelector(".audio-duration");
@@ -188,7 +189,7 @@ function playingSong(trackIndex){
 
   if (radioCountry != null || radioCountry != undefined) {
     const countryTracks = radioCountry.querySelectorAll("a .track");
-    for (let j = 0; j <= countryTracks.length; j++) {
+    for (let j = 0; j < countryTracks.length; j++) {
       if(countryTracks[j].getAttribute("li-index") != trackIndex){
         if(countryTracks[j].classList.contains("playing")) {
           let audioTag = countryTracks[j].querySelector(".audio-duration");
@@ -214,7 +215,7 @@ function playingSong(trackIndex){
   if (radioKm != null || radioKm != undefined) {
     const kmTracks = radioKm.querySelectorAll("a .track");
 
-    for (let j = 0; j <= kmTracks.length; j++) {
+    for (let j = 0; j < kmTracks.length; j++) {
       if(kmTracks[j].getAttribute("li-index") != trackIndex){
         if(kmTracks[j].classList.contains("playing")) {
           let audioTag = kmTracks[j].querySelector(".audio-duration");
@@ -241,7 +242,7 @@ function playingSong(trackIndex){
   if (radioOthers != null || radioOthers != undefined) {
     const otherTracks = radioOthers.querySelectorAll("a .track");
 
-    for (let j = 0; j <= otherTracks.length; j++) {
+    for (let j = 0; j < otherTracks.length; j++) {
       if(otherTracks[j].getAttribute("li-index") != trackIndex){
         if(otherTracks[j].classList.contains("playing")) {
           let audioTag = otherTracks[j].querySelector(".audio-duration");

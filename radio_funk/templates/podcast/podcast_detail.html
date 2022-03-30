@@ -61,33 +61,6 @@
       {% endif %}
     </div>
     {% endfor %}
-    {% for ep in object.podcast.all %}
-    <div class="cursor-pointer dark:bg-black/40 bg-white-200/40 max-w-full p-2 flex items-start leading-none space-x-2 hover:bg-white-200/90 hover:shadow-md dark:hover:bg-black/90 dark:hover:shadow-md duration-200 rounded">
-      <img src="{{ep.image.thumbnail.url}}" alt="{{ep.name|title}} photo" class="md:w-24 md:h-24 w-20 h-20 object-cover rounded-md">
-      <div @click="timer_{{ep.id}} = ! timer_{{ep.id}}, podcast_player = true" x-data="{timer_{{ep.id}}:false}" li-index="{{ep.id}}" onclick="playpodcast(this)" class="list-group-item flex-col w-auto md:w-[calc(100%_-_5.8rem)] pr-4">
-        <h3 class="text-2xl leading-none font-black">Ep.{{forloop.counter}} {{ep.name|title}}</h3>
-        <p class="text-xl leading-none font-lighter truncate">{% if not request.user_agent.is_mobile %}{{ep.description|capfirst|safe|truncatechars:320}}{% else %}{{ep.description|capfirst|safe|truncatechars:80}}{% endif %}</p>
-        <div class="flex items-center space-x-3 mt-2">
-          <svg @click="timer_{{ep.id}} = ! timer_{{ep.id}}, podcast_player = true" class="play md:w-8 md:h-8 w-5 h-5 block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          <p class="date text-xl font-black">{{ep.created|date:"M Y"}}</p>
-          <!-- <div :class="timer_{{ep.id}} ? '' : 'hidden'" class="podcast-progress-area w-[40%] h-[4px] flex-none rounded-md dark:bg-white-bg bg-black cursor-pointer -mt-2">
-            <div class="podcast-progress-bar flex items-center w-[0%] relative rounded-md">
-              <audio id="podcast-audio-{{ep.id}}" src="{{ep.audio.url}}"></audio>
-            </div>
-            <div class="song-timer-{{ep.id}} flex items-center justify-between mt-[1px]">
-              <span class="text-sm podcast-current-time-{{ep.id}} dark:text-primary text-live-bg">0:00</span>
-              <span class="text-sm podcast-max-duration-{{ep.id}} dark:text-primary text-live-bg">{{ep.duration|floatformat:2}}</span>
-            </div>
-          </div> -->
-        </div>
-      </div>
-      {% if not request.user.paid and not request.user.is_authenticated %}
-      <a href="{{ep.audio.url}}" download="Ep_{{ep.id}}_{{ep.slug}}">
-        <svg class="w-6 h-6 md:w-9 md:h-9 cursor-pointer text-podcast-bg hover:scale-90 duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path></svg>
-      </a>
-      {% endif %}
-    </div>
-    {% endfor %}
   </div>
 
   <div :class="{'hidden':podcast_player === false, 'flex':podcast_player === true}" class="w-full md:w-[calc(100%_-_12rem)] hidden h-12 dark:bg-black/60 bg-white-bg/60 items-center justify-evenly p-2 space-x-2 fixed bottom-20 md:bottom-0 right-0 z-10">

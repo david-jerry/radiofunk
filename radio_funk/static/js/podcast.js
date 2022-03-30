@@ -21,7 +21,7 @@ isMusicPaused = true;
 
 window.addEventListener("load", ()=>{
   loadMusic(musicIndex);
-  // playingSong();
+  // playingSong(musicIndex);
 });
 
 function loadMusic(index){
@@ -64,8 +64,8 @@ function prevMusic(){
   //if musicIndex is less than 1 then musicIndex will be the array length so the last music play
   musicIndex < 1 ? musicIndex = sourceData.length : musicIndex = musicIndex;
   loadMusic(musicIndex);
-  playMusic();
   playingSong(musicIndex);
+  playMusic();
 };
 
 //next music function
@@ -74,8 +74,8 @@ function nextMusic(){
   //if musicIndex is greater than array length then musicIndex will be 1 so the first music play
   musicIndex > sourceData.length ? musicIndex = 1 : musicIndex = musicIndex;
   loadMusic(musicIndex);
-  playMusic();
   playingSong(musicIndex);
+  playMusic();
 };
 
 // play or pause button event
@@ -83,7 +83,7 @@ playPauseBtn.addEventListener("click", ()=>{
   const isMusicPlay = wrapper.classList.contains("paused");
   //if isPlayMusic is true then call pauseMusic else call playMusic
   isMusicPlay ? pauseMusic() : playMusic();
-  playingSong();
+  // playingSong();
 });
 
 //prev music button event
@@ -136,9 +136,9 @@ progressArea.addEventListener("click", (e)=>{
 });
 
 function playingSong(trackIndex){
-  if (musicList != null || musicList != undefined) {
+  // if (musicList != null || musicList != undefined) {
     const Tracks = musicList.querySelectorAll(".list-group-item");
-    for (let j = 0; j <= Tracks.length; j++) {
+    for (let j = 0; j < Tracks.length; j++) {
 
       if(Tracks[j].getAttribute("li-index") != trackIndex){
         if(Tracks[j].classList.contains("playing")) {
@@ -162,7 +162,7 @@ function playingSong(trackIndex){
 
       Tracks[j].setAttribute("onclick", "playpodcast(this)");
     };
-  }
+  // }
 }
 
 function playpodcast(element){
