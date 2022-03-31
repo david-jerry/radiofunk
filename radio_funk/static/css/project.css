@@ -1686,6 +1686,14 @@ body::-webkit-scrollbar {
   min-width: 100%;
 }
 
+.min-w-\[\] {
+  min-width: ;
+}
+
+.min-w-\[96px\] {
+  min-width: 96px;
+}
+
 .max-w-full {
   max-width: 100%;
 }
@@ -2393,6 +2401,10 @@ body::-webkit-scrollbar {
 
 .bg-white\/60 {
   background-color: rgb(255 255 255 / 0.6);
+}
+
+.bg-white-200\/70 {
+  background-color: rgb(254 250 242 / 0.7);
 }
 
 .bg-opacity-20 {

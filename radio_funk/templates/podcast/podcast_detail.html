@@ -29,7 +29,7 @@
     <p class="text-md leading-none">{{object.description|safe|title}}</p>
     <div class="flex items-center space-x-3 overflow-x-scroll scrollbar-hide">
       {% for g in object.genre.all %}
-      <a href="{{g.get_absolute_url}}" class="bg-black/40 dark:bg-white-200/30 uppercase text-white-200 w-24 text-center border-none shadow hover:scale-105 duration-200 rounded-full border pt-2 pb-1 leading-none text-md font-black">{{g.name|title}}</a>
+      <a href="{{g.get_absolute_url}}" class="bg-black/40 dark:bg-white-200/30 uppercase text-white-200 min-w-[96px] text-center border-none shadow hover:scale-105 duration-200 rounded-full border pt-2 pb-1 leading-none text-md font-black">{{g.name|title}}</a>
       {% endfor %}
     </div>
   </div>
@@ -63,7 +63,7 @@
     {% endfor %}
   </div>
 
-  <div :class="{'hidden':podcast_player === false, 'flex':podcast_player === true}" class="w-full md:w-[calc(100%_-_12rem)] hidden h-12 dark:bg-black/60 bg-white/70 items-center justify-evenly p-2 space-x-2 fixed bottom-20 md:bottom-0 right-0 z-10">
+  <div :class="{'hidden':podcast_player === false, 'flex':podcast_player === true}" class="w-full md:w-[calc(100%_-_12rem)] hidden h-12 dark:bg-black/60 bg-white-200/70 items-center justify-evenly p-2 space-x-2 fixed bottom-20 md:bottom-0 right-0 z-10">
     <div class="img-area w-8 h-8 rounded-md shadow overflow-hidden flex-none">
       <img class="object-cover w-full h-full" src="" alt="">
     </div>
