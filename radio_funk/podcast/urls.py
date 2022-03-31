@@ -6,6 +6,7 @@ from radio_funk.podcast.views import (
     podcast_list,
     podcast_like,
     podcast_unlike,
+    remove_favorite,
     playlist_detail
 )
 
@@ -19,4 +20,5 @@ urlpatterns = [
     path("<slug>/", view=podcast_detail, name="podcast_detail"),
     path("<slug>/like/", view=podcast_like, name="podcast_like"),
     path("<slug>/unlike/", view=podcast_unlike, name="podcast_unlike"),
+    path("<slug>/unfavorite/", view=remove_favorite, name="unfavorite"),
 ]

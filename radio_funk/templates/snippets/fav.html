@@ -1,0 +1,16 @@
+{% for f in favorites %}
+<div class="flex items-center justify-between space-x-2 bg-gradient-to-bl from-white to-white-200 h-min rounded-md hover:from-white/60 hover:to-white-200/60 relative">
+  <a href="{{f.get_absolute_url}}" class="flex w-3/4 py-1 h-min items-center space-x-2  p-1">
+    <img src="{{f.image.thumbnail.url}}" alt="{{f.name|title}} photo" class="w-10 h-10 rounded-md object-cover">
+    <div class="items-center justify-center">
+      <h2 class="text-2xl font-black leading-[1]">{{f.name|title}}</h2>
+      <p class="text-xl leading-none">{{f.author.username}}</p>
+    </div>
+  </a>
+  <div hx-post="{% url 'podcast:unfavorite' f.slug%}" hx-target="#fav-list" hx-confirm="Are you sure to unfavorite this?" class="text-xl font-black text-red-600 p-4 h-full uppercase w-min block text-center"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></div>
+</div>
+{% empty %}
+<div class="items-center text-2xl justify-center w-full h-min">
+  You have no favorite podcast.
+</div>
+{% endfor %}

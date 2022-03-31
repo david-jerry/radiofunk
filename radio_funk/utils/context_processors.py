@@ -95,10 +95,10 @@ def context_data(request):
 
     genres = Genre.objects.popular()[:20] if Genre.objects.popular().exists() else None
 
-    # if request.user.is_authenticated:
-    #     transactions = Transactions.objects.filter(user=request.user)[:20]
-    # else:
-    #     transactions = None
+    if request.user.is_authenticated:
+        favorites = request.user.podcast_likes.all()
+    else:
+        favorites = None
 
     sleep_episodes = Episodes.objects.filter(
         reduce(
@@ -166,6 +166,7 @@ def context_data(request):
         "bedtime_podcasts": bedtime_podcasts,
         "moods_podcasts": moods_podcasts,
         'podcast_documentary': podcast_documentary,
+        "favorites": favorites,
 
         'active_radios':active_radios,
         'c_radios':closest_radios,

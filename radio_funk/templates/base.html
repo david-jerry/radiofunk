@@ -73,11 +73,11 @@
 
   </head>
   {% if request.path == home_url and device == "Mobile" %}
-  <body onload="iziToast.show({'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, sub_menu:false, playlist:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
+  <body onload="iziToast.show({'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, sub_menu:false, playlist:false, favorite:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
   {% elif request.path == home_url %}
-  <body onload="iziToast.show({'maxWidth':'50%', 'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, sub_menu:false, playlist:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
+  <body onload="iziToast.show({'maxWidth':'50%', 'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, sub_menu:false, playlist:false, favorite:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
   {% else %}
-  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, sub_menu:false, playlist:false, search:false, lang_open:false, m_lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-white-200 bg-white-bg text-font relative">
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, sub_menu:false, playlist:false, favorite:false, search:false, lang_open:false, m_lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-white-200 bg-white-bg text-font relative">
   {% endif %}
 
     {% include 'snippets/sidenav.html' %}
@@ -162,7 +162,10 @@
       </div>
 
       <!-- playlist form -->
-      <div @click="playlist = ! playlist" :class="{'max-w-0':playlist === false, 'w-screen':playlist === true}" class="duration-300 h-full absolute bg-black/70 top-0 left-0 justify-center items-center flex z-40">
+      <div @click="playlist = false" :class="{'max-w-0':playlist === false, 'w-screen':playlist === true}" class="duration-300 h-full absolute bg-black/70 top-0 left-0 justify-center items-center flex z-40">
+
+      </div>
+      <div @click="favorite = false" :class="{'max-w-0':favorite === false, 'w-screen':favorite === true}" class="duration-300 h-full absolute bg-black/70 top-0 left-0 justify-center items-center flex z-40">
 
       </div>
       <div :class="{'hidden':playlist === false, 'flex-col':playlist === true}" class="hidden z-50 absolute rounded-md left-[50%] top-[50%] transform -translate-x-1/2 -translate-y-1/2 md:w-[512px] w-[320px] h-min bg-white-bg/70 dark:bg-black/60 p-4 space-y-4">
@@ -180,6 +183,15 @@
             <button hx-post="{% url 'podcast:create_playlist' %}" @click="playlist = false, iziToast.success({'message':'Playlist Created Successfully', 'id':'success', 'color':'green', 'title':'PLAYLIST', 'timeout': 5000, 'resetOnHover': true, 'balloon': true,})" type="submit" class="bg-podcast-bg hover:bg-podcast-bg/70 duration-300 uppercase font-black text-xl w-1/3 rounded p-2">create</button>
           </div>
         </form>
+      </div>
+
+      <div :class="{'hidden':favorite === false, 'flex-col':favorite === true}" class="hidden z-50 absolute rounded-md left-[50%] top-[50%] transform -translate-x-1/2 -translate-y-1/2 md:w-[512px] w-[320px] max-h-[60%] bg-white-bg/70 dark:bg-black/60 p-2 space-y-4">
+        <h2 class="font-black text-4xl leading-none uppercase">Favorites</h2>
+        <div class="overflow-y-scroll w-full space-y-2 scrollbar-hide" id="fav-list">
+
+          {% include "snippets/fav.html" %}
+
+        </div>
       </div>
 
 
@@ -204,10 +216,13 @@
             <span class="text-xl block font-black text-ellipsis overflow-hidden leading-none">{% trans 'Create' %}</span>
             <span class="text-xl block font-black text-ellipsis overflow-hidden leading-none">{% trans 'Playlist' %}</span>
           </a>
-          <a href="javascript:;" class="hover:bg-black py-3 px-4 dark:hover:bg-white-bg hover:text-white-bg dark:hover:text-black space-y-1 flex items-center flex-col">
-            <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+          <a href="javascript:;" @click="favorite = ! favorite, sub_menu = ! sub_menu" class="hover:bg-black py-3 px-4 dark:hover:bg-white-bg hover:text-white-bg dark:hover:text-black space-y-1 flex items-center flex-col">
+            <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
+            <span class="flex-none text-xl block font-black text-ellipsis overflow-hidden leading-none">{% trans 'Favorites' %}</span>
+
+            <!-- <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
             <span class="text-xl block font-black text-ellipsis overflow-hidden leading-none">{% trans 'Go' %}</span>
-            <span class="text-xl block font-black text-ellipsis overflow-hidden leading-none">{% trans 'Live' %}</span>
+            <span class="text-xl block font-black text-ellipsis overflow-hidden leading-none">{% trans 'Live' %}</span> -->
           </a>
           <a href="{% if user.is_authenticated %}{% url 'account_logout' %}{% endif %}" class="hover:bg-black py-3 px-4 dark:hover:bg-white-bg text-red-600 space-y-1 flex items-center flex-col">
             <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>

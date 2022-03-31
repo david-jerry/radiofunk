@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 import random
 
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
 from itertools import chain
 
@@ -69,7 +69,14 @@ def create_playlist(request):
 
     return render(request, 'snippets/playlists.html', context={'playlists':playlists})
 
-
+@login_required
+def remove_favorite(request, slug):
+    podcast = get_object_or_404(Podcast, slug=slug)
+    request.user.podcast_likes.remove(podcast.id)
+    context = {
+        "favorites": request.user.podcast_likes.all()
+    }
+    return render(request, "snippets/fav.html", context)
 
 # @login_required
 # def download_episode(request, slug, pslug):
