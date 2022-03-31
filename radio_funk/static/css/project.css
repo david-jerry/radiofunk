@@ -2391,6 +2391,10 @@ body::-webkit-scrollbar {
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
 }
 
+.bg-white\/60 {
+  background-color: rgb(255 255 255 / 0.6);
+}
+
 .bg-opacity-20 {
   --tw-bg-opacity: 0.2;
 }
