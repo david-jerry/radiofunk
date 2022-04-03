@@ -1,38 +1,85 @@
 {% extends "users/base.html" %}
-{% load static %}
+{% load static humanize %}
 
 {% block title %}User: {{ object.username }}{% endblock %}
 
 {% block inner %}
-<h2 class="font-bolder text-sm text-gray-400">Welcome Back, {{user.username|title}}</h2>
-<div class="flex items-center">
-  <div class="min-w-[324px] max-w-sm bg-gray-900 min-h-min rounded-xl shadow-xl">
-    <div class="text-center bg-gray-700 rounded-t-xl py-8  shadow-xl">
-      {% if request.user.image or request.user.socialaccount_set.all.0.get_avatar_url %}
-      <img class="rounded-full w-16 h-16 object-cover" src="{% if request.user.image %}{{request.user.image.thumbnail.url}}{% elif request.user.socialaccount_set.all.0.get_avatar_url %}request.user.socialaccount_set.all.0.get_avatar_url{% endif %}" class="fill-current w-10 h-10" alt="{{request.user.username|title}} Passport"/>
-      {% else %}
-      <button type="button" class="w-24 h-24 rounded-full bg-gray-900 border-4 border-yellow-400 overflow-hidden">
-        <svg class='w-24 h-24 rounded-full object-contain hover:scale-110 hover:cursor-pointer' fill='currentColor' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z' clip-rule='evenodd'></path></svg>
-      </button>
+<div class="md:w-min w-full">
+    <div class="w-full md:min-w-[324px] md:max-w-sm bg-white-200 dark:bg-black min-h-min rounded-xl shadow-xl text-2xl">
+      <div class="text-center rounded-t-xl py-8  shadow-xl">
+        {% if object.image or user.socialaccount_set.all.0.get_avatar_url %}
+        <img class="rounded-full w-16 h-16 object-cover duration-200" src="{% if object.image %}{{object.image.thumbnail.url}}{% elif object.socialaccount_set.all.0.get_avatar_url %}{{object.socialaccount_set.all.0.get_avatar_url}}{% endif %}" class="fill-current w-10 h-10" alt="{{request.user.username|title}} Passport"/>
+        {% else %}
+        <button type="button" class="w-24 h-24 rounded-full bg-live-bg dark:bg-gray-900 border-4 border-yellow-400 overflow-hidden">
+          <svg class='w-24 h-24 rounded-full object-contain hover:scale-110 hover:cursor-pointer duration-200' fill='currentColor' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z' clip-rule='evenodd'></path></svg>
+        </button>
+        {% endif %}
+      </div>
+      <div class="bg-white-200 dark:bg-black space-y-6 py-4 px-6 text-2xl">
+        <div class="flex items-center justify-between border-b-2">
+          <h3 class="text-gray-400 text-xl font-black">Name:</h3><span class="font-black dark:text-primary">{% if object.name %}{{object.name|title}}{% else %}{{object.username|title}}{% endif %}</span>
+        </div>
+        <div class="flex items-center justify-between  border-b-2">
+          <h3 class="text-gray-400 text-xl font-black">Email:</h3><span class="font-black dark:text-primary">{{object.email}}</span>
+        </div>
+        {% if request.user == object %}
+        <div class="flex items-center justify-between  border-b-2">
+          <h3 class="text-gray-400 text-xl font-black">Subscribed:</h3><span class="font-black dark:text-primary">{{object.paid}}</span>
+        </div>
+        {% endif %}
+        {% if request.user.podcaster %}
+        <div class="flex items-center justify-between  border-b-2">
+          <h3 class="text-gray-400 text-xl font-black">Followers:</h3><span class="font-black dark:text-primary">{{object.get_follower_count|intword}}</span>
+        </div>
+        {% if object == request.user %}
+        <div class="flex items-center justify-between  border-b-2">
+          <h3 class="text-gray-400 text-xl font-black">Earnings:</h3><span class="font-black dark:text-primary">$ {{object.wallet.balance|intword}}</span>
+        </div>
+        {% endif %}
+        {% endif %}
+        <div class="flex items-center justify-between  border-b-2">
+          <h3 class="text-gray-400 text-xl font-black">Joined:</h3><span class="font-black dark:text-primary">{{object.date_joined|date:"M Y"}}</span>
+        </div>
+      </div>
+      {% if request.user == user %}
+      <a href="javascript:;" class="block bg-green-400 py-4 px-6 overflow-hidden hover:bg-green-400/50 focus:bg-green-400/50 text-center text-black hover:text-white  uppercase font-black transition-all duration-500 ease-in-out">
+        Withdraw Earnings
+      </a>
+      <a href="{% url 'account_email' %}" class="block bg-primary py-4 px-6 rounded-b-xl overflow-hidden hover:bg-primary/50 focus:bg-primary/50 text-center text-yellow-900 hover:text-white  uppercase font-black transition-all duration-500 ease-in-out">
+        Update Your Email
+      </a>
       {% endif %}
     </div>
-    <div class="bg-gray-900 space-y-6 py-4 px-6">
-      <div class="flex items-center justify-between">
-        <h3 class="text-gray-400 font-normal text-sm">Name:</h3><span class="font-black text-yellow-200">{% if user.name %}{{user.name|title}}{% else %}{{user.username|title}}{% endif %}</span>
-      </div>
-      <div class="flex items-center justify-between">
-        <h3 class="text-gray-400 font-normal text-sm">Email:</h3><span class="font-black text-yellow-200">{{user.email}}</span>
-      </div>
-      <div class="flex items-center justify-between">
-        <h3 class="text-gray-400 font-normal text-sm">Joined:</h3><span class="font-black text-yellow-200">{{user.date_joined|date:"M Y"}}</span>
-      </div>
+
+    {% if request.user == object %}
+    <div class="shadow-xl w-full h-min bg-white-200 dark:bg-black md:mt-4 mt-6 rounded-xl p-4 space-y-3 text-2xl">
+      <header class="text-2xl font-black uppercase">Settings</header>
+      <a href="{% url 'account_change_password' %}" class="block bg-primary py-4 px-6 rounded-xl overflow-hidden hover:bg-primary/50 focus:bg-primary/50 text-center text-yellow-900 hover:text-white uppercase font-black transition-all duration-500 ease-in-out">
+        Change Password
+      </a>
+      <a href="{% url 'socialaccount_connections' %}" class="block bg-primary py-4 px-6 rounded-xl overflow-hidden hover:bg-primary/50 focus:bg-primary/50 text-center text-yellow-900 hover:text-white uppercase font-black transition-all duration-500 ease-in-out">
+        Connected Social Accounts
+      </a>
     </div>
-    <a href="{% url 'account_email' %}" class="block bg-yellow-400 py-4 px-6 rounded-b-xl overflow-hidden text-center hover:bg-yellow-200 focus:bg-yellow-200 text-center text-yellow-900 uppercase font-black transition-all duration-500 ease-in-out">
-      Update Your Email
-    </a>
+    {% endif %}
+</div>
+
+<div class="w-full">
+  <div class="shadow-xl w-full h-min bg-white-200 dark:bg-black md:mt-0 mt-6 rounded-xl p-4 space-y-3 text-2xl">
+    <header class="text-2xl font-black uppercase">Playlists</header>
+
+  </div>
+
+
+  <div class="shadow-xl w-full h-min bg-white-200 dark:bg-black md:mt-4 mt-6 rounded-xl p-4 space-y-3 text-2xl">
+    <header class="text-2xl font-black uppercase">Podcasts</header>
+
   </div>
 </div>
 {% endblock inner %}
+
+
+
 <div class="container">
 
   <div class="row">

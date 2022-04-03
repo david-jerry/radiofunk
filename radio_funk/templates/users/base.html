@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
-{% block content %}
-{% block inner %}
+{% block search_component %}<span class="hidden md:block dark:text-white-bg text-font-darker font-extrabold text-2xl truncate leading-none">{{user.username|title}} Profile</span>{% endblock search_component %}
 
-{% endblock inner %}
+{% block content %}
+<div x-data="{}" class="w-full h-full overflow-y-scroll md:flex md:items-start p-4 scrollbar-hide md:space-x-2">
+
+  {% block inner %}
+  {% endblock inner %}
+
+</div>
 {% endblock content %}
