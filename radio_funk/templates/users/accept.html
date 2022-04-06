@@ -1,2 +1,3 @@
+{% if request.user.is_authenticated %}
 <button class="rounded-xl bg-primary text-black font-black text-xl uppercase p-2 w-full text-center items-center" hx-post="{% if request.user.podcaster %}{% url 'users:listener' request.user.username %}{% else %}{% url 'users:podcaster' request.user.username %}{% endif %}" hx-target="#podcaster">{% if object.podcaster %}Become Listener{% else %}Become Podcaster{% endif %}</button>
-
+{% endif %}
