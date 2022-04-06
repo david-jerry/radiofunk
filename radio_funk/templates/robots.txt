@@ -1,7 +1,7 @@
 User-agent: *
 Disallow: /admin/*
 Disallow: /accounts/*
-Disallow: /dashboard/*
+Disallow: /portal/*
 Disallow: /users/*
 Disallow: /search/*
 Disallow: /jet/*
