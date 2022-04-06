@@ -27,6 +27,7 @@ from django.utils.timezone import now
 from .managers import UserObjManager
 from radio_funk.tunes.models import Stations
 from radio_funk.podcast.models import Podcast
+
 class User(AbstractUser):
     """
     Default custom user model for radio_funk.
