@@ -45,8 +45,8 @@
       <a href="javascript:;" class="block bg-green-400 py-4 px-6 overflow-hidden hover:bg-green-400/50 focus:bg-green-400/50 text-center text-black hover:text-white  uppercase font-black transition-all duration-500 ease-in-out">
         Withdraw Earnings
       </a>
-      <a href="{% url 'account_email' %}" class="block bg-primary py-4 px-6 rounded-b-xl overflow-hidden hover:bg-primary/50 focus:bg-primary/50 text-center text-yellow-900 hover:text-white  uppercase font-black transition-all duration-500 ease-in-out">
-        Update Your Email
+      <a href="javascript:;" class="block bg-primary py-4 px-6 rounded-b-xl overflow-hidden hover:bg-primary/50 focus:bg-primary/50 text-center text-yellow-900 hover:text-white  uppercase font-black transition-all duration-500 ease-in-out">
+        Subscribe
       </a>
       {% endif %}
     </div>
@@ -54,6 +54,12 @@
     {% if request.user == object %}
     <div class="shadow-xl w-full h-min bg-white-200 dark:bg-black md:mt-4 mt-6 rounded-xl p-4 space-y-3 text-2xl">
       <header class="text-2xl font-black uppercase">Settings</header>
+      <a href="javascript:;" @click="podcaster = ! podcaster" class="block bg-primary py-4 px-6 rounded-xl overflow-hidden hover:bg-primary/50 focus:bg-primary/50 text-center text-yellow-900 hover:text-white uppercase font-black transition-all duration-500 ease-in-out">
+        Podcaster or Listener?
+      </a>
+      <a href="{% url 'account_email' %}" class="block bg-primary py-4 px-6 rounded-xl overflow-hidden hover:bg-primary/50 focus:bg-primary/50 text-center text-yellow-900 hover:text-white  uppercase font-black transition-all duration-500 ease-in-out">
+        Update Your Email
+      </a>
       <a href="{% url 'account_change_password' %}" class="block bg-primary py-4 px-6 rounded-xl overflow-hidden hover:bg-primary/50 focus:bg-primary/50 text-center text-yellow-900 hover:text-white uppercase font-black transition-all duration-500 ease-in-out">
         Change Password
       </a>
@@ -64,17 +70,22 @@
     {% endif %}
 </div>
 
-<div class="w-full">
-  <div class="shadow-xl w-full h-min bg-white-200 dark:bg-black md:mt-0 mt-6 rounded-xl p-4 space-y-3 text-2xl">
-    <header class="text-2xl font-black uppercase">Playlists</header>
-
+<div class="w-full h-full">
+  <div class="shadow-xl w-full min-h-min max-h-full bg-white-200 dark:bg-black md:mt-0 mt-6 rounded-xl p-4 space-y-3 text-2xl">
+    <header class="text-2xl font-black uppercase items-center justify-between flex"><span>Playlists</span> <svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg></header>
+    <div class="w-full h-1/2 overflow-y-scroll scrollbar-hide" id="pl-list">
+      {% include 'snippets/pl.html' %}
+    </div>
   </div>
 
-
-  <div class="shadow-xl w-full h-min bg-white-200 dark:bg-black md:mt-4 mt-6 rounded-xl p-4 space-y-3 text-2xl">
-    <header class="text-2xl font-black uppercase">Podcasts</header>
-
+  {% if object.podcaster %}
+  <div class="shadow-xl w-full min-h-min max-h-full bg-white-200 dark:bg-black md:mt-4 mt-6 rounded-xl p-4 space-y-3 text-2xl">
+    <header class="text-2xl font-black uppercase items-center justify-between flex"><span>Podcasts</span><svg class="w-6 h-6 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clip-rule="evenodd"></path></svg></header>
+    <div class="w-full h-1/2 overflow-y-scroll scrollbar-hide" id="pd-list">
+      {% include 'snippets/pd.html' %}
+    </div>
   </div>
+  {% endif %}
 </div>
 {% endblock inner %}
 

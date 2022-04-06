@@ -1,0 +1,26 @@
+{% load static %}
+
+{% if user_playlists %}
+{% for p in user_playlists %}
+  <div class="flex items-start py-2 space-x-2 justify-between hover:bg-black/5 pl-2 dark:hover:bg-white/5 hover:shadow-md border-b-2 {% if forloop.first %}border-t-2{% endif %} mb-2 duration-200">
+    <div class="w-6/7 flex items-start">
+      <div class="w-10 h-10 rounded overflow-hidden">
+        <img src="{% if p.podcast.first.image.thumbnail %}{{p.podcast.first.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="" class="w-10 h-10 object-cover">
+      </div>
+      <a href="{{p.get_absolute_url}}" class="flex flex-col items-start text-left w-auto h-min pt-2 pl-4 leading-[0.6]">
+        <h2 class="text-2xl font-black text-live bg dark:text primary uppercase leading-[0]">
+          {{p.name}}
+        </h2>
+        <p class="text-[18px] dark:text-primary text-live-bg font-black leading-[1.5]">{{p.created|date:"M Y"}} | {{p.podcast.all.count}} Pod.</p>
+        <p class="truncate">
+          {{p.description|safe|truncatechars:120}}
+        </p>
+      </a>
+    </div>
+    <div hx-delete="{% url 'podcast:delete_playlist' p.slug%}" hx-target="#pl-list" hx-confirm="Are you sure to delete {{p.name|title}} playlist?" class="text-xl font-black text-red-600 p-4 h-full uppercase w-auto block text-center cursor-pointer"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></div>
+  </div>
+{% empty %}
+<p class="w-full p-2">
+<text-center>No Playlist</text-center>
+{% endfor %}
+{% endif %}

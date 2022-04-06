@@ -35,6 +35,11 @@ def context_data(request):
     if not Mode.objects.filter(ip=ip).exists():
         Mode.objects.create(ip=ip, theme="light")
 
+    if request.user.is_authenticated:
+        playlist = request.user.playlist_author.all().order_by("-modified")[:2]
+    else:
+        playlist = None
+
     device_type = ""
     browser_type = ""
     browser_version = ""
@@ -171,6 +176,7 @@ def context_data(request):
         'active_radios':active_radios,
         'c_radios':closest_radios,
         'closes_fifty': fiftykm_close_radios,
+        'playlist': playlist,
         'all_radios': all_radios,
         'radios_in_country': radios_in_country,
         'popular_radios': popular_radios,

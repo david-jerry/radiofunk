@@ -82,14 +82,15 @@
       <span class="flex-none text-xl pt-1">{% trans 'Create Playlist' %}</span>
     </a>
     {% endif %}
-    <a href="/" class="h-6 py-1 flex flex-row items-center justify-start space-x-2 hover:border-r-4 hover:border-r-primary hover:text-primary hover:font-extrabold transition-all duration-200 ease-in-out">
+
+    <!-- {% if playlist %}
+    {% for p in playlist %}
+    <a href="{{p.get_absolute_url}}" class="h-6 py-1 flex flex-row items-center justify-start space-x-2 hover:border-r-4 hover:border-r-primary hover:text-primary hover:font-extrabold transition-all duration-200 ease-in-out">
       <svg class="w-4 h-4 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
-      <span class="flex-none text-xl pt-1">Hot 100</span>
+      <span class="flex-none text-xl pt-1">{{p.name|title|truncatechars:15}}</span>
     </a>
-    <a href="/" class="h-6 py-1 flex flex-row items-center justify-start space-x-2 hover:border-r-4 hover:border-r-primary hover:text-primary hover:font-extrabold transition-all duration-200 ease-in-out">
-      <svg class="w-4 h-4 fill-current" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
-      <span class="flex-none text-xl pt-1">{{location_country_code|upper}} Top 50</span>
-    </a>
+    {% endfor %}
+    {% endif %} -->
   </div>
   {% endif %}
 

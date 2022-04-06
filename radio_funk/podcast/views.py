@@ -69,6 +69,24 @@ def create_playlist(request):
 
     return render(request, 'snippets/playlists.html', context={'playlists':playlists})
 
+# @require_http_methods(['POST', 'GET', 'DELETE'])
+@login_required
+def delete_playlist(request, slug):
+    playlist = get_object_or_404(Playlist, slug=slug)
+    playlist.delete()
+    playlists = request.user.playlist_author.all()
+    context = {'user_playlists':playlists}
+    return render(request, "snippets/pl.html", context)
+
+@login_required
+def delete_podcast(request, slug):
+    podcast = get_object_or_404(Podcast, slug=slug)
+    podcast.delete()
+    podcasts = request.user.podcast_shows.all()
+    context = {'user_podcasts':podcasts}
+    return render(request, "snippets/pd.html", context)
+
+
 @login_required
 def remove_favorite(request, slug):
     podcast = get_object_or_404(Podcast, slug=slug)

@@ -73,11 +73,11 @@
 
   </head>
   {% if request.path == home_url and device == "Mobile" %}
-  <body onload="iziToast.show({'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, sub_menu:false, playlist:false, favorite:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
+  <body onload="iziToast.show({'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, podcaster:false, sub_menu:false, playlist:false, favorite:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
   {% elif request.path == home_url %}
-  <body onload="iziToast.show({'maxWidth':'50%', 'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, sub_menu:false, playlist:false, favorite:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
+  <body onload="iziToast.show({'maxWidth':'50%', 'icon':'fa fa-info-circle', 'message':'Browse the map and search for your favorite radio stations. \nBe informed that the map starts from you location and suggests to you the nearest radio station you can listen to.', 'id':'error', 'title':'INFO', 'timeout': 50000, 'resetOnHover': true, 'balloon': true, 'position':'topRight'})" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, podcaster:false, sub_menu:false, playlist:false, favorite:false, m_lang_open:false, search:false, lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-gray-100 bg-white-200-bg text-font relative">
   {% else %}
-  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, sub_menu:false, playlist:false, favorite:false, search:false, lang_open:false, m_lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-white-200 bg-white-bg text-font relative">
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data="{player:false, podcaster:false, sub_menu:false, playlist:false, favorite:false, search:false, lang_open:false, m_lang_open:false, notif:false, radio:false}" class="flex transition-all duration-300 ease-in-out max-w-[100vw] h-screen dark:bg-black/90 dark:text-white-200 bg-white-bg text-font relative">
   {% endif %}
 
     {% include 'snippets/sidenav.html' %}
@@ -168,6 +168,9 @@
       <div @click="favorite = false" :class="{'max-w-0':favorite === false, 'w-screen':favorite === true}" class="duration-300 h-full absolute bg-black/70 top-0 left-0 justify-center items-center flex z-40">
 
       </div>
+      <div @click="podcaster = false" :class="{'max-w-0':podcaster === false, 'w-screen':podcaster === true}" class="duration-300 h-full absolute bg-black/70 top-0 left-0 justify-center items-center flex z-40">
+
+      </div>
       <div :class="{'hidden':playlist === false, 'flex-col':playlist === true}" class="hidden z-50 absolute rounded-md left-[50%] top-[50%] transform -translate-x-1/2 -translate-y-1/2 md:w-[512px] w-[320px] h-min bg-white-bg/70 dark:bg-black/60 p-4 space-y-4">
         <h2 class="font-black text-4xl uppercase">create playlist</h2>
         <form class="w-full space-y-2">
@@ -191,6 +194,25 @@
 
           {% include "snippets/fav.html" %}
 
+        </div>
+      </div>
+
+      <div :class="{'hidden':podcaster === false, 'flex-col':podcaster === true}" class="hidden z-50 absolute rounded-md left-[50%] top-[50%] transform -translate-x-1/2 -translate-y-1/2 md:w-[512px] w-[320px] min-h-min max-h-[60%] bg-white-bg/70 dark:bg-black/60 p-2 space-y-4">
+        <h2 class="font-black text-4xl leading-none uppercase">Become a Podcaster?</h2>
+        <div class="overflow-y-scroll w-full space-y-2 scrollbar-hide py-3">
+          <p class="text-xl font-normal leading-[1]">
+            Become a Podcaster and get paid for your content.
+            You can earn money by creating a playlist and sharing it with your followers.
+            You can also earn money by sharing your content with your followers.
+            Your content will be featured on the homepage and will be listed on the podcast page based on our algorithm which ranks each podcast based on the number of followers they have, likes they get and views.
+          </p>
+          <p class="text-xl font-normal leading-[1]">
+            You can switch back to your listener account anytime you desire. Your balance remains the same regardless.
+            We take a <strong>15% commission</strong> from every gift your get and approve the rest for withdrawal at the end of each month.
+          </p>
+          <div class="w-full h-min" id="podcaster">
+            {% include 'users/accept.html' %}
+          </div>
         </div>
       </div>
 

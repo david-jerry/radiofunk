@@ -1,4 +1,7 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+from django.views.decorators.http import require_http_methods
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
@@ -6,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, RedirectView, UpdateView, ListView, CreateView, DeleteView
 
 from radio_funk.podcast.models import Playlist
+from django.shortcuts import get_object_or_404, render
 
 User = get_user_model()
 
@@ -16,8 +20,32 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     slug_field = "username"
     slug_url_kwarg = "username"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.podcaster:
+            podcasts = self.request.user.podcast_shows.all()
+        else:
+            podcasts = None
+        context['user_playlists'] = self.request.user.playlist_author.all()
+        context['user_podcasts'] = podcasts
+        return context
+
 
 user_detail_view = UserDetailView.as_view()
+
+@login_required
+def become_podcaster(request, username):
+    user = get_object_or_404(User, username=username)
+    user.podcaster = True
+    user.save()
+    return render(request, 'users/accept.html', {'object':user})
+
+@login_required
+def do_not_become_podcaster(request, username):
+    user = get_object_or_404(User, username=username)
+    user.podcaster = False
+    user.save()
+    return render(request, 'users/accept.html', {'object':user})
 
 
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):

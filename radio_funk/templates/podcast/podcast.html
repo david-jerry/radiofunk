@@ -11,7 +11,7 @@
     </div>
     <div class="scrollbar-hide flex items-center w-full h-min space-x-6 p-2 overflow-x-auto">
       {% for obj in popular_podcasts %}
-        <a href="{{obj.get_absolute_url}}" class="rounded-md w-36 h-min shadow-md p-1 hover:shadow-lg hover:scale-105 duration-300">
+        <a href="{{obj.get_absolute_url}}" class="rounded-md w-36 h-min shadow-md bg-white dark:bg-black p-1 hover:shadow-lg hover:scale-105 duration-300">
             <div class="flex-col flex items-center space-y-1">
               <img src="{% if obj.image.thumbnail %}{{obj.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-36 h-36 rounded-lg">
               <div class="flex-col text-left w-full px-2 truncate leading-none">
@@ -31,7 +31,7 @@
     </div>
     <div class="scrollbar-hide flex items-center w-full h-min space-x-6 p-2 overflow-x-auto">
       {% for obj in bedtime_podcasts %}
-        <a href="{{obj.get_absolute_url}}" class="rounded-md w-36 h-min shadow-md p-1 hover:shadow-lg hover:scale-105 duration-300">
+        <a href="{{obj.get_absolute_url}}" class="rounded-md w-36 bg-white dark:bg-black h-min shadow-md p-1 hover:shadow-lg hover:scale-105 duration-300">
             <div class="flex-col flex items-center space-y-1">
               <img src="{% if obj.image.thumbnail %}{{obj.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-36 h-36 rounded-lg">
               <div class="flex-col text-left w-full px-2 truncate leading-none">
@@ -52,7 +52,7 @@
     </div>
     <div class="flex flex-none items-center overflow-x-scroll scrollbar-hide max-w-[100%] h-full space-x-4">
       {% for obj in moods_podcasts %}
-      <a href="{{obj.get_absolute_url}}" class="rounded-md w-36 h-min shadow-md p-1 hover:shadow-lg hover:scale-105 duration-300">
+      <a href="{{obj.get_absolute_url}}" class="bg-white dark:bg-black rounded-md w-36 h-min shadow-md p-1 hover:shadow-lg hover:scale-105 duration-300">
         <div class="flex-col flex items-center space-y-1">
           <img src="{% if obj.image.thumbnail %}{{obj.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-36 h-36 rounded-lg">
           <div class="flex-col text-left w-full px-2 truncate leading-none">
@@ -73,7 +73,7 @@
     </div>
     <div class="flex flex-none items-center overflow-x-scroll scrollbar-hide max-w-[100%] h-full space-x-4">
       {% for obj in podcast_documentary %}
-      <a href="{{obj.get_absolute_url}}" class="rounded-md w-36 h-min shadow-md p-1 hover:shadow-lg hover:scale-105 duration-300">
+      <a href="{{obj.get_absolute_url}}" class="bg-white dark:bg-black rounded-md w-36 h-min shadow-md p-1 hover:shadow-lg hover:scale-105 duration-300">
         <div class="flex-col flex items-center space-y-1">
           <img src="{% if obj.image.thumbnail %}{{obj.image.thumbnail.url}}{% else %}{% static 'images/favicons.svg' %}{% endif %}" alt="{{obj.name|title|truncatechars:10}} Cover Image" class="object-contain w-36 h-36 rounded-lg">
           <div class="flex-col text-left w-full px-2 truncate leading-none">
